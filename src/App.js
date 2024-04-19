@@ -1,22 +1,17 @@
-import logo from './logo.svg';
-// import './App.css';
+import React from 'react';
+import IsLogin from './pages/admin/isLogin';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className='bg-blue-800'>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className='bg-danger-500'
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React an node
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path='/' element={<IsLogin />}></Route>
+        </Routes>
+      </Router>
+      {/* <IsLogin /> */}
     </div>
   );
 }
