@@ -4,8 +4,11 @@ import image2 from "../../assets/hero_image.png";
 import image3 from "../../assets/Image.png";
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import Footer from "../footer/footer";
+
 import FormsModal from "./modal/FormsModal";
+import Footer from "../footer/footer";
+import { Link } from "react-router-dom";
+
 
 const Header = () => {
   let Links = [
@@ -33,9 +36,11 @@ const Header = () => {
           <div className=" w-full fixed top-0 left-0">
             <div className="md:flex items-center justify-between text-white py-4 md:px-10 px-7">
               {/* logo section */}
+              <Link to={"/Home"}>
               <div className="font-bold text-2xl cursor-pointer flex items-center gap-1">
                 <h1 className="w-7 h-7 text-blue-600">ECOMHUB</h1>
               </div>
+              </Link>
               {/* Menu icon */}
               <div
                 onClick={() => setOpen(!open)}
