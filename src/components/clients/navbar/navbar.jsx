@@ -13,6 +13,8 @@ const Navbar = () => {
           
           <a href="/panier" className="text-gray-600 transition-colors hover:text-gray-800">Panier</a>
           <a href="/compte" className="text-gray-600 transition-colors hover:text-gray-800">Compte</a>
+          <a href="/a propos" className="text-gray-600 transition-colors hover:text-gray-800">a propos</a>
+
         </div>
 
         <button className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700">
