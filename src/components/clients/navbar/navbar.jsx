@@ -1,28 +1,80 @@
-// import React from 'react';
 
-// import { links } from './ListNavbar';
-// import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+const Navbar = () => {
+	return (
+		<nav className="bg-white shadow-md">
+			<div className="container flex flex-row items-center justify-between py-4 mx-auto">
+				<a href="/" className="text-lg font-bold text-gray-800">
+					Nom de votre boutique
+				</a>
+
+				<div className="flex flex-row space-x-4">
+					<a
+						href="/produits"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						Produits
+					</a>
+					<a
+						href="/categories"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						Catégories
+					</a>
 
 
-// const Navbar = ({handleOpen}) => {
-//     // const location = useLocation();
-//   return (
-//     <> 
-//     {links.map((menu, index) => (
-//         <div key={index} className=''>
-//             <div className="px-2 py-2 md:py-0 md:cursor-pointer group">
-//             <Navbar 
-//             onClick={handleOpen}
-//                 className={'justify-between block relative after: after:block after:bottom text-sm items-center duration-500 pb-1 focus:border-b-2 focus:border-slate-800 active:border-b-2 active:border-slate-800  hover:border-b-2  hover:border-slate-800  pr- group ' }
-//                 to={menu.link}    
-//                 >
-//                 {menu.name}
-//             </Navbar>
-//         </div>
-//         </div>
-//     ))}
-//     </>
-//   )
-// }
+					<a
+						href="/panier"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						Panier
+					</a>
+					<a
+						href="/compte"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						Compte
+					</a>
+					<a
+						href="/a propos"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						a propos
+					</a>
+					<a
+						href="/boutique"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						boutique
+					</a>
+					<a
+						href="/boutique"
+						className="text-gray-600 transition-colors hover:text-gray-800"
+					>
+						boutique
+					</a>
+				</div>
 
-// export default Navbar
+				<button className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700">
+					<svg
+						className="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M16 8l-4-4m0 0l-4 4M16 16l-4 4m0 0l-4-4"
+						/>
+					</svg>
+				</button>
+			</div>
+		</nav>
+	);
+};
+
+export default Navbar;
