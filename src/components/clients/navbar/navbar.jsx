@@ -61,12 +61,14 @@ const Navbar = () => {
 										</a>
 									</li>
 								))}
+								<Link to="/panier">
 								<button
-									onClick={toggleModal}
 									className="px-3 py-1 font-semibold text-black duration-500 rounded btn md:ml-8 md:static"
 								>
 									<FaCartShopping />
 								</button>
+								</Link>
+								
 							</ul>
 						</div>
 					</div>

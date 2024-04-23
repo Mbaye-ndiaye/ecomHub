@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import { FaArrowLeft } from 'react-icons/fa';
 
+
+
 export default function ShoppingCart() {
 	const cartItems = [
 		{
