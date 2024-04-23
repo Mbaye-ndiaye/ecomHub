@@ -1,5 +1,6 @@
 import React from 'react'
-import Navbar from '../../components/clients/navbar/Navbar'
+import Navbar from '../../components/clients/navbar/navbar'
+
 
 
 const Home = () => {
