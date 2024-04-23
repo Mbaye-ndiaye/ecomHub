@@ -22,13 +22,14 @@ const Navbar = () => {
 					>
 						Catégories
 					</a>
-
-					<a
-						href="/panier"
+                    <Link to="/panier">
+                    <p
 						className="text-gray-600 transition-colors hover:text-gray-800"
 					>
 						Panier
-					</a>
+					</p>
+                    </Link>
+			
 					<a
 						href="/compte"
 						className="text-gray-600 transition-colors hover:text-gray-800"
