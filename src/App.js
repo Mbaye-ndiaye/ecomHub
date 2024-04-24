@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/Admin" element={<InterfaceAdmin />} />
-          <Route path="/" element={<IsLogin />}></Route>
+          <Route path="/Dashboard" element={<IsLogin />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
         </Routes>
       </Router>
