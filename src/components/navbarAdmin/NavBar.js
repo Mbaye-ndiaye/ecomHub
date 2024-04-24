@@ -5,11 +5,12 @@ import image3 from "../../assets/Image.png";
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import Footer from "../footer/footer";
+import Temoigne from "../temogneAdmin/temogne"
 import FormsModal from "./modal/FormsModal";
 
 const Header = () => {
   let Links = [
-    { name: "APROPO", link: "/" },
+    { name: "APROPOS", link: "/" },
     { name: "CONTACT", link: "/" },
   ];
   let [open, setOpen] = useState(false);
@@ -90,6 +91,7 @@ const Header = () => {
           <FormsModal />
         </Modal>
       )}
+      <Temoigne/>
       <Footer />
     </>
   );
