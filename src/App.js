@@ -1,22 +1,20 @@
-import logo from './logo.svg';
-// import './App.css';
+import Login from './components/adminConnexion/Connexion';
+import Inscription from './components/adminInscription/Inscription';
+import InterfaceAdmin from './components/interfaceAdmin/InterfaceAdmin';
+import Home from './pages/home/home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className='bg-blue-800'>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className='bg-danger-500'
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React an node
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="inscription" element={<Inscription />} />
+          <Route path="/Admin" element={<InterfaceAdmin />} />
+          {/* Ajoutez d'autres routes ici */}
+        </Routes>
+      </Router>
     </div>
   );
 }
