@@ -1,3 +1,4 @@
+
 import Header from "../navbarAdmin/NavBar";
 
 const InterfaceAdmin = () => {
@@ -9,3 +10,4 @@ const InterfaceAdmin = () => {
 };
 
 export default InterfaceAdmin;
+

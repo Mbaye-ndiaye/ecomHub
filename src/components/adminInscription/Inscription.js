@@ -1,18 +1,26 @@
+
+
 import React, { useEffect, useState } from "react";
+import {Link, useNavigate} from "react-router-dom"
+
+import axios from "axios";
+import Swal from "sweetalert2";
 
 import trees from "../../assets/images.jfif";
 
 export default function Inscription() {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
+
+    name: "",
     prenom: "",
-    nom: "",
     email: "",
     password: "",
     adresse: "",
-    number: "",
+    telephone: "",
   });
 
   //   const handleSignUpClick = () => {
@@ -25,12 +33,12 @@ export default function Inscription() {
 
   const updateButtonDisabled = () => {
     if (
+      formData.name.trim() !== "" &&
       formData.prenom.trim() !== "" &&
-      formData.nom.trim() !== "" &&
       formData.email.trim() !== "" &&
       formData.password.trim() !== "" &&
       formData.adresse.trim() !== "" &&
-      formData.number.trim() !== ""
+      formData.telephone.trim() !== ""
     ) {
       setIsButtonDisabled(false);
     } else {
@@ -39,19 +47,38 @@ export default function Inscription() {
   };
   useEffect(() => {
     updateButtonDisabled();
-  }, [
-    formData.prenom,
-    formData.nom,
+  }, [  
     formData.email,
     formData.password,
-    formData.number,
-    formData.adresse,
   ]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/utilisateur/inscription",
+        formData
+      );
+
+      console.log(response.data)
+      // afficher le message succes 
+      await Swal.fire({
+        icon:"success",
+        title:"Inscription réussie!",
+        showConfirmButton: false,
+        timer:2000,
+      });
+      navigate('/connexion')
+    }catch(error) {
+      console.error(error)
+      alert('inscription echoue')
+    }
+  }
   return (
     <div className="w-full h-screen flex  bg-gradient-to-r from-cyan-500 to-blue-500 ">
       <div className="  grid grid-cols-2 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
@@ -60,7 +87,7 @@ export default function Inscription() {
         </div>
         <div className="flex flex-col justify-center items-center w-[35rem] bg-white ">
           <h1 className="text-3xl text-center">Inscription</h1>
-          <form className=" w-full p-8 rounded">
+          <form  className=" w-full p-8 rounded" onSubmit={handleSubmit}>
             <div className="flex flex-row gap-5 mb-4">
               <div className="flex flex-col ">
                 <label htmlFor="prenom" className="block text-sm font-medium ">
@@ -78,16 +105,18 @@ export default function Inscription() {
               </div>
 
               <div className="flex relative flex-col mb-4">
-                <label htmlFor="nom" className="block text-sm font-medium ">
+
+                <label htmlFor="name" className="block text-sm font-medium ">
                   Nom
                 </label>
                 <input
                   required
                   type="text"
-                  id="nom"
-                  name="nom"
+
+                  id="name"
+                  name="name"
                   className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-                  value={formData.nom}
+                  value={formData.name}
                   onChange={handleChange}
                 />
               </div>
@@ -171,6 +200,7 @@ export default function Inscription() {
                   ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
                   : "bg-gray-900 text-active text-white hover:bg-gray-900"
               } ${isLoading ? "relative" : ""}`}
+
             >
               Enregistrer
             </button>
@@ -179,5 +209,6 @@ export default function Inscription() {
         </div>
       </div>
     </div>
+
   );
 }

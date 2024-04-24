@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"
+import axios from "axios";
+import Swal from "sweetalert2";
+
 
 export default function FormsModal() {
+  const navigate = useNavigate()
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -22,6 +27,7 @@ export default function FormsModal() {
 
   const updateButtonDisabled = () => {
     if (
+
       formData.nom.trim() !== "" &&
       formData.email.trim() !== "" &&
       formData.image.trim() !== "" &&
@@ -39,6 +45,7 @@ export default function FormsModal() {
   useEffect(() => {
     updateButtonDisabled();
   }, [
+
     formData.nom,
     formData.email,
     formData.image,
@@ -54,38 +61,77 @@ export default function FormsModal() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formDataToSend = new FormData();
+    for (let key in formData) {
+      formDataToSend.append(key, formData[key])
+    }
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/shops",
+        formData
+      );
+
+      console.log(response.data)
+      // afficher le message succes 
+      await Swal.fire({
+        icon: "success",
+        title: "Boutique ajouter avec succes",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      navigate('/connexion')
+    } catch (error) {
+      console.error(error)
+      alert('echoue')
+    }
+  }
+
   return (
     <div className="flex justify-center items-center w-full h-full ">
       <form className=" w-full p-8 rounded">
         <div className="flex flex-row gap-5 mb-2">
           <div className="flex flex-col ">
             <label htmlFor="nom" className="block text-sm font-medium ">
+
               Nom du boutique
             </label>
             <input
               required
               type="text"
-              id="nom"
-              name="nom"
+
+              id="name"
+              name="name"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.nom}
+              value={formData.name}
+
               onChange={handleChange}
             />
           </div>
 
+
           <div className="flex flex-col mb-2">
-            <label htmlFor="email" className="block text-sm font-medium ">
-              Email
-            </label>
-            <input
-              required
-              type="email"
-              id="email"
-              name="email"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.email}
-              onChange={handleChange}
-            />
+
+            <div className="flex flex-col mb-2">
+              <label htmlFor="email" className="block text-sm font-medium ">
+                Email
+              </label>
+              <input
+                required
+                type="email"
+                id="email"
+                name="email"
+                className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                value={formData.email}
+                onChange={handleChange}
+              />
+
+            </div>
+          </div >
+
+          <div className="flex flex-row gap-5 mb-2">
+
           </div>
         </div>
 
@@ -168,9 +214,9 @@ export default function FormsModal() {
           />
         </div>
 
-        <div className="flex relative flex-col mb-2">
+        < div className="flex relative flex-col mb-2" >
           <label htmlFor="description" className="block text-sm font-medium ">
-            description du site
+            Description du site
           </label>
           <textarea
             required
@@ -198,5 +244,6 @@ export default function FormsModal() {
         </Link>
       </form>
     </div>
+
   );
 }

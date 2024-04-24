@@ -5,12 +5,14 @@ import image3 from "../../assets/Image.png";
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import Footer from "../footer/footer";
+
 import FormsModal from "./modal/FormsModal";
+import { Link } from "react-router-dom";
 import Temoigne from "../temoigneAdmin/Temoigne";
 
 const Header = () => {
   let Links = [
-    { name: "APROPO", link: "/" },
+    { name: "APROPOS", link: "/" },
     { name: "CONTACT", link: "/" },
   ];
   let [open, setOpen] = useState(false);
@@ -35,7 +37,9 @@ const Header = () => {
             <div className="md:flex items-center justify-between text-white py-4 md:px-10 px-7">
               {/* logo section */}
               <div className="font-bold text-2xl cursor-pointer flex items-center gap-1">
-                <h1 className="w-7 h-7 text-blue-600">ECOMHUB</h1>
+                <Link to="/Accueil">
+                  <h1 className="w-7 h-7 text-blue-600">ECOMHUB</h1>
+                </Link>
               </div>
               {/* Menu icon */}
               <div
@@ -91,6 +95,7 @@ const Header = () => {
           <FormsModal />
         </Modal>
       )}
+
       <Temoigne />
       <Footer />
     </>
