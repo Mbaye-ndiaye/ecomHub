@@ -1,12 +1,13 @@
-import Header from "../navbarAdmin/NavBar"
 
+import Header from "../navbarAdmin/NavBar";
 
 const InterfaceAdmin = () => {
-    return(
-        <div>
-            <Header/>
-        </div>
-    )
-}
+  return (
+    <div>
+      <Header />
+    </div>
+  );
+};
 
-export default InterfaceAdmin
+export default InterfaceAdmin;
+

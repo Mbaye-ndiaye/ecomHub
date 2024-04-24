@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios";
 import Swal from "sweetalert2";
 
 
 export default function FormsModal() {
   const navigate = useNavigate()
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
-    // email: "",
-    // image: "",
-    // logo: "",
-    // telephone: "",
-    // adresse: "",
-    // apropos: "",
+    nom: "",
+    email: "",
+    image: "",
+    logo: "",
+    telephone: "",
+    adresse: "",
+    apropos: "",
     description: "",
   });
 
@@ -26,13 +27,14 @@ export default function FormsModal() {
 
   const updateButtonDisabled = () => {
     if (
-      formData.name.trim() !== "" &&
-      // formData.email.trim() !== "" &&
-      // formData.image.trim() !== "" &&
-      // formData.logo.trim() !== "" &&
-      // formData.telephone.trim() !== "" &&
-      // formData.adresse.trim() !== "" &&
-      // formData.apropos.trim() !== "" &&
+
+      formData.nom.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.image.trim() !== "" &&
+      formData.logo.trim() !== "" &&
+      formData.telephone.trim() !== "" &&
+      formData.adresse.trim() !== "" &&
+      formData.apropos.trim() !== "" &&
       formData.description.trim() !== ""
     ) {
       setIsButtonDisabled(false);
@@ -43,13 +45,14 @@ export default function FormsModal() {
   useEffect(() => {
     updateButtonDisabled();
   }, [
-    formData.name,
-    // formData.email,
-    // formData.image,
-    // formData.logo,
-    // formData.telephone,
-    // formData.adresse,
-    // formData.apropos,
+
+    formData.nom,
+    formData.email,
+    formData.image,
+    formData.logo,
+    formData.telephone,
+    formData.adresse,
+    formData.apropos,
     formData.description,
   ]);
 
@@ -73,13 +76,13 @@ export default function FormsModal() {
       console.log(response.data)
       // afficher le message succes 
       await Swal.fire({
-        icon:"success",
-        title:"Boutique ajouter avec succes",
+        icon: "success",
+        title: "Boutique ajouter avec succes",
         showConfirmButton: false,
-        timer:2000,
+        timer: 2000,
       });
       navigate('/connexion')
-    }catch(error) {
+    } catch (error) {
       console.error(error)
       alert('echoue')
     }
@@ -87,40 +90,52 @@ export default function FormsModal() {
 
   return (
     <div className="flex justify-center items-center w-full h-full ">
-      <form className=" w-full p-8 rounded" onSubmit={handleSubmit}>
+      <form className=" w-full p-8 rounded">
         <div className="flex flex-row gap-5 mb-2">
           <div className="flex flex-col ">
-            <label htmlFor="name" className="block text-sm font-medium ">
+            <label htmlFor="nom" className="block text-sm font-medium ">
+
               Nom du boutique
             </label>
             <input
               required
               type="text"
+
               id="name"
               name="name"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.name}
+
               onChange={handleChange}
             />
           </div>
 
-          {/* <div className="flex flex-col mb-2">
-            <label htmlFor="email" className="block text-sm font-medium ">
-              Email
-            </label>
-            <input
-              required
-              type="email"
-              id="email"
-              name="email"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div> */}
+
+          <div className="flex flex-col mb-2">
+
+            <div className="flex flex-col mb-2">
+              <label htmlFor="email" className="block text-sm font-medium ">
+                Email
+              </label>
+              <input
+                required
+                type="email"
+                id="email"
+                name="email"
+                className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                value={formData.email}
+                onChange={handleChange}
+              />
+
+            </div>
+          </div >
+
+          <div className="flex flex-row gap-5 mb-2">
+
+          </div>
         </div>
 
-        {/* <div className="flex flex-row gap-5 mb-2">
+        <div className="flex flex-row gap-5 mb-2">
           <div className="flex relative flex-col mb-4">
             <label htmlFor="image" className="block text-sm font-medium ">
               Image du banniere
@@ -197,9 +212,9 @@ export default function FormsModal() {
             value={formData.apropos}
             onChange={handleChange}
           />
-        </div> */}
+        </div>
 
-        <div className="flex relative flex-col mb-2">
+        < div className="flex relative flex-col mb-2" >
           <label htmlFor="description" className="block text-sm font-medium ">
             Description du site
           </label>
@@ -214,19 +229,18 @@ export default function FormsModal() {
             onChange={handleChange}
           />
         </div>
-
         <button
           type="submit"
           disabled={isButtonDisabled || isLoading}
-          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-            isButtonDisabled || isLoading
-              ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-              : "bg-gray-900 text-active text-white hover:bg-gray-900"
-          } ${isLoading ? "relative" : ""}`}
+          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${isButtonDisabled || isLoading
+            ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+            : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            } ${isLoading ? "relative" : ""}`}
         >
           Enregistrer
         </button>
-      </form>
-    </div>
+      </form >
+    </div >
+
   );
 }

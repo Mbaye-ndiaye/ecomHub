@@ -10,7 +10,7 @@ import FormsModal from "./modal/FormsModal";
 
 const Header = () => {
   let Links = [
-    { name: "APROPO", link: "/" },
+    { name: "APROPOS", link: "/" },
     { name: "CONTACT", link: "/" },
   ];
   let [open, setOpen] = useState(false);
