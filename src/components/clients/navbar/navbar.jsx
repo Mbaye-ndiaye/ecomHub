@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import image2 from '../../../assets/hero_image.png';
 import imgShop from '../../../assets/imgShop.jpg';
 import { FaBars } from 'react-icons/fa';
@@ -9,27 +9,56 @@ import CardProduit from '../card/CardProduit';
 import Accueil from '../../../pages/clients/accueil/Accueil';
 import InputRecherche from '../../../pages/clients/accueil/InputRecherche';
 import { FaCartShopping } from "react-icons/fa6";
+import Input from './Input';
+
+
 
 
 
 
 const Navbar = () => {
-	let Links = [
-		{ name: 'APROPO', link: '/' },
-		{ name: 'CONTACT', link: '/' },
-		{ name: 'Boutique', link: '/' },
-		{ name: 'Categorie', link: '/' },
-	];
-	let [open, setOpen] = useState(false);
+	
+	// let [open, setOpen] = useState(false);
 
 	// Fonction pour ouvrir et fermer la modal
-	const toggleModal = () => {
-		setOpen(!open);
-	};
+	// const toggleModal = () => {
+	// 	setOpen(!open);
+	// };
 
 	return (
-		<div>
-            <div className='flex justify-between mt-3 bg-black items-center'>
+		<div className='flex justify-between bg-current  p-2'>
+        <nav className="">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                <div className="flex items-center">
+                <p className="text-white text-xl font-semibold mx-4">Logo</p>
+                <div className='flex mx-auto text-white mx-4'>
+                    <p className='mx-4'>Boutique</p>
+                    <p className='mx-4'>About</p>
+                    <p className='mx-4'>Contact</p>
+                </div>
+                </div>
+            </div>
+        </nav>
+        <div className=' flex items-center fs-5 mx-4'>
+        <Input />
+        <FaCartShopping className='text-white text-2xl mx-4'/>
+      </div>
+        {/* <div className="relative">
+      <input
+        type="text"
+        placeholder="Recherce"
+        // onChange={onChange}
+        className="block w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+      />
+      <svg className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a8 8 0 11-16 0 8 8 0 0116 0zm-1.82 4.83a6 6 0 111.415-1.415L20.586 17 22 18.414l-2.122 2.122-1.415-1.415z" />
+      </svg>
+      <div>
+      <FaCartShopping className='text-white text-lg '/>
+      </div>
+
+    </div> */}
+            {/* <div className='flex justify-between mt-3 bg-black items-center'>
             <Accueil />
             <div className=' flex items-center fs-5 mx-4'>
 
@@ -40,7 +69,7 @@ const Navbar = () => {
             <div>
             </div>
             <CardProduit />
-		    <Footer />
+		    <Footer /> */}
       
 
 			{/* <div className="relative w-full min-h-screen ">

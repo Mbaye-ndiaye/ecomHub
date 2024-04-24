@@ -62,7 +62,7 @@ const CardProduit = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ">
+    <div className="flex flex-wrap mb-3">
       {products.map((product, index) => (
         <CardList key={index} product={product} />
       ))}
