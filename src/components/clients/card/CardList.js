@@ -18,13 +18,13 @@ const CardList = () => {
   }, []);
 
   return (
-    <div className=" mx-auto px-4">
-      <h1 className="text-3xl font-bold text-start my-8">Categorie</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-5">
+    <div className="container mx-auto px-4">
+      <h1 className="text-3xl font-bold text-start my-8">categorie</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {products.map((product, index) => (
           <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg">
-            <img className="w-full h-64 object-cover " src={product.image} alt={product.title} />
-            <div className="p-2">
+            <img className="w-full h-32 object-cover" src={product.image} alt={product.title} />
+            <div className="p-3">
               <h3 className="text-sm font-semibold mb-2">{product.title}</h3>
               {/* <p className="text-gray-700 mb-2">{product.description}</p> */}
               <p className="text-gray-900 font-bold">${product.price}</p>
