@@ -12,8 +12,8 @@ import Footer from '../../../components/footer/footer';
 
 const Accueil = () => {
   return (
-    <div className=' mt-3 bg-black items-center'>
-      <div>
+    <div >
+      <div className='  bg-black items-center'>
         <Navbar />
       </div>
       <div>
