@@ -1,3 +1,4 @@
+
 import React from "react";
 import Login from "./components/adminConnexion/Connexion";
 import Inscription from "./components/adminInscription/Inscription";
@@ -17,7 +18,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/Admin" element={<InterfaceAdmin />} />
-          {/* <Route path="/" element={<IsLogin />}></Route> */}
+          <Route path="/" element={<IsLogin />}></Route>
           <Route path="/Home" element={<Home />}></Route>
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
