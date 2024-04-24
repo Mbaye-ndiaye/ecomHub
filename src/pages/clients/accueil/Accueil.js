@@ -17,10 +17,7 @@ const Accueil = () => {
           
         </div>
         {/* <div className="md:hidden">
-          <button className="text-white focus:outline-none">
-           
-          </button>
-        </div> */}
+
       </div>
     </nav>
   );
