@@ -7,7 +7,6 @@ import Message from "../user/Message";
 import { useLocation } from "react-router";
 // import axiosInstance from "../../utils/axiosInstance";
 
-
 const Header = () => {
   const { toggleSidebare } = useSidebare();
   const location = useLocation();
@@ -17,38 +16,38 @@ const Header = () => {
   const [nouveauCommande, setNouveauCommande] = useState([]);
   const [nouveauMessage, setNouveauMessage] = useState([]);
 
-//   useEffect(() => {
-//     const fetchCommandes = async () => {
-//       try {
-//         const response = await axiosInstance.get("/commandes");
-//         const produitsNonLuTrue = response.data.filter(
-//           (produit) => produit.lu === false
-//         );
-//         setNouveauCommande(produitsNonLuTrue);
-//       } catch (error) {
-//         console.error("Erreur lors de la récupération des commandes :", error);
-//       }
-//     };
-//     fetchCommandes();
-//   }, [nouveauCommande]);
+  //   useEffect(() => {
+  //     const fetchCommandes = async () => {
+  //       try {
+  //         const response = await axiosInstance.get("/commandes");
+  //         const produitsNonLuTrue = response.data.filter(
+  //           (produit) => produit.lu === false
+  //         );
+  //         setNouveauCommande(produitsNonLuTrue);
+  //       } catch (error) {
+  //         console.error("Erreur lors de la récupération des commandes :", error);
+  //       }
+  //     };
+  //     fetchCommandes();
+  //   }, [nouveauCommande]);
 
-//   useEffect(() => {
-//     const fetchMessage = async () => {
-//       try {
-//         const response = await axiosInstance.get("/messages");
-//         const messagesNonLuTrue = response.data.filter(
-//           (message) => message.lu === false
-//         );
-//         setNouveauMessage(messagesNonLuTrue);
-//       } catch (error) {
-//         console.error("Erreur lors de la récupération des commandes :", error);
-//       }
-//     };
-//     fetchMessage();
-//   }, [nouveauMessage]);
+  //   useEffect(() => {
+  //     const fetchMessage = async () => {
+  //       try {
+  //         const response = await axiosInstance.get("/messages");
+  //         const messagesNonLuTrue = response.data.filter(
+  //           (message) => message.lu === false
+  //         );
+  //         setNouveauMessage(messagesNonLuTrue);
+  //       } catch (error) {
+  //         console.error("Erreur lors de la récupération des commandes :", error);
+  //       }
+  //     };
+  //     fetchMessage();
+  //   }, [nouveauMessage]);
 
   return (
-    <header className="z-[10] bg-gray-800 fixed w-full m-0 flex justify-between text-gray-100 w-100 px-5 py-3">
+    <header className="z-[10] bg-gray-500 fixed w-full m-0 flex justify-between text-gray-100 w-100 px-5 py-3">
       <div className="flex gap-4 items-center">
         <FaBars
           className="cursor-pointer mt-0.75"

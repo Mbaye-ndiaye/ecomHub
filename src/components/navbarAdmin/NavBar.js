@@ -6,6 +6,7 @@ import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
 import Footer from "../footer/footer";
 import FormsModal from "./modal/FormsModal";
+import Temoigne from "../temoigneAdmin/Temoigne";
 
 const Header = () => {
   let Links = [
@@ -90,6 +91,7 @@ const Header = () => {
           <FormsModal />
         </Modal>
       )}
+      <Temoigne />
       <Footer />
     </>
   );

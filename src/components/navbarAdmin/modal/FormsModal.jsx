@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FormsModal() {
   const [showPassword, setShowPassword] = useState(false);
@@ -182,18 +183,19 @@ export default function FormsModal() {
             onChange={handleChange}
           />
         </div>
-
-        <button
-          type="submit"
-          disabled={isButtonDisabled || isLoading}
-          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-            isButtonDisabled || isLoading
-              ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-              : "bg-gray-900 text-active text-white hover:bg-gray-900"
-          } ${isLoading ? "relative" : ""}`}
-        >
-          Enregistrer
-        </button>
+        <Link to={"/Dashboard"}>
+          <button
+            type="submit"
+            disabled={isButtonDisabled || isLoading}
+            className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
+              isButtonDisabled || isLoading
+                ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+                : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            } ${isLoading ? "relative" : ""}`}
+          >
+            Enregistrer
+          </button>
+        </Link>
       </form>
     </div>
   );
