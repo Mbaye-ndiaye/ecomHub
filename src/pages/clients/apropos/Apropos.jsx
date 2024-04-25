@@ -1,7 +1,14 @@
 import React from 'react';
+import Navbar from './../../../components/clients/navbar/Navbar';
+import Footer from './../../../components/footer/footer';
+
+
 
 const AboutPage = () => {
+  
   return (
+    <section>
+    <Navbar/>
     <div className="container py-16 mx-auto">
       <h1 className="text-3xl font-bold text-center">A propos de nous</h1>
 
@@ -53,6 +60,9 @@ const AboutPage = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </section>
+    
   );
 };
 
