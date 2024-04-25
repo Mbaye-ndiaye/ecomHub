@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom"
 
@@ -13,6 +14,7 @@ export default function Inscription() {
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
+
     name: "",
     prenom: "",
     email: "",
@@ -45,8 +47,7 @@ export default function Inscription() {
   };
   useEffect(() => {
     updateButtonDisabled();
-  }, [
-  
+  }, [  
     formData.email,
     formData.password,
   ]);
@@ -104,12 +105,14 @@ export default function Inscription() {
               </div>
 
               <div className="flex relative flex-col mb-4">
+
                 <label htmlFor="name" className="block text-sm font-medium ">
                   Nom
                 </label>
                 <input
                   required
                   type="text"
+
                   id="name"
                   name="name"
                   className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
@@ -196,9 +199,8 @@ export default function Inscription() {
                 isButtonDisabled || isLoading
                   ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
                   : "bg-gray-900 text-active text-white hover:bg-gray-900"
-              } ${isLoading ? "relative" : ""
-            }
-              `}
+              } ${isLoading ? "relative" : ""}`}
+
             >
               Enregistrer
             </button>
@@ -207,4 +209,6 @@ export default function Inscription() {
         </div>
       </div>
     </div>
-  );}
+
+  );
+}
