@@ -8,16 +8,12 @@ import image2 from '../../../assets/images.jpg';
 import TextAccueil from '../../../components/clients/text/TextAccueil';
 
 
-// import navbar from '../../../components/clients/navbar/Navbar';
-
-
-
-
 
 const Accueil = () => {
+
   return (
     <div >
-      <div className='  bg-black items-center ' style={{backgroundImage:  `url(${image2})`}}>
+      <div className='items-center bg-black ' style={{backgroundImage:  `url(${image2})`}}>
         <Navbar />
       </div>
       <div>
@@ -35,10 +31,3 @@ const Accueil = () => {
 };
 
 export default Accueil;
-// </div>
-{/* <div className=' flex items-center fs-5 mx-4'>
-  <Input />
-  <FaCartShopping className='text-white text-lg mx-4'/>
-</div> */}
-{/* <div> */}
-
