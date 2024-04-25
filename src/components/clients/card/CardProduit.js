@@ -62,7 +62,7 @@ const CardProduit = () => {
   ];
 
   return (
-    <div className="flex flex-wrap mb-3">
+    <div className="flex flex-wrap mt">
       {products.map((product, index) => (
         <CardList key={index} product={product} />
       ))}

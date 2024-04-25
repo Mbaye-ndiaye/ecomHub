@@ -1,6 +1,4 @@
 import React from 'react';
-import image2 from '../../../assets/hero_image.png';
-import imgShop from '../../../assets/imgShop.jpg';
 import { FaBars } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
@@ -127,6 +125,7 @@ const Navbar = () => {
 				
 			</div> */}
 		</div>
+
 	);
 };
 

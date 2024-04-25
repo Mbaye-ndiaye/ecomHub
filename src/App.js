@@ -23,6 +23,7 @@ function App() {
           <Route path="/" element={<IsLogin />}></Route>
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/Dashboard" element={<IsLogin />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
           <Route path="/Apropos" element={<AboutPage />}></Route>
           <Route path="/Contact" element={<ContactPage />}></Route>
