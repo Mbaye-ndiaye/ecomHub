@@ -32,13 +32,13 @@ function IsLogin() {
   //   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-700 p-[20px] h-full flex gap[20px]">
+    <div className="">
       {/* <SidebareContextProvider> */}
       {/* <ProduitContextProvider> */}
       {/* <Header /> */}
       {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
-      <Sidebare />
-      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between">
+      {/* <Sidebare /> */}
+      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between mb-5">
         <ContentSidebar />
         <PrifilSidebar />
         <Routes>

@@ -6,13 +6,20 @@ import TeachersList from "./TecherList";
 
 const ContentSidebar = () => {
   return (
-    <div className="w-[75%]">
-      <ContentHeader />
-      <CardsSidebar />
-      <TeachersList />
-      <Table/>
-    </div>
+
+    <>
+      <div className="w-[75%] ">
+        <ContentHeader />
+        <CardsSidebar />
+        <TeachersList />
+      </div>
+
+      
+    </>
   );
 };
+
+
+
 
 export default ContentSidebar;

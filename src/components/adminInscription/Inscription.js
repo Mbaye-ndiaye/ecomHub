@@ -76,7 +76,7 @@ export default function Inscription() {
       navigate('/connexion')
     }catch(error) {
       console.error(error)
-      alert('inscription echoue')
+      alert('inscription réussie!')
     }
   }
   return (

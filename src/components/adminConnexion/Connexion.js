@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-
+import axios from "axios";
+import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 
 import loginImg from "../../assets/imagesback.jfif";
@@ -37,6 +38,29 @@ export default function Login() {
       setFormData({ ...formData, [name]: value });
     };
 
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/api/utilisateur/connexion",
+          formData
+        );
+  
+        console.log(response.data)
+        // afficher le message succes 
+        await Swal.fire({
+          icon:"success",
+          title:"Inscription réussie!",
+          showConfirmButton: false,
+          timer:2000,
+        });
+        navigate('/connexion')
+      }catch(error) {
+        console.error(error)
+        alert('inscription echoue')
+      }
+    }
+
     return (
       <div className="relative w-full h-screen bg-zinc-900/90">
         <img
@@ -46,7 +70,7 @@ export default function Login() {
         />
 
         <div className="flex justify-center items-center h-full ">
-          <form className="max-w-[400px] w-full mx-auto bg-white p-8 rounded">
+          <form className="max-w-[400px] w-full mx-auto bg-white p-8 rounded" onSubmit={handleSubmit}>
             <h2 className="text-4xl font-bold text-center py-4">EcomHub</h2>
 
             <div className="flex relative flex-col mb-4">
