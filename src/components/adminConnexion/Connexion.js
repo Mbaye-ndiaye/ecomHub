@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import loginImg from "../../assets/imagesback.jfif";
+import Table from "../table/Table";
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -107,6 +108,7 @@ export default function Login() {
             </p>
           </form>
         </div>
+        <Table/>
       </div>
     );
   }
