@@ -1,12 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Navbar from '../../../components/clients/navbar/navbar';
 
 const BoutiqueCategorie = () => {
   return (
     <div>
-      <h1>BoutiqueCategorie</h1>
-      <h1>BoutiqueCategorie</h1>
-      <h1>BoutiqueCategorie</h1>
-      <h1>BoutiqueCategorie</h1>
+        <Navbar />
+        
     </div>
   )
 }
