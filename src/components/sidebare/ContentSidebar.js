@@ -1,6 +1,8 @@
+import Table from "../table/Table";
 import CardsSidebar from "./CardsSidebar";
 import ContentHeader from "./ContentHeader";
 import TeachersList from "./TecherList";
+
 
 const ContentSidebar = () => {
   return (
@@ -8,6 +10,7 @@ const ContentSidebar = () => {
       <ContentHeader />
       <CardsSidebar />
       <TeachersList />
+      <Table/>
     </div>
   );
 };
