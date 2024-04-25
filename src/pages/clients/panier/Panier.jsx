@@ -1,13 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from './../../../components/clients/navbar/Navbar';
+import Navbar from '../../../components/clients/navbar/Navbar';
 import Footer from '../../../components/footer/footer';
 import { FaTrash } from 'react-icons/fa';
-import { FaArrowLeftLong } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa6";
-
-
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { FaPlus } from 'react-icons/fa6';
+import { FaMinus } from 'react-icons/fa6';
 
 export default function ShoppingCart() {
 	return (
@@ -45,21 +43,20 @@ export default function ShoppingCart() {
 									</div>
 								</div>
 								<div className="flex flex-col">
-								<div className="flex">
-								<button className="px-3 mr-2 text-white bg-blue-600 border rounded-md h-9">
-								<FaMinus />
-							    </button>
-							<input
-								className="w-16 px-2 py-1 border border-gray-300 rounded-md"
-								type="number"
-								defaultValue={1}
-								min={0}
-							/>
-							    <button className="px-3 ml-2 text-white bg-blue-600 border rounded-md h-9">
-							<FaPlus />
-
-							    </button>
-								</div>
+									<div className="flex">
+										<button className="px-3 mr-2 text-white bg-blue-600 border rounded-md h-9">
+											<FaMinus />
+										</button>
+										<input
+											className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+											type="number"
+											defaultValue={1}
+											min={0}
+										/>
+										<button className="px-3 ml-2 text-white bg-blue-600 border rounded-md h-9">
+											<FaPlus />
+										</button>
+									</div>
 									<p className="mt-2 text-lg font-semibold text-center">
 										$17.99
 									</p>
@@ -88,34 +85,31 @@ export default function ShoppingCart() {
 									</div>
 								</div>
 								<div className="flex flex-col">
-								<div className="flex">
-								<button className="px-3 mr-2 text-white bg-blue-600 border rounded-md h-9">
-								<FaMinus />
-							    </button>
-							<input
-								className="w-16 px-2 py-1 border border-gray-300 rounded-md"
-								type="number"
-								defaultValue={1}
-								min={0}
-							/>
-							    <button className="px-3 ml-2 text-white bg-blue-600 border rounded-md h-9">
-							<FaPlus />
-
-							    </button>
-								</div>
+									<div className="flex">
+										<button className="px-3 mr-2 text-white bg-blue-600 border rounded-md h-9">
+											<FaMinus />
+										</button>
+										<input
+											className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+											type="number"
+											defaultValue={1}
+											min={0}
+										/>
+										<button className="px-3 ml-2 text-white bg-blue-600 border rounded-md h-9">
+											<FaPlus />
+										</button>
+									</div>
 									<p className="mt-2 text-lg font-semibold text-center">
 										$17.99
 									</p>
 								</div>
 							</div>
 							<hr />
-							<Link
-								to="/Accueil"
-							>
-							<p className="flex gap-1 px-5 py-6 font-semibold text-black">
-							<FaArrowLeftLong className='mt-1'/>
-							<span>Retour à la boutique</span>
-							</p>
+							<Link to="/Accueil">
+								<p className="flex gap-1 px-5 py-6 font-semibold text-black">
+									<FaArrowLeftLong className="mt-1" />
+									<span>Retour à la boutique</span>
+								</p>
 							</Link>
 							{/* Repeat for second product */}
 						</div>
@@ -135,7 +129,9 @@ export default function ShoppingCart() {
 										</li>
 										<li className="flex items-center justify-between">
 											<strong>Total amount</strong>
-											<span className="text-lg font-bold text-red-500">$53.98</span>
+											<span className="text-lg font-bold text-red-500">
+												$53.98
+											</span>
 										</li>
 									</ul>
 									<hr />

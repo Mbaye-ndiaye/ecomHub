@@ -1,4 +1,3 @@
-
 import React from "react";
 import Login from "./components/adminConnexion/Connexion";
 import Inscription from "./components/adminInscription/Inscription";
@@ -10,7 +9,6 @@ import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
-
 
 function App() {
   return (
