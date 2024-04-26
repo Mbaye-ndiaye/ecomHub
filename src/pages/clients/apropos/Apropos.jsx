@@ -24,7 +24,7 @@ const AboutPage = () => {
 						</p>
 						<p className="mt-4 text-lg text-gray-500">
 							Suspendisse potenti. Nulla facilisi. Praesent ut urna vel ligula
-							tempor eleifend nec non magna.
+							tempor eleifend nec non magna ba.
 						</p>
 					</div>
 				</div>
