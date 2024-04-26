@@ -1,7 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import Footer from './../../../components/footer/footer';
+
 import Navbar from '../../../components/clients/navbar/navbar';
+
+import Footer from './../../../components/footer/footer';
 
 
 const ContactPage = () => {
