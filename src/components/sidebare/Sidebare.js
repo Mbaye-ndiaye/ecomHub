@@ -133,7 +133,7 @@ const Sidebar = ({children}) => {
               ))
           }
       </div>
-      <main style={{ marginLeft: isOpen ? "130px" : "20px" }} className='flex-1 p-10'>{children}</main>
+      <main style={{ marginLeft: isOpen ? "130px" : "20px" }} className='flex-1 p-10 mb-5'>{children}</main>
   </div>
     );
 };

@@ -38,7 +38,7 @@ function IsLogin() {
       {/* <Header /> */}
       {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
       {/* <Sidebare /> */}
-      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between">
+      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between mb-5">
         <ContentSidebar />
         <PrifilSidebar />
         <Routes>

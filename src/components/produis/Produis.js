@@ -1,7 +1,9 @@
+import Table from "../table/Table"
+
 const Produit = () => {
     return(
-        <div className="bg-black">
-            produis
+        <div>
+            <Table/>
         </div>
     )
 }
