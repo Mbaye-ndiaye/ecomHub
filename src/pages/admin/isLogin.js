@@ -9,7 +9,7 @@ import Header from "../../components/header";
 // import DetailsProduits from "../../components/produits/DetailsProduits";
 // import DetailsCommandeProvide from "./DetailsCommandeProvide";
 // import Profil from "./Profil";
-import {  Routes } from "react-router";
+import { Routes } from "react-router";
 // import useGlobal from "../../utils/hooks/useGlobal";
 // import ListeClients from "../../components/Clients/ListeClients";
 // import FiltreCommandeEnAttente from "../../components/cards-et-filtre/filtreDesCommandes/FiltreCommandeEnAttente";
@@ -23,23 +23,26 @@ import {  Routes } from "react-router";
 // import ProduitContextProvider from "../../utils/contexte/ProduitsContext";
 import Sidebare from "../../components/sidebare/Sidebare";
 import SidebareContextProvider from "../../utils/context/SidebareContext";
-
+import ContentSidebar from "../../components/sidebare/ContentSidebar";
+import PrifilSidebar from "../../components/sidebare/ProfilSidebar";
 
 function IsLogin() {
-//   const { isLoggedIn } = useGlobal();
+  //   const { isLoggedIn } = useGlobal();
 
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   return (
-    <div className="App min-h-screen">
-      <SidebareContextProvider>
-        {/* <ProduitContextProvider> */}
-        <Header />
-        {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
-        <div className="App pt-[56px] h-screen  gap-6 ">
-           <Sidebare />
-          <Routes>
-            {/* {isLoggedIn() ? (
+    <div className="">
+      {/* <SidebareContextProvider> */}
+      {/* <ProduitContextProvider> */}
+      {/* <Header /> */}
+      {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
+      {/* <Sidebare /> */}
+      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between">
+        <ContentSidebar />
+        <PrifilSidebar />
+        <Routes>
+          {/* {isLoggedIn() ? (
               <Route path="/dashboard" element={<Dashboard />} />
             ) : (
               navigate("/admin")
@@ -158,11 +161,10 @@ function IsLogin() {
             ) : (
               navigate("/admin")
             )} */}
-            
-          </Routes>
-        </div>
-        {/* </ProduitContextProvider> */}
-      </SidebareContextProvider>
+        </Routes>
+      </div>
+      {/* </ProduitContextProvider> */}
+      {/* </SidebareContextProvider> */}
     </div>
   );
 }
