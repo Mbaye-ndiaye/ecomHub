@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../../components/clients/navbar/Navbar';
+import Navbar from '../../../components/clients/navbar/navbar';
 import Footer from './../../../components/footer/footer';
 import { BsTelephone } from 'react-icons/bs';
 import { VscMail } from 'react-icons/vsc';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../../../components/clients/navbar/Navbar';
+import Navbar from '../../../components/clients/navbar/navbar';
 import Footer from '../../../components/footer/footer';
 import { FaTrash } from 'react-icons/fa';
 import { FaArrowLeftLong } from 'react-icons/fa6';
