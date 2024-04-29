@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
 export default function FormsModal() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
-    nom: "",
+    name: "",
     email: "",
-    image: "",
+    banniere: "",
     logo: "",
     telephone: "",
     adresse: "",
-    apropos: "",
+    a_propos: "",
     description: "",
   });
 
@@ -27,14 +26,13 @@ export default function FormsModal() {
 
   const updateButtonDisabled = () => {
     if (
-
-      formData.nom.trim() !== "" &&
+      formData.name.trim() !== "" &&
       formData.email.trim() !== "" &&
-      formData.image.trim() !== "" &&
+      formData.banniere.trim() !== "" &&
       formData.logo.trim() !== "" &&
       formData.telephone.trim() !== "" &&
       formData.adresse.trim() !== "" &&
-      formData.apropos.trim() !== "" &&
+      formData.a_propos.trim() !== "" &&
       formData.description.trim() !== ""
     ) {
       setIsButtonDisabled(false);
@@ -44,17 +42,7 @@ export default function FormsModal() {
   };
   useEffect(() => {
     updateButtonDisabled();
-  }, [
-
-    formData.nom,
-    formData.email,
-    formData.image,
-    formData.logo,
-    formData.telephone,
-    formData.adresse,
-    formData.apropos,
-    formData.description,
-  ]);
+  }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +53,7 @@ export default function FormsModal() {
     e.preventDefault();
     const formDataToSend = new FormData();
     for (let key in formData) {
-      formDataToSend.append(key, formData[key])
+      formDataToSend.append(key, formData[key]);
     }
     try {
       const response = await axios.post(
@@ -73,46 +61,41 @@ export default function FormsModal() {
         formData
       );
 
-      console.log(response.data)
-      // afficher le message succes 
+      console.log(response.data);
+      // afficher le message succes
       await Swal.fire({
         icon: "success",
         title: "Boutique ajouter avec succes",
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate('/connexion')
+      navigate("/connexion");
     } catch (error) {
-      console.error(error)
-      alert('echoue')
+      console.error(error);
+      alert("echoue");
     }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center w-full h-full ">
-      <form className=" w-full p-8 rounded">
+      <form className=" w-full p-8 rounded" onSubmit={handleSubmit}>
         <div className="flex flex-row gap-5 mb-2">
           <div className="flex flex-col ">
-            <label htmlFor="nom" className="block text-sm font-medium ">
-
+            <label htmlFor="name" className="block text-sm font-medium ">
               Nom du boutique
             </label>
             <input
               required
               type="text"
-
               id="name"
               name="name"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.name}
-
               onChange={handleChange}
             />
           </div>
 
-
           <div className="flex flex-col mb-2">
-
             <div className="flex flex-col mb-2">
               <label htmlFor="email" className="block text-sm font-medium ">
                 Email
@@ -126,27 +109,24 @@ export default function FormsModal() {
                 value={formData.email}
                 onChange={handleChange}
               />
-
             </div>
-          </div >
-
-          <div className="flex flex-row gap-5 mb-2">
-
           </div>
+
+          <div className="flex flex-row gap-5 mb-2"></div>
         </div>
 
         <div className="flex flex-row gap-5 mb-2">
           <div className="flex relative flex-col mb-4">
-            <label htmlFor="image" className="block text-sm font-medium ">
-              Image du banniere
+            <label htmlFor="banniere" className="block text-sm font-medium ">
+              Banniere du banniere
             </label>
             <input
               required
               type="file"
-              id="image"
-              name="image"
+              id="banniere"
+              name="banniere"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.image}
+              value={formData.banniere}
               onChange={handleChange}
             />
           </div>
@@ -199,22 +179,22 @@ export default function FormsModal() {
         </div>
 
         <div className="flex relative flex-col mb-2">
-          <label htmlFor="apropos" className="block text-sm font-medium ">
+          <label htmlFor="a_propos" className="block text-sm font-medium ">
             Apropos du site
           </label>
           <textarea
             required
             row="5"
             cols="16"
-            id="apropos"
-            name="apropos"
+            id="a_propos"
+            name="a_propos"
             className="w-[31rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-            value={formData.apropos}
+            value={formData.a_propos}
             onChange={handleChange}
           />
         </div>
 
-        < div className="flex relative flex-col mb-2" >
+        <div className="flex relative flex-col mb-2">
           <label htmlFor="description" className="block text-sm font-medium ">
             Description du site
           </label>
@@ -229,21 +209,20 @@ export default function FormsModal() {
             onChange={handleChange}
           />
         </div>
-        <Link to={"/Dashboard"}>
-          <button
-            type="submit"
-            disabled={isButtonDisabled || isLoading}
-            className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-              isButtonDisabled || isLoading
-                ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-                : "bg-gray-900 text-active text-white hover:bg-gray-900"
-            } ${isLoading ? "relative" : ""}`}
-          >
-            Enregistrer
-          </button>
-        </Link>
+        {/* <Link to={"/Dashboard"}> */}
+        <button
+          type="submit"
+          disabled={isButtonDisabled || isLoading}
+          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
+            isButtonDisabled || isLoading
+              ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+              : "bg-gray-900 text-active text-white hover:bg-gray-900"
+          } ${isLoading ? "relative" : ""}`}
+        >
+          Enregistrer
+        </button>
+        {/* </Link> */}
       </form>
     </div>
-
   );
 }
