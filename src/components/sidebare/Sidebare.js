@@ -58,7 +58,7 @@ const Sidebare = ({isOpene}) => {
                         <p style={{ display: isOpen ? "block" : "none" }}>Dashboard</p>
                     </div>
                 </Link>
-                <Link to={"/produis"}>
+                <Link to={"/produits"}>
 
                     <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
                         <BiTask className="text-lg" />

@@ -24,7 +24,7 @@ import { Routes } from "react-router";
 // import DetailsMessages from "../../components/messages/DetailsMessages";
 // import ProduitContextProvider from "../../utils/contexte/ProduitsContext";
 import Sidebare from "../../components/sidebare/Sidebare";
-import SidebareContextProvider from "../../utils/context/SidebareContext";
+// import SidebareContextProvider from "../../utils/context/SidebareContext";
 import ContentSidebar from "../../components/sidebare/ContentSidebar";
 import PrifilSidebar from "../../components/sidebare/ProfilSidebar";
 // import Produis from "../../components/produits/Produis";

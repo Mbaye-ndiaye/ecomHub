@@ -135,7 +135,7 @@ export const Thead = ({thead}) => {
 
 export const Tbody = ({tbody, actions}) => {
     return (
-        <tbody className='bg-white '>
+        <tbody >
        {products.map((product, index) => (
             <tr className="text-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100" key={index}>
               <td className="px-4 py-5 text-xl text-center border">{product.name}</td>

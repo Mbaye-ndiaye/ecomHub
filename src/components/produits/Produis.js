@@ -23,6 +23,7 @@ import HeaderTable from '../headerTable/HeaderTable';
 // import useSidebare from '../../utils/hooks/useSidebare';
 import Formulaire from '././../formulaire/Formulaire';
 import Table from "../table/Table";
+import Sidebare from "../sidebare/Sidebare";
 // import Select from '../cards-et-filtre/Select';
 // import { ToastContainer } from 'react-toastify';
 
@@ -76,7 +77,9 @@ const Produis = () => {
     'Ajouter un produits'
   )
   return (
-    <div >
+    <div className="flex bg-gray-700 p-[20px]   gap[20px]">
+      <Sidebare/>
+      <div className="bg-white rounded-[20px] p-[2rem] flex-1 gap-[1.5rem] justify-between mb-5 h-auto ml-8">  
       <HeaderTable
        title="Produits"
        nomAjout={titreModal} 
@@ -91,6 +94,7 @@ const Produis = () => {
        />
       <Table thead={table} tbody={products} actions={actions} />
       {/* <ToastContainer /> */}
+      </div>
 </div>
   )
 }
