@@ -37,7 +37,7 @@ function IsLogin() {
   //   const navigate = useNavigate();
 
   return (
-    <div className="flex bg-gray-700 p-[20px]  flex gap[20px]">
+    <div className=" bg-gray-700 p-[20px]  flex gap[20px]">
       {/* <SidebareContextProvider> */}
       {/* <ProduitContextProvider> */}
       {/* <Header /> */}
