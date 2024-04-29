@@ -1,5 +1,7 @@
 // import CategoriesAdmin from "../../components/categories/CategoriesAdmin";
 import Header from "../../components/header";
+import React, { useState } from 'react';
+
 // import Sidebare from "../../components/sidebare/Sidebare";
 // import SidebareContextProvider from "../../utils/contexte/SidebareContext";
 // import Commandes from "./Commandes";
@@ -28,17 +30,19 @@ import PrifilSidebar from "../../components/sidebare/ProfilSidebar";
 
 function IsLogin() {
   //   const { isLoggedIn } = useGlobal();
+  const [isOpene, setIsOpene] = useState(false);
+  const toggles = () => setIsOpene(!isOpene);
 
   //   const navigate = useNavigate();
 
   return (
-    <div className="bg-gray-700 p-[20px] h-full flex gap[20px]">
+    <div className="flex bg-gray-700 p-[20px]  flex gap[20px]">
       {/* <SidebareContextProvider> */}
       {/* <ProduitContextProvider> */}
       {/* <Header /> */}
       {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
-      <Sidebare />
-      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between">
+      <Sidebare  isOpen={isOpene}/>
+      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between mb-5 h-auto" style={{ marginLeft: isOpene ? "160px" : "50px" }} >
         <ContentSidebar />
         <PrifilSidebar />
         <Routes>
