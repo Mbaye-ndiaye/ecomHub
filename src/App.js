@@ -7,14 +7,19 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
+import GlobalContextProvider from './utils/context/GlobalContext';
 
 import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
 
-import Produit from "./components/produis/Produis";
+import Produit from "./components/produits/Produis";
 import Sidebare from "./components/sidebare/Sidebare";
 
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
+import Categorie from "./components/categories/Categorie";
+import Commande  from "./components/commandes/Commande";
+import ProduitContextProvider from "./utils/context/ProduitsContext";
+
 
 function App() {
   return (
@@ -35,14 +40,34 @@ function App() {
           <Route path="/Accueil" element={<Accueil />}></Route>
           <Route path="/Apropos" element={<AboutPage />}></Route>
           <Route path="/Contact" element={<ContactPage />}></Route>
-          <Route path="/Dash" element={<IsLogin />} />
-          <Route path="/produis" element={<Produit />} />
           <Route
             path="/BoutiqueCategorie"
             element={<BoutiqueCategorie />}
           ></Route>
           {/* <Route path="/Dashboard" element={<DashboardWithSidebar />} /> */}
         </Routes>
+      <GlobalContextProvider>
+        <ProduitContextProvider>
+          <Routes>
+          <Route path="/Dash" element={<IsLogin/>}></Route>
+          <Route path="/produits" element={<Produit/>}></Route>
+          <Route path="/categories" element={<Categorie/>}></Route>
+          <Route path="/commandes" element={<Commande/>}></Route>
+
+
+
+            {/* <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/comment" element={<Comment />} /> */}
+            {/* <Route path="/about" element={<About />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/product" element={<Product />} />
+            <Route path="/productList" element={<ProductList />} /> */}
+          </Routes>
+      
+        </ProduitContextProvider>
+        </GlobalContextProvider>
+
       </Router>
     </div>
   );
