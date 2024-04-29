@@ -1,6 +1,6 @@
 // import CategoriesAdmin from "../../components/categories/CategoriesAdmin";
 import Header from "../../components/header";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 // import Sidebare from "../../components/sidebare/Sidebare";
 // import SidebareContextProvider from "../../utils/contexte/SidebareContext";
@@ -41,8 +41,12 @@ function IsLogin() {
       {/* <ProduitContextProvider> */}
       {/* <Header /> */}
       {/* {isLoggedIn() ? <Header /> : navigate("/admin")} */}
-      <Sidebare  isOpen={isOpene}/>
-      <div className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between mb-5 h-auto" style={{ marginLeft: isOpene ? "160px" : "50px" }} >
+
+      <Sidebare isOpen={isOpene} />
+      <div
+        className="bg-white flex-1 rounded-[20px] p-[2rem] flex gap-[1.5rem] justify-between mb-5 h-auto"
+        style={{ marginLeft: isOpene ? "160px" : "50px" }}
+      >
         <ContentSidebar />
         <PrifilSidebar />
         <Routes>

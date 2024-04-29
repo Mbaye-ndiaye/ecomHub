@@ -1,96 +1,110 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { GoogleMap, LoadScript } from '@react-google-maps/js';
+import Navbar from '../../../components/clients/navbar/navbar';
+import Footer from './../../../components/footer/footer';
+import { BsTelephone } from 'react-icons/bs';
+import { VscMail } from 'react-icons/vsc';
+
 
 const ContactPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
   return (
-    <div className="container py-16 mx-auto">
-      <h1 className="text-3xl font-bold text-center">Contactez-nous</h1>
+    <section className="bg-gray-100">
+      <Navbar />
+      <div className="w-full px-4 md:px-4 my-14">
+        <h1 className="mb-4 text-3xl font-bold px-9">Contacts</h1>
 
-      <div className="flex flex-col mt-8 md:flex-row">
-        <div className="px-4 md:w-1/2">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-              <label className="block mb-2 font-bold text-gray-700">Nom</label>
-              <input
-                {...register('name', { required: true })}
-                type="text"
-                className="w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-md form-input"
-              />
-              {errors.name && <span className="text-red-500">Nom requis</span>}
+        <div className="flex flex-col w-full gap-4 pt-4 md:px-9 md:flex-row md:gap-7">
+            <div className="w-full py-4 border border-gray-200 rounded-md shadow-sm md:w-1/4">
+              <div className="px-5 py-6">
+                <h1 className="flex items-center gap-3 font-medium">
+                  <div className="p-3 text-white rounded-full bg-slate-800">
+                    <BsTelephone size={18} />
+                  </div>
+                  Appelez-nous
+                </h1>
+                <p className="my-5 text-sm">
+                  Nous sommes disponibles 6j/7 de 9h à 19h
+                </p>
+                <p className="text-sm border-b-2 pb-9 border-slate-800">
+                  Téléphone: +221 77 982 54 32{" "}
+                </p>
+                <h1 className="flex items-center gap-3 font-medium mt-7">
+                  <div className="p-3 text-white rounded-full bg-slate-800">
+                    <VscMail size={18} />
+                  </div>
+                  Ecrivez-nous
+                </h1>
+                <p className="my-5 text-sm">
+                  Remplissez notre formulaire et nous vous contacterons sous
+                  24h
+                </p>
+                <p>Emails: kaysolu@gmail.com</p>
+              </div>
             </div>
+          <div className="w-full px-4 border shadow-sm md:px-9 md:w-3/4">
+            <h1 className="pt-4 pb-2 font-medium border border-t-0 border-s-0 border-e-0 ">
+              Contactez-nous
+            </h1>
+            <form className="w-full py-4 mx-auto">
+              <div className="mt-">
+                <div className="flex flex-col justify-center w-full gap-5 mt-5 align-center md:flex-row">
+                  <div className="w-full mb-0 md:mb-5 md:w-1/3">
+                    <input
+                      required
+                      type="text"
+                      id="prenom"
+                      placeholder="Prénom et Nom"
+                      name="prenomNom"
+                      className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none px- focus:border focus:border-double focus:border-sky-600"
+                    />
+                  </div>
+                  <div className="w-full mb-0 mt- md:mb-5 md:w-1/3">
+                    <input
+                      required
+                      type="tel"
+                      id="tel"
+                      placeholder="Téléphone"
+                      name="telephone"
+                      className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                    />
+                  </div>
+                  <div className="w-full mb-4 mt- md:w-1/3">
+                    <input
+                      required
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Email"
+                      className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center w-full gap-5 mt- align-center md:flex-row">
+                  <textarea
+                    required
+                    rows={8}
+                    name="message"
+                    placeholder="Votre message"
+                    className="w-full p-5 px-2 pt-3 mb-5 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                  ></textarea>
+                </div>
+              </div>
 
-            <div className="mb-4">
-              <label className="block mb-2 font-bold text-gray-700">Adresse e-mail</label>
-              <input
-                {...register('email', { required: true, pattern: /^\S+@\S+\.\S+$/i })}
-                type="email"
-                className="w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-md form-input"
-              />
-              {errors.email && <span className="text-red-500">Adresse e-mail invalide</span>}
-            </div>
-
-            <div className="mb-4">
-              <label className="block mb-2 font-bold text-gray-700">Sujet</label>
-              <input
-                {...register('subject', { required: true })}
-                type="text"
-                className="w-full px-4 py-2 bg-gray-200 border border-gray-300 rounded-md form-input"
-              />
-              {errors.subject && <span className="text-red-500">Sujet requis</span>}
-            </div>
-
-            <div className="mb-4">
-              <label className="block mb-2 font-bold text-gray-700">Message</label>
-              <textarea
-                {...register('message', { required: true })}
-                className="w-full h-24 px-4 py-2 bg-gray-200 border border-gray-300 rounded-md form-textarea"
-              />
-              {errors.message && <span className="text-red-500">Message requis</span>}
-            </div>
-
-            <button
-              type="submit"
-              className="px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700"
-            >
-              Envoyer
-            </button>
-          </form>
+              <div className="flex items-center justify-end mt-2">
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-white bg-black rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+                >
+                  Envoyer le message
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div className="px-4 mt-8 md:w-1/2 md:mt-0">
-          <h2 className="text-2xl font-bold">Informations de contact</h2>
-          <p className="text-gray-600">
-            Adresse e-mail: [adresse e-mail] <br />
-            Numéro de téléphone: [numéro de téléphone] <br />
-            Adresse: [adresse physique]
-          </p>
-
-          <h2 className="mt-4 text-2xl font-bold">Carte</h2>
-          {
-            <LoadScript
-              googleMapsApiKey="[API_KEY_GOOGLE_MAPS]"
-              libraries={['places']}
-            >
-              <GoogleMap
-                containerClassName="w-full h-400"
-                zoom={15}
-                center={{ lat: 48.8566, lng: 2.3522 }}
-                mapOptions={{
-                  disableDefaultUI: true,
-                }}
-              />
-            </LoadScript>}
-        </div>
-    </div>
-    </div>
+      </div>
+      <Footer />
+    </section>
   );
 };
 
-export default ContactPage
-    
+export default ContactPage;

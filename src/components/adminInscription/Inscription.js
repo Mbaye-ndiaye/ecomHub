@@ -67,6 +67,7 @@ export default function Inscription() {
         showConfirmButton: false,
         timer: 2000,
       });
+
       navigate("/connexion");
     } catch (error) {
       console.error(error);
