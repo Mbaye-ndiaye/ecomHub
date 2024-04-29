@@ -94,18 +94,18 @@ const Sidebar = ({children}) => {
             icon:<FaTh/>
         },
         {
-            path:"/produis",
+            path:"/produits",
             name:"List Produis",
             icon:<FaThList/>
 
         },
         {
-            path:"/analytics",
+            path:"/categories",
             name:"Categories",
             icon:<BiStats/>
         },
         {
-            path:"/Commande",
+            path:"/commandes",
             name:"Commande",
             icon:<BiSolidReport/>
         },
