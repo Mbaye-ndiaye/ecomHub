@@ -1,13 +1,17 @@
 import React from 'react';
 import { FaBars } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+
 import Footer from '../../footer/footer';
 import CardProduit from '../card/CardProduit';
 import Accueil from '../../../pages/clients/accueil/Accueil';
 import InputRecherche from '../../../pages/clients/accueil/InputRecherche';
 import { FaCartShopping } from 'react-icons/fa6';
 import Input from './Input';
+import imgShop from '../../../assets/imgShop.jpg';
+import HeaderBanner from '../Header/HeaderBanner';
+import { Link } from 'react-router-dom';
+
 
 const Navbar = () => {
 	// let [open, setOpen] = useState(false);
@@ -18,13 +22,37 @@ const Navbar = () => {
 	// };
 
 	return (
-		<div className="flex justify-between p-2 bg-current">
+        <>
+		{/* <div className='flex justify-between bg-current p-2 w-full fixed'>
+        <nav className="">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                <div className="flex items-center">
+                <p className="text-white text-xl font-semibold mx-4">MARHABA</p>
+                <div className='flex mx-auto text-white mx-4'>
+                   
+                    <p className='mx-4'>About</p>
+                    <p className='mx-4'>Contact</p>
+                </div>
+                </div>
+            </div>
+        </nav>
+        <div className=' flex items-center fs-5 mx-4'>
+        <Input />
+        <FaCartShopping className='text-white text-2xl mx-4'/>
+        
+      </div>
+            </div>
+        <HeaderBanner /> */}
+            
+            
+
+		<div className="flex justify-between p-2 bg-current p-2 w-full fixed">
 			<nav className="">
 				<div className="flex items-center justify-between mx-auto max-w-7xl">
 					<div className="flex items-center">
 						<p className="mx-4 text-xl font-semibold text-white">Logo</p>
 						<div className="flex mx-4 mx-auto text-white">
-							<p className="mx-4">Boutique</p>
+                        <Link to="/BoutiqueCategorie"><p className='mx-4'>Boutique</p></Link>
 							<Link to="/Apropos"><p className="mx-4">About</p></Link>
 							<Link to="/Contact"><p className="mx-4">Contact</p></Link>
 						</div>
@@ -125,6 +153,7 @@ const Navbar = () => {
 				
 			</div> */}
 		</div>
+            </>
 
 	);
 };

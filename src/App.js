@@ -7,10 +7,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
+
+import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
+
 import Produit from "./components/produis/Produis";
 import Sidebare from "./components/sidebare/Sidebare";
+
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
+
 
 function App() {
   return (
@@ -25,8 +30,10 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           <Route path="/Dashboard" element={<IsLogin />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
+          <Route path="/BoutiqueCategorie" element={<BoutiqueCategorie />}></Route>
           <Route path="/Apropos" element={<AboutPage />}></Route>
           <Route path="/Contact" element={<ContactPage />}></Route>
+
         </Routes>
 
         <Sidebare>
