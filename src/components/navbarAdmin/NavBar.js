@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+ import React, { useState } from "react";
 import Modal from "./modal/Modal";
 import image2 from "../../assets/hero_image.png";
 import image3 from "../../assets/Image.png";
