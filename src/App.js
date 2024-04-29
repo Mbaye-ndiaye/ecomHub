@@ -1,3 +1,4 @@
+
 import React from "react";
 import Login from "./components/adminConnexion/Connexion";
 import Inscription from "./components/adminInscription/Inscription";
@@ -9,7 +10,8 @@ import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
 import GlobalContextProvider from './utils/context/GlobalContext';
 
-import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
+import BoutiqueCategorie from './pages/clients/boutiqueCategorie/BoutiqueCategorie';
+
 
 import Produit from "./components/produits/Produis";
 import Sidebare from "./components/sidebare/Sidebare";
