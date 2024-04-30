@@ -7,12 +7,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
-
 import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
-
 import Produit from "./components/produis/Produis";
 import Sidebare from "./components/sidebare/Sidebare";
-
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
 
@@ -22,9 +19,9 @@ function App() {
       {/* <IsLogin/> */}
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
-          <Route path="/Admin" element={<InterfaceAdmin />} />
+          <Route path="/" element={<InterfaceAdmin />} />
           <Route path="/" element={<IsLogin />}></Route>
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>

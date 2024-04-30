@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import React, { useState } from 'react';
 
 import { Link } from "react-router-dom";
@@ -214,7 +214,7 @@ export default Sidebare;
 // }
 
 // export default Sidebar
-=======
+
 // import React from "react";
 
 // import { Link } from "react-router-dom";
@@ -286,74 +286,3 @@ export default Sidebare;
 
 // export default Sidebare;
 
-import React, { useState } from 'react';
-import {
-    FaTh,
-    FaBars,
-    FaThList
-}from "react-icons/fa";
-
-import {
-  BiMessage,
-  BiSolidReport,
-  BiStats,
-} from "react-icons/bi";
-import { NavLink } from 'react-router-dom';
-
-
-const Sidebar = ({children}) => {
-    const[isOpen ,setIsOpen] = useState(false);
-    const toggle = () => setIsOpen (!isOpen);
-    const menuItem=[
-        {
-            path:"/Dash",
-            name:"Dashboard",
-            icon:<FaTh/>
-        },
-        {
-            path:"/produis",
-            name:"List Produis",
-            icon:<FaThList/>
-
-        },
-        {
-            path:"/analytics",
-            name:"Categories",
-            icon:<BiStats/>
-        },
-        {
-            path:"/Commande",
-            name:"Commande",
-            icon:<BiSolidReport/>
-        },
-        {
-            path:"/Message",
-            name:"Message",
-            icon:<BiMessage/>
-        }
-    ]
-    return (
-      <div className="flex bg-gray-700 p-[20px] h-[100vh] flex gap[20px]">
-      <div style={{ width: isOpen ? "200px" : "50px", position: "fixed", top: 0, left: 0, height: "100vh",  transition: "width 0.3s" }} className="bg-gray-700">
-          <div className="flex items-center px-4 py-3 mb-8">
-              <div className="flex text-3xl mr-8">
-                  <FaBars onClick={toggle} className='text-white cursor-pointer' />
-              </div>
-              <h1 style={{ display: isOpen ? "block" : "none" }} className="text-2xl text-white ">Logo</h1>
-          </div>
-          {
-              menuItem.map((item, index) => (
-                  <NavLink to={item.path} key={index} className="flex text-white px-4 py-3 gap-3" activeClassName="active">
-                      <div className="icon">{item.icon}</div>
-                      <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
-                  </NavLink>
-              ))
-          }
-      </div>
-      <main style={{ marginLeft: isOpen ? "130px" : "20px" }} className='flex-1 p-10 mb-5'>{children}</main>
-  </div>
-    );
-};
-
-export default Sidebar;
->>>>>>> 526f84a7a203e5414558abe3db86b02e9ea8b702
