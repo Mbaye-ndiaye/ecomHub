@@ -4,7 +4,7 @@ function CheckoutPage() {
 	return (
 		<main className="flex items-center justify-center min-h-screen bg-gray-100">
 			<section className="container grid grid-cols-1 gap-8 lg:grid-cols-3 lg:gap-08">
-				<div className="bg-white rounded-lg shadow-lg lg:col-span-2">
+				<div className="bg-black rounded-lg shadow-lg lg:col-span-2">
 					<div className="card">
 						<div className="p-8 card-body">
 							<h2 className="mb-4 text-xl font-bold">Billing Info</h2>
