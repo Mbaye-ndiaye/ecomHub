@@ -15,6 +15,7 @@ import Sidebare from "./components/sidebare/Sidebare";
 
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
+import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
       {/* <IsLogin/> */}
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/Admin" element={<InterfaceAdmin />} />
           <Route path="/" element={<IsLogin />}></Route>
@@ -37,10 +38,12 @@ function App() {
           <Route path="/Contact" element={<ContactPage />}></Route>
           <Route path="/Dash" element={<IsLogin />} />
           <Route path="/produis" element={<Produit />} />
+          <Route path="/profile" element={<FormProfilUser />} />
           <Route
             path="/BoutiqueCategorie"
             element={<BoutiqueCategorie />}
           ></Route>
+
           {/* <Route path="/Dashboard" element={<DashboardWithSidebar />} /> */}
         </Routes>
       </Router>

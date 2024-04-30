@@ -12,41 +12,49 @@ export default function FormsModal() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    banniere: "",
-    logo: "",
     telephone: "",
     adresse: "",
     a_propos: "",
     description: "",
+    banniere: null,
+    logo: null,
   });
 
-  const updateShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const updateShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
-  const updateButtonDisabled = () => {
-    if (
-      formData.name.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.banniere.trim() !== "" &&
-      formData.logo.trim() !== "" &&
-      formData.telephone.trim() !== "" &&
-      formData.adresse.trim() !== "" &&
-      formData.a_propos.trim() !== "" &&
-      formData.description.trim() !== ""
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-  };
-  useEffect(() => {
-    updateButtonDisabled();
-  }, [formData.name, formData.email]);
+  // const updateButtonDisabled = () => {
+  //   if (
+  //     formData.name.trim() !== "" &&
+  //     formData.email.trim() !== "" &&
+  //     formData.banniere.trim() !== "" &&
+  //     formData.logo.trim() !== "" &&
+  //     formData.telephone.trim() !== "" &&
+  //     formData.adresse.trim() !== "" &&
+  //     formData.a_propos.trim() !== "" &&
+  //     formData.description.trim() !== ""
+  //   ) {
+  //     setIsButtonDisabled(false);
+  //   } else {
+  //     setIsButtonDisabled(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateButtonDisabled();
+  // }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      [e.target.name]: file,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -126,8 +134,7 @@ export default function FormsModal() {
               id="banniere"
               name="banniere"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.banniere}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </div>
 
@@ -141,8 +148,7 @@ export default function FormsModal() {
               id="logo"
               name="logo"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.logo}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </div>
         </div>
@@ -212,12 +218,13 @@ export default function FormsModal() {
         {/* <Link to={"/Dashboard"}> */}
         <button
           type="submit"
-          disabled={isButtonDisabled || isLoading}
-          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-            isButtonDisabled || isLoading
-              ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-              : "bg-gray-900 text-active text-white hover:bg-gray-900"
-          } ${isLoading ? "relative" : ""}`}
+          // disabled={isButtonDisabled || isLoading}
+          className="w-full mt-8 bg-gray-800 px-4 py-2 text-white rounded-md md:w-1/2"
+          //  ${
+          // isButtonDisabled || isLoading
+          // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+          // : "bg-gray-900 text-active text-white hover:bg-gray-900"
+          // } ${isLoading ? "relative" : ""}`}
         >
           Enregistrer
         </button>
