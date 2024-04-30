@@ -53,7 +53,7 @@ export default function Login() {
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/connexion");
+      navigate("/Admin");
     } catch (error) {
       console.error(error);
       alert("Connexion echoue");
