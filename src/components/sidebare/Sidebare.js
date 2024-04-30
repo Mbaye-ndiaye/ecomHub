@@ -58,6 +58,7 @@ const Sidebare = ({ isOpene }) => {
 
           {/* <h2 className="text-2xl">Bienvenu</h2> */}
         </div>
+
         <div>
           <Link to={"/Dash"}>
             <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
@@ -65,22 +66,25 @@ const Sidebare = ({ isOpene }) => {
               <p style={{ display: isOpen ? "block" : "none" }}>Dashboard</p>
             </div>
           </Link>
-          <Link to={"/produis"}>
+          <Link to={"/produits"}>
             <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
               <BiTask className="text-lg" />
               <p style={{ display: isOpen ? "block" : "none" }}>Produis</p>
             </div>
           </Link>
 
-          <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
-            <BiStats className="text-lg" />
-            <p style={{ display: isOpen ? "block" : "none" }}>Categories</p>
-          </div>
-
-          <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px]  rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
-            <BiSolidReport className="text-lg" />
-            <p style={{ display: isOpen ? "block" : "none" }}>Commande</p>
-          </div>
+          <Link to={"/categories"}>
+            <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
+              <BiStats className="text-lg" />
+              <p style={{ display: isOpen ? "block" : "none" }}>Categories</p>
+            </div>
+          </Link>
+          <Link to={"/commandes"}>
+            <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px]  rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
+              <BiSolidReport className="text-lg" />
+              <p style={{ display: isOpen ? "block" : "none" }}>Commande</p>
+            </div>
+          </Link>
 
           <div className="w-48 mb-3 flex itmes-center gap-[20px] text-md font-bold p-[10px] rounded text-white hover:bg-[#27374d] hover:text-[#dde6ed]">
             <BiMessage className="text-lg" />
@@ -137,14 +141,14 @@ export default Sidebare;
 //       <div className="flex bg-gray-700 p-[20px] h-[100vh] flex gap[20px]">
 //       <div style={{ width: isOpen ? "200px" : "50px", position: "fixed", top: 0, left: 0, height: "100vh",  transition: "width 0.3s" }} className="bg-gray-700">
 //           <div className="flex items-center px-4 py-3 mb-8">
-//               <div className="flex text-3xl mr-8">
+//               <div className="flex mr-8 text-3xl">
 //                   <FaBars onClick={toggle} className='text-white cursor-pointer' />
 //               </div>
 //               <h1 style={{ display: isOpen ? "block" : "none" }} className="text-2xl text-white ">Logo</h1>
 //           </div>
 //           {
 //               menuItem.map((item, index) => (
-//                   <NavLink to={item.path} key={index} className="flex text-white px-4 py-3 gap-3" activeClassName="active">
+//                   <NavLink to={item.path} key={index} className="flex gap-3 px-4 py-3 text-white" activeClassName="active">
 //                       <div className="icon">{item.icon}</div>
 //                       <div style={{ display: isOpen ? "block" : "none" }} className="link_text">{item.name}</div>
 //                   </NavLink>
@@ -215,7 +219,6 @@ export default Sidebare;
 // }
 
 // export default Sidebar
-
 // import React from "react";
 
 // import { Link } from "react-router-dom";
