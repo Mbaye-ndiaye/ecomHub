@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Navbar from '../navbar/navbar'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import CardProduit from '../card/CardProduit';
+import { ProduitsContext } from '../../../utils/context/ProduitsContext';
+import { IoMdArrowRoundBack } from "react-icons/io";
+import ButtonComponent from '../button/ButtonComponent';
+
+
 
 
 
 const DetailCard = () => {
-
+  const { id } = useParams()
+const produit = useContext(ProduitsContext)
   const navigate = useNavigate()
 
 
@@ -16,14 +23,14 @@ const DetailCard = () => {
   return (
     <div>
       <Navbar />
-      <div onClick={() => setDropdown(false)} className="">
+      <div  className="">
       {produit !== undefined ? (
         <section className="overflow-hidden py-4 mx-auto">
           <div  className="w-10 h-10">
             <IoMdArrowRoundBack onClick={pagePrecedente} className="mt-20 ml-10 text-black  shadow-xl text-xl w-6 h-6" />
           </div>
 
-          <div key={_id}>
+          <div key={id}>
             <div className="max-w-6xl px-4 py-4 lg:py-8 md:px-6 shadow-xl mx-auto">
               <div className="flex flex-wrap mx-4">
                 <div className="w-full px-4 md:w-1/2">
@@ -52,7 +59,7 @@ const DetailCard = () => {
                       </p>
                       <div className="mb-8 text-4xl font-bold text-gray-700 flex ">
                         <h2 className="w-14 text-xl font-bold my-2">Prix:</h2>
-                            {reduction ? (
+                            {/* {reduction ? (
                           <div className="flex items-end justify-around md:justify-start ">
                                 <span className="text-xl md:text-[18px] text-red-600 my-2">
                                   {prixAAjouter.toLocaleString("DE-de")} FCFA
@@ -67,7 +74,7 @@ const DetailCard = () => {
                               <span className="py-1 text-xl md:text-[18px] py-1 font-medium text-sm text-gray-900 my-2">
                                 {produit.prix.toLocaleString("DE-de")} FCFA
                               </span>
-                          </div>)}
+                          </div>)} */}
                       </div>
                       <div>
                         <h3 className="text-sm font-bold ">
@@ -85,8 +92,8 @@ const DetailCard = () => {
                           {produit.taille}
                         </div>
                       </div>
-                      <ComponentButton
-                        onClick={handleAddToCart}
+                      <ButtonComponent
+                        // onClick={handleAddToCart}
                         className="bg-slate-800 text-white w-full px-3 py-2 my-5 text-sm tracking-widest rounded"
                         texte="Ajouter au panier"
                       />
@@ -98,7 +105,7 @@ const DetailCard = () => {
           </div>
         </section>
       ) : (
-        <Loader />
+        <div>test</div>
       )}
     </div>
     </div>
