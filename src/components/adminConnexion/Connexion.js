@@ -44,19 +44,26 @@ export default function Login() {
         "http://localhost:8000/api/utilisateur/connexion",
         formData
       );
-
-      console.log(response.data);
-      // afficher le message succes
-      await Swal.fire({
-        icon: "success",
-        title: "Connexion réussie!",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      navigate("/Admin");
+  
+      // Vérifiez si la demande de connexion a réussi et si la réponse contient l'ID de l'utilisateur
+      // if (response.status === 200 && response.data.id) {
+        // const userId = response.data.id;
+        // console.log("ID de l'utilisateur connecté :", userId);
+  
+        // afficher le message succès
+        await Swal.fire({
+          icon: "success",
+          title: "Connexion réussie!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate("/Admin");
+      // } else {
+      //   throw new Error("Erreur lors de la connexion");
+      // }
     } catch (error) {
       console.error(error);
-      alert("Connexion echoue");
+      alert("Connexion échouée");
     }
   };
 
