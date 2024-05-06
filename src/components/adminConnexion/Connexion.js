@@ -62,7 +62,6 @@ export default function Login() {
         timer: 2000,
       });
       navigate("/Admin");
-      
     } catch (error) {
       console.error(error);
       alert("Connexion échouée");
