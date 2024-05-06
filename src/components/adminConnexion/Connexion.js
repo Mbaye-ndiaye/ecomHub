@@ -41,17 +41,17 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/utilisateur/connexion",formData)
+        "http://localhost:8000/api/login",formData)
 
-        const token = response.data.token;
+        const token = response.data.access_token;
 
         localStorage.setItem('tokenClient', token);
-        localStorage.setItem('userId', response.data.utilisateur.id);
+        localStorage.setItem('userId', response.data.user.id);
       
         console.log(response.data);
         console.log('token:', token)
 
-        console.log('UserID:', response.data.utilisateur.id);
+        console.log('UserID:', response.data.user.id);
 
       // afficher le message succes
       await Swal.fire({

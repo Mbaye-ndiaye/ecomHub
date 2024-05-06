@@ -61,7 +61,7 @@ export default function FormsModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("tokenClient");
-    console.log(token)
+    console.log('tokenClient', token)
 
     if (!token) {
       alert('connectez vous abord avant de creer votre boutique')
@@ -69,7 +69,7 @@ export default function FormsModal() {
       return;
     }
   
-    const formDataToSend = new FormData(); // Ajout de l'initialisation de formDataToSend
+    const formDataToSend = new FormData(); 
   
     formDataToSend.append("name", formData.name);
     formDataToSend.append("description", formData.description);
@@ -79,13 +79,20 @@ export default function FormsModal() {
     formDataToSend.append("email", formData.email);
     formDataToSend.append("adresse", formData.adresse);
     formDataToSend.append("a_propos", formData.a_propos);
-    formDataToSend.append("user_id", formData.user_id); // Correction de l'utilisation de formData
+    formDataToSend.append("user_id", formData.user_id);
+    
+    console.log(formData.user_id)
     
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
         formDataToSend,
-        
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token JWT à l'en-tête Authorization
+            "Content-Type": "application/json" // Indiquer le type de contenu comme multipart/form-data
+          }
+        }
       );
   
       console.log(response.data);

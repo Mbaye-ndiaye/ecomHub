@@ -55,11 +55,14 @@ export default function Inscription() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/utilisateur/inscription",
+        "http://localhost:8000/api/register",
         formData
       );
+      localStorage.setItem('token', response.data.token);
 
       console.log(response.data);
+      
+      
       // afficher le message succes
       await Swal.fire({
         icon: "success",
@@ -75,14 +78,14 @@ export default function Inscription() {
     }
   };
   return (
-    <div className="w-full h-screen flex  bg-gradient-to-r from-cyan-500 to-blue-500 ">
+    <div className="flex w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 ">
       <div className="  grid grid-cols-2 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
         <div className="w-full h-[550px] hidden md:block">
           <img className="w-[130rem] h-full" src={trees} alt="/" />
         </div>
         <div className="flex flex-col justify-center items-center w-[35rem] bg-white ">
           <h1 className="text-3xl text-center">Inscription</h1>
-          <form className=" w-full p-8 rounded" onSubmit={handleSubmit}>
+          <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
             <div className="flex flex-row gap-5 mb-4">
               <div className="flex flex-col ">
                 <label htmlFor="prenom" className="block text-sm font-medium ">
@@ -99,7 +102,7 @@ export default function Inscription() {
                 />
               </div>
 
-              <div className="flex relative flex-col mb-4">
+              <div className="relative flex flex-col mb-4">
                 <label htmlFor="name" className="block text-sm font-medium ">
                   Nom
                 </label>
@@ -131,7 +134,7 @@ export default function Inscription() {
                 />
               </div>
 
-              <div className="flex relative flex-col mb-2">
+              <div className="relative flex flex-col mb-2">
                 <label
                   htmlFor="password"
                   className="block text-sm font-medium "
@@ -150,7 +153,7 @@ export default function Inscription() {
               </div>
             </div>
             <div className="flex flex-row gap-5 mb-2">
-              <div className="flex relative flex-col mb-4">
+              <div className="relative flex flex-col mb-4">
                 <label
                   htmlFor="telephone"
                   className="block text-sm font-medium "
@@ -168,7 +171,7 @@ export default function Inscription() {
                 />
               </div>
 
-              <div className="flex relative flex-col mb-2">
+              <div className="relative flex flex-col mb-2">
                 <label htmlFor="adresse" className="block text-sm font-medium ">
                   Adresse
                 </label>
