@@ -65,7 +65,7 @@ export default function FormsModal() {
 
     if (!token) {
       alert('connectez vous abord avant de creer votre boutique')
-      navigate("/connexion"); // Rediriger vers la page de connexion
+      navigate("/connexion");
       return;
     }
   
@@ -89,8 +89,8 @@ export default function FormsModal() {
         formDataToSend,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Ajouter le token JWT à l'en-tête Authorization
-            "Content-Type": "application/json" // Indiquer le type de contenu comme multipart/form-data
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "multipart/form-data" 
           }
         }
       );
