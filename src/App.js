@@ -17,6 +17,7 @@ import Categorie from "./components/categories/Categorie";
 import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
 import Produis from "./components/produits/Produis";
+import DetailCard from "./components/clients/details/DetailCard";
 
 function App() {
   return (
@@ -43,6 +44,8 @@ function App() {
             path="/BoutiqueCategorie"
             element={<BoutiqueCategorie />}
           ></Route>
+
+          <Route path="/DetailCard" element={<DetailCard />}></Route>
 
           {/* <Route path="/Dashboard" element={<DashboardWithSidebar />} /> */}
         </Routes>

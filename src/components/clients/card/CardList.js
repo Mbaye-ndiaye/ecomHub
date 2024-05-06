@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaShoppingCart } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const CardList = () => {
   const [products, setProducts] = useState([]);
@@ -26,7 +27,11 @@ const CardList = () => {
         {products.map((product, index) => (
           <div key={index} className="bg-white rounded-lg  overflow-hidden shadow-lg">
             <div>
-            <img className="w-full h-48 object-cover" src={product.image} alt={product.title} />
+            <Link to='/DetailCard'>
+            <img className="w-full h-48 object-cover" 
+            src={product.image} 
+            alt={product.title} />
+            </Link>
             </div>  
             <div className="p-3">
               <h3 className="text-sm text-black mb-2">{product.category}</h3>
