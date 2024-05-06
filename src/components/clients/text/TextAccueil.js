@@ -3,31 +3,31 @@ import { FaUsers } from "react-icons/fa";
 
 const TextAccueil = () => {
   return (
-    <div className='flex gap-4 px-4 text-lg'>
-        <div className='py-5 '>
-            <div className='flex mx-auto text-2xl'>
-            <FaUsers />
+    <div className='flex gap-4 px-4 text-lg gap-10 py-6 mb-5'>
+        <div className='py-5 text-center'>
+            <div className='flex justify-center items-center mb-5  text-2xl'>
+            <FaUsers className='bg-orange-500 ' />
             </div>
             <h2>Livraison International</h2>
             <p>Il elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
         </div>
-        <div className='py-5 '>
-            <div className='flex text-center text-2xl'>
-            <FaUsers />
+        <div className='py-5 text-center'>
+            <div className='flex justify-center items-center mb-5  text-2xl'>
+            <FaUsers className='bg-orange-500 '/>
             </div>
             <h2>Livraison International</h2>
             <p>Il elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
         </div>
-        <div className='py-5 '>
-            <div className='flex text-center text-2xl'>
-            <FaUsers className='flex text-center'/>
+        <div className='py-5 text-center'>
+            <div className='flex justify-center items-center mb-5  text-2xl'>
+            <FaUsers className='bg-orange-500 '/>
             </div>
             <h2>Livraison International</h2>
             <p>Il elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
         </div>
-        <div className='py-5 '>
-            <div className='flex text-center text-2xl'>
-            <FaUsers />
+        <div className='py-5 text-center'>
+            <div className='flex justify-center items-center mb-5  text-2xl'>
+            <FaUsers className='bg-orange-500 ' />
             </div>
             <h2>Livraison International</h2>
             <p>Il elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.</p>
