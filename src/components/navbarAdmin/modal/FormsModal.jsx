@@ -12,73 +12,108 @@ export default function FormsModal() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    banniere: "",
-    logo: "",
     telephone: "",
     adresse: "",
     a_propos: "",
     description: "",
+    banniere: null,
+    logo: null,
+    user_id: localStorage.getItem("userId"),
   });
 
-  const updateShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  // const updateShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
-  const updateButtonDisabled = () => {
-    if (
-      formData.name.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.banniere.trim() !== "" &&
-      formData.logo.trim() !== "" &&
-      formData.telephone.trim() !== "" &&
-      formData.adresse.trim() !== "" &&
-      formData.a_propos.trim() !== "" &&
-      formData.description.trim() !== ""
-    ) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-  };
-  useEffect(() => {
-    updateButtonDisabled();
-  }, [formData.name, formData.email]);
+  // const updateButtonDisabled = () => {
+  //   if (
+  //     formData.name.trim() !== "" &&
+  //     formData.email.trim() !== "" &&
+  //     formData.banniere.trim() !== "" &&
+  //     formData.logo.trim() !== "" &&
+  //     formData.telephone.trim() !== "" &&
+  //     formData.adresse.trim() !== "" &&
+  //     formData.a_propos.trim() !== "" &&
+  //     formData.description.trim() !== ""
+  //   ) {
+  //     setIsButtonDisabled(false);
+  //   } else {
+  //     setIsButtonDisabled(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateButtonDisabled();
+  // }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      [e.target.name]: file,
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-    for (let key in formData) {
-      formDataToSend.append(key, formData[key]);
+    const token = localStorage.getItem("tokenClient");
+    console.log('tokenClient', token)
+
+    if (!token) {
+      alert('connectez vous abord avant de creer votre boutique')
+      navigate("/connexion"); // Rediriger vers la page de connexion
+      return;
     }
+  
+    const formDataToSend = new FormData(); 
+  
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("logo", formData.logo);
+    formDataToSend.append("banniere", formData.banniere);
+    formDataToSend.append("telephone", formData.telephone);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("adresse", formData.adresse);
+    formDataToSend.append("a_propos", formData.a_propos);
+    formDataToSend.append("user_id", formData.user_id);
+    
+    console.log(formData.user_id)
+    
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
-        formData
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ajouter le token JWT à l'en-tête Authorization
+            "Content-Type": "application/json" // Indiquer le type de contenu comme multipart/form-data
+          }
+        }
       );
-
+  
       console.log(response.data);
-      // afficher le message succes
+  
+      // afficher le message de succès
       await Swal.fire({
         icon: "success",
-        title: "Boutique ajouter avec succes",
+        title: "Boutique ajoutée avec succès",
         showConfirmButton: false,
-        timer: 2000,
       });
-      navigate("/connexion");
+      navigate("/admin");
     } catch (error) {
       console.error(error);
-      alert("echoue");
+      alert("Échec de l'ajout de la boutique");
     }
   };
+  
 
   return (
-    <div className="flex justify-center items-center w-full h-full ">
-      <form className=" w-full p-8 rounded" onSubmit={handleSubmit}>
+    <div className="flex items-center justify-center w-full h-full ">
+      <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
         <div className="flex flex-row gap-5 mb-2">
           <div className="flex flex-col ">
             <label htmlFor="name" className="block text-sm font-medium ">
@@ -116,7 +151,7 @@ export default function FormsModal() {
         </div>
 
         <div className="flex flex-row gap-5 mb-2">
-          <div className="flex relative flex-col mb-4">
+          <div className="relative flex flex-col mb-4">
             <label htmlFor="banniere" className="block text-sm font-medium ">
               Banniere du banniere
             </label>
@@ -126,12 +161,11 @@ export default function FormsModal() {
               id="banniere"
               name="banniere"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.banniere}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </div>
 
-          <div className="flex relative flex-col mb-2">
+          <div className="relative flex flex-col mb-2">
             <label htmlFor="logo" className="block text-sm font-medium ">
               Logo du site
             </label>
@@ -141,13 +175,12 @@ export default function FormsModal() {
               id="logo"
               name="logo"
               className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-              value={formData.logo}
-              onChange={handleChange}
+              onChange={handleImageChange}
             />
           </div>
         </div>
         <div className="flex flex-row gap-5 mb-2">
-          <div className="flex relative flex-col mb-4">
+          <div className="relative flex flex-col mb-4">
             <label htmlFor="telephone" className="block text-sm font-medium ">
               Telephone
             </label>
@@ -162,7 +195,7 @@ export default function FormsModal() {
             />
           </div>
 
-          <div className="flex relative flex-col mb-2">
+          <div className="relative flex flex-col mb-2">
             <label htmlFor="adresse" className="block text-sm font-medium ">
               Adresse du site
             </label>
@@ -178,7 +211,7 @@ export default function FormsModal() {
           </div>
         </div>
 
-        <div className="flex relative flex-col mb-2">
+        <div className="relative flex flex-col mb-2">
           <label htmlFor="a_propos" className="block text-sm font-medium ">
             Apropos du site
           </label>
@@ -194,7 +227,7 @@ export default function FormsModal() {
           />
         </div>
 
-        <div className="flex relative flex-col mb-2">
+        <div className="relative flex flex-col mb-2">
           <label htmlFor="description" className="block text-sm font-medium ">
             Description du site
           </label>
@@ -212,12 +245,13 @@ export default function FormsModal() {
         {/* <Link to={"/Dashboard"}> */}
         <button
           type="submit"
-          disabled={isButtonDisabled || isLoading}
-          className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-            isButtonDisabled || isLoading
-              ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-              : "bg-gray-900 text-active text-white hover:bg-gray-900"
-          } ${isLoading ? "relative" : ""}`}
+          // disabled={isButtonDisabled || isLoading}
+          className="w-full px-4 py-2 mt-8 text-white bg-gray-800 rounded-md md:w-1/2"
+          //  ${
+          // isButtonDisabled || isLoading
+          // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+          // : "bg-gray-900 text-active text-white hover:bg-gray-900"
+          // } ${isLoading ? "relative" : ""}`}
         >
           Enregistrer
         </button>
