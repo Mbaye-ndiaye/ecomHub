@@ -41,17 +41,19 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/login",formData)
+        "http://localhost:8000/api/login",
+        formData
+      );
 
-        const token = response.data.access_token;
+      const token = response.data.access_token;
 
-        localStorage.setItem('tokenClient', token);
-        localStorage.setItem('userId', response.data.user.id);
-      
-        console.log(response.data);
-        console.log('token:', token)
+      localStorage.setItem("tokenClient", token);
+      localStorage.setItem("userId", response.data.user.id);
 
-        console.log('UserID:', response.data.user.id);
+      console.log(response.data);
+      console.log("token:", token);
+
+      console.log("UserID:", response.data.user.id);
 
       // afficher le message succes
       await Swal.fire({
@@ -61,7 +63,7 @@ export default function Login() {
         timer: 2000,
       });
 
-      navigate("/Dash");
+      navigate("/Admin");
     } catch (error) {
       console.error(error);
       alert("Connexion echoue");
