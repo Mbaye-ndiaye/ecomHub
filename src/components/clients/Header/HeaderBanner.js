@@ -14,10 +14,7 @@ const HeaderBanner = () => {
             <p className="mt-2 text-lg text-black">Votre sous-titre ou contenu supplémentaire</p>
         <div >
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-4">
-        Button
-      </button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Button
+        Acheter a la boutique
       </button>
         </div>
         </div>

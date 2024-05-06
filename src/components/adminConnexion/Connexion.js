@@ -53,6 +53,7 @@ export default function Login() {
         showConfirmButton: false,
         timer: 2000,
       });
+
       navigate("/Dash");
     } catch (error) {
       console.error(error);
