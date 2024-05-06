@@ -7,19 +7,16 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
-import GlobalContextProvider from "./utils/context/GlobalContext";
-
 import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
-
-import Produit from "./components/produits/Produis";
+import GlobalContextProvider from "./utils/context/GlobalContext";
 import Sidebare from "./components/sidebare/Sidebare";
-
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
 import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 import Categorie from "./components/categories/Categorie";
 import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
+import Produis from "./components/produits/Produis";
 
 function App() {
   return (
@@ -29,7 +26,7 @@ function App() {
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
-          <Route path="/Admin" element={<InterfaceAdmin />} />
+          <Route path="/" element={<InterfaceAdmin />} />
           <Route path="/" element={<IsLogin />}></Route>
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
@@ -53,7 +50,7 @@ function App() {
           <ProduitContextProvider>
             <Routes>
               <Route path="/Dash" element={<IsLogin />}></Route>
-              <Route path="/produits" element={<Produit />}></Route>
+              <Route path="/produits" element={<Produis />}></Route>
               <Route path="/categories" element={<Categorie />}></Route>
               <Route path="/commandes" element={<Commande />}></Route>
 
