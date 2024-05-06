@@ -41,11 +41,18 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/utilisateur/connexion",
-        formData
-      );
+        "http://localhost:8000/api/login",formData)
 
-      console.log(response.data);
+        const token = response.data.access_token;
+
+        localStorage.setItem('tokenClient', token);
+        localStorage.setItem('userId', response.data.user.id);
+      
+        console.log(response.data);
+        console.log('token:', token)
+
+        console.log('UserID:', response.data.user.id);
+
       // afficher le message succes
       await Swal.fire({
         icon: "success",
@@ -64,19 +71,19 @@ export default function Login() {
   return (
     <div className="relative w-full h-screen bg-zinc-900/90">
       <img
-        className="absolute w-full h-full object-cover mix-blend-overlay"
+        className="absolute object-cover w-full h-full mix-blend-overlay"
         src={loginImg}
         alt="/"
       />
 
-      <div className="flex justify-center items-center h-full ">
+      <div className="flex items-center justify-center h-full ">
         <form
           className="max-w-[400px] w-full mx-auto bg-white p-8 rounded"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl font-bold text-center py-4">EcomHub</h2>
+          <h2 className="py-4 text-4xl font-bold text-center">EcomHub</h2>
 
-          <div className="flex relative flex-col mb-4">
+          <div className="relative flex flex-col mb-4">
             <label htmlFor="email" className="block text-sm font-medium ">
               Email
             </label>
@@ -85,12 +92,12 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
-              className="w-full p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.email}
               onChange={handleChange}
             />
           </div>
-          <div className="flex relative flex-col ">
+          <div className="relative flex flex-col ">
             <label htmlFor="password" className="block text-sm font-medium ">
               Mot de pass
             </label>
@@ -99,7 +106,7 @@ export default function Login() {
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
-              className="w-full p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.password}
               onChange={handleChange}
             />
@@ -122,7 +129,7 @@ export default function Login() {
             Remember Me
           </p>
 
-          <p className="text-center mt-8">
+          <p className="mt-8 text-center">
             Not a member?{" "}
             <span
               className="relative cursor-pointer"
