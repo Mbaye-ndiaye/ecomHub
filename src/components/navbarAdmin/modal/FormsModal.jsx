@@ -1,14 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+// Fonction pour obtenir l'ID de l'utilisateur à partir du token JWT
+const getUserIdFromToken = () => {
+  const token = localStorage.getItem("token"); // Récupérer le token JWT depuis le local storage
+  if (token) {
+    const decodedToken = parseJwt(token); // Décode le token JWT pour obtenir les informations utilisateur
+    return decodedToken.userId; // Retourne l'ID de l'utilisateur extrait du token
+  }
+  return null; // Retourne null si aucun token n'est trouvé
+};
+
+// Fonction pour décoder un token JWT
+const parseJwt = (token) => {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map((c) => {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
 export default function FormsModal() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,31 +43,8 @@ export default function FormsModal() {
     description: "",
     banniere: null,
     logo: null,
+    user_id: localStorage.getItem("token"),
   });
-
-  // const updateShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
-
-  // const updateButtonDisabled = () => {
-  //   if (
-  //     formData.name.trim() !== "" &&
-  //     formData.email.trim() !== "" &&
-  //     formData.banniere.trim() !== "" &&
-  //     formData.logo.trim() !== "" &&
-  //     formData.telephone.trim() !== "" &&
-  //     formData.adresse.trim() !== "" &&
-  //     formData.a_propos.trim() !== "" &&
-  //     formData.description.trim() !== ""
-  //   ) {
-  //     setIsButtonDisabled(false);
-  //   } else {
-  //     setIsButtonDisabled(true);
-  //   }
-  // };
-  // useEffect(() => {
-  //   updateButtonDisabled();
-  // }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -59,6 +61,11 @@ export default function FormsModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const userId = getUserIdFromToken(); // Obtient l'ID de l'utilisateur à partir du token JWT
+    if (!userId) {
+      console.log("yes");
+      return;
+    }
     const formDataToSend = new FormData();
     for (let key in formData) {
       formDataToSend.append(key, formData[key]);
@@ -66,21 +73,22 @@ export default function FormsModal() {
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
-        formData
+        { ...formData, user_id: userId } // Ajoute l'ID de l'utilisateur dans les données à envoyer
       );
 
       console.log(response.data);
-      // afficher le message succes
+      // Afficher le message de succès
       await Swal.fire({
         icon: "success",
-        title: "Boutique ajouter avec succes",
+        title: "Boutique ajoutée avec succès",
         showConfirmButton: false,
         timer: 2000,
       });
       navigate("/connexion");
     } catch (error) {
       console.error(error);
-      alert("echoue");
+      alert("Echec");
+      console.log(userId);
     }
   };
 
