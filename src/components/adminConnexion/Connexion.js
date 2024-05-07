@@ -61,7 +61,7 @@ export default function Login() {
         timer: 2000,
       });
 
-      navigate("/Dash");
+      navigate("/");
     } catch (error) {
       console.error(error);
       alert("Connexion echoue");
