@@ -13,10 +13,11 @@ import Sidebare from "./components/sidebare/Sidebare";
 import AboutPage from "./pages/clients/apropos/Apropos";
 import ContactPage from "./pages/clients/contact/Contact";
 import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
-import Categorie from "./components/categories/Categorie";
+import CategoriesAdmin from "./components/categories/CategoriesAdmin";
 import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
 import Produis from "./components/produits/Produis";
+// import CategoriesAdmin from "./components/categories/CategoriesAdmin";
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
             <Routes>
               <Route path="/Dash" element={<IsLogin />}></Route>
               <Route path="/produits" element={<Produis />}></Route>
-              <Route path="/categories" element={<Categorie />}></Route>
+              <Route path="/categories" element={<CategoriesAdmin />}></Route>
               <Route path="/commandes" element={<Commande />}></Route>
 
               {/* <Route path="/" element={<Dashboard />} />
