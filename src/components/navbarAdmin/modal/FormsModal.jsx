@@ -20,6 +20,35 @@ export default function FormsModal() {
     user_id: localStorage.getItem("userId"),
   });
 
+<<<<<<< HEAD
+=======
+
+
+  // const updateShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
+
+  // const updateButtonDisabled = () => {
+  //   if (
+  //     formData.name.trim() !== "" &&
+  //     formData.email.trim() !== "" &&
+  //     formData.banniere.trim() !== "" &&
+  //     formData.logo.trim() !== "" &&
+  //     formData.telephone.trim() !== "" &&
+  //     formData.adresse.trim() !== "" &&
+  //     formData.a_propos.trim() !== "" &&
+  //     formData.description.trim() !== ""
+  //   ) {
+  //     setIsButtonDisabled(false);
+  //   } else {
+  //     setIsButtonDisabled(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateButtonDisabled();
+  // }, [formData.name, formData.email]);
+
+>>>>>>> 5bfb24f2f13353b5b3de7aa0ee7daae041ded54f
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -56,9 +85,16 @@ export default function FormsModal() {
     formDataToSend.append("adresse", formData.adresse);
     formDataToSend.append("a_propos", formData.a_propos);
     formDataToSend.append("user_id", formData.user_id);
+<<<<<<< HEAD
 
     console.log(formData.user_id);
 
+=======
+    
+    console.log(formData.user_id)
+
+    
+>>>>>>> 5bfb24f2f13353b5b3de7aa0ee7daae041ded54f
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
@@ -71,6 +107,7 @@ export default function FormsModal() {
         }
       );
 
+<<<<<<< HEAD
       console.log(response.data);
 
       // afficher le message de succès
@@ -85,6 +122,27 @@ export default function FormsModal() {
       console.error(error);
       alert("Échec de l'ajout de la boutique");
     }
+=======
+        // Here, you get the shop_id from the response
+        const shopId = response.data.id;
+          console.log(shopId);
+
+          localStorage.setItem('shopId', response.data.id);
+      
+          console.log(response.data);
+      
+          // afficher le message de succès
+          await Swal.fire({
+            icon: "success",
+            title: "Boutique ajoutée avec succès",
+            showConfirmButton: false,
+          });
+          navigate("/Dash");
+        } catch (error) {
+          console.error(error);
+          alert("Échec de l'ajout de la boutique");
+        }
+>>>>>>> 5bfb24f2f13353b5b3de7aa0ee7daae041ded54f
   };
 
   return (

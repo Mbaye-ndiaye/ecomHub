@@ -66,7 +66,7 @@ export default function Login() {
       navigate("/creeShop");
     } catch (error) {
       console.error(error);
-      alert("Connexion echoue");
+      alert("Connexion échouée");
     }
   };
 

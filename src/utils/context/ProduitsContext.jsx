@@ -5,6 +5,9 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineDelete } from "react-icons/md";
 import useGlobal from "../hooks/useGlobal";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
+import axios from "axios";
+
 // import { toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 // import axiosInstance from "../axiosInstance";
@@ -14,30 +17,25 @@ export const ProduitsContext = createContext();
 
 const ProduitContextProvider = ({ children }) => {
   const navigate = useNavigate()
-//   const [produits, setProduits] = useState([])
+  const [products, setProducts] = useState([])
   const [categoryNames, setCategoryNames] = useState([]);
 //   // Création des contexts pour formulaire
   
   const [nom, setNom] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
+  const [image, setImage] = useState('')
   const [titre, setTitre] = useState('')
   const [description, setDescription] = useState('')
   const [quantite, setQuantite] = useState('')
   const [categorie, setCategorie] = useState('')
 //   const [categorieId, setCategorieId] = useState('')
-  const [carracteristique, setCarracteristique] = useState('')
   const [prix, setPrix] = useState('')
-  const [couleur, setCouleur] = useState('')
-  const [taille, setTaille] = useState('')
-  const [fournisseur, setFournisseur] = useState('')
-  const [promo, setPromo] = useState(0)
+
   const [titreModal, setTitreModal] = useState('Ajouter un produits')
 //   const [corpModal, setCorpModal] = useState('')
-//   const [soumettre, setSoumettre] = useState('Ajouter')
-//   // const [idAModifie, setIdAModifie] = useState('')
-//   const [filtreProduits, setFiltreProduits] = useState([])
+  const [soumettre, setSoumettre] = useState('Ajouter')
+  const [idAModifie, setIdAModifie] = useState('')
+  const [filtreProducts, setFiltreProducts] = useState([])
 //   // const [categorieSelect, setCategorieSelect] = useState([]); 
-//   // const [listeProduitsCategories, setListeProduitsCategories] = useState([])
   const [valueInput, setValueInput] = useState('');
 
   // Filtre produit par letter saisi
@@ -46,7 +44,7 @@ const ProduitContextProvider = ({ children }) => {
 //   );
   
   const table = [
-    'Article', 'Quantité', 'Prix', 'Actions'
+    'Image', 'Descript', 'Nom', 'Quantité', 'Prix'
   ]
 
   
@@ -67,9 +65,9 @@ const ProduitContextProvider = ({ children }) => {
         icon: <MdEdit />,
         color: 'bg-orange-500',
         handleClick: (id) => {
-        //   setSoumettre('Modifier')
-          // setIdAModifie(id)
-        //   hanldleUpdate(id)
+          setSoumettre('Modifier')
+          setIdAModifie(id)
+          hanldleUpdate(id)
         }
       },
       {
@@ -96,14 +94,8 @@ const ProduitContextProvider = ({ children }) => {
       label: "Image du produit",
       type: "file",
       name: "imageUrl",
-      value: imageUrl,
-      setValue: setImageUrl
-    },
-    {
-      label: "Titre du Produit",
-      type: "text",
-      value: titre,
-      setValue: setTitre
+      value: image,
+      setValue: setImage
     },
     {
       label: "Quantité",
@@ -112,40 +104,10 @@ const ProduitContextProvider = ({ children }) => {
       setValue: setQuantite
     },
     {
-      label: "Carractéristiques",
-      type: "text",
-      value: carracteristique,
-      setValue: setCarracteristique
-    },
-    {
       label: "Prix",
       type: "number",
       value: prix,
       setValue: setPrix
-    },
-    {
-      label: "Couleur",
-      type: "text",
-      value: couleur,
-      setValue: setCouleur
-    },
-    {
-      label: "Taille",
-      type: "text",
-      value: taille,
-      setValue: setTaille
-    },
-    {
-      label: "Fourniseur",
-      type: "text",
-      value: fournisseur,
-      setValue: setFournisseur
-    },
-    {
-      label: "Promo en %",
-      type: "number",
-      value: promo,
-      setValue: setPromo
     }
   ]
 
@@ -194,116 +156,133 @@ const ProduitContextProvider = ({ children }) => {
 //   };
 
   // Ajout de Produit
-//   const addProduit = async (produit) => {
-//     try {
-//         const formData = new FormData();
-//         formData.append('nom', produit.nom);
-//         formData.append('imageUrl', produit.imageUrl);
-//         formData.append('titre', produit.titre);
-//         formData.append('description', produit.description);
-//         formData.append('quantite', produit.quantite);
-//         formData.append('categorie', produit.categorie);
-//         formData.append('categorieId', produit.categorieId);
-//         formData.append('carracteristique', produit.carracteristique);
-//         formData.append('prix', produit.prix);
-//         formData.append('couleur', produit.couleur);
-//         formData.append('taille', produit.taille);
-//         formData.append('fournisseur', produit.fournisseur);
-//         formData.append('promo', produit.promo);
+  const addProduit = async (produit) => {
+    try {
+        const formData = new FormData();
+        formData.append('nom', produit.nom);
+        formData.append('imageUrl', produit.image);
+        // formData.append('titre', produit.titre);
+        formData.append('description', produit.description);
+        formData.append('quantite', produit.quantite);
+        // formData.append('categorie', produit.categorie);
+        // formData.append('categorieId', produit.categorieId);
+        // formData.append('carracteristique', produit.carracteristique);
+        formData.append('prix', produit.prix);
+        // formData.append('couleur', produit.couleur);
+        // formData.append('taille', produit.taille);
+        // formData.append('fournisseur', produit.fournisseur);
+        // formData.append('promo', produit.promo);
         
-//         const response = await axiosInstance.post('/produits', formData, {
-//           headers: {
-//             'Content-Type': 'multipart/form-data'
-//           }
-//         });
+        const response = await axios.post('http://127.0.0.1:8000/api/products', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
 
 
-//         if (response.status === 201) {
-//             fetchProduitsCategorie(categorieId)
-//             // alert('Produit ajouté avec succès:');
-//             toast.success('Produit ajouté avec succès!');
+        if (response.status === 201) {
+            // fetchProduitsCategorie(categorieId)
+            // alert('Produit ajouté avec succès:');
+            // toast.success('Produit ajouté avec succès!');
+            await Swal.fire({
+              icon: "success",
+              title: "Produit ajouté avec succès!",
+              showConfirmButton: false,
+              timer: 2000,
+            });
             
-//             setShowModal(false);
-//         }
-//          else {
-//             throw new Error('Erreur lors de l\'ajout du produit');
-//         }
-//     } catch (error) {
-//       navigate("/error")
-//         console.error('Erreur lors de l\'ajout du produit:', error);
-//         toast.error("Erreur lors de l'ajout du produit");
-//     }
-//   }
+            setShowModal(false);
+        }
+         else {
+            throw new Error('Erreur lors de l\'ajout du produit');
+        }
+    } catch (error) {
+      // navigate("/error")
+        // console.error('Erreur lors de l\'ajout du produit:', error);
+        // toast.error("Erreur lors de l'ajout du produit");
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur lors de l'ajout du produit",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+    }
+  }
 
-//   const updateProduit = async (produit) => {
-//     try {
-//       const formData = new FormData();
-//       formData.append('nom', produit.nom);
-//       formData.append('imageUrl', produit.imageUrl);
-//       formData.append('titre', produit.titre);
-//       formData.append('description', produit.description);
-//       formData.append('quantite', produit.quantite);
-//       formData.append('categorie', produit.categorie);
-//       formData.append('categorieId', produit.categorieId);
-//       formData.append('carracteristique', produit.carracteristique);
-//       formData.append('prix', produit.prix);
-//       formData.append('couleur', produit.couleur);
-//       formData.append('taille', produit.taille);
-//       formData.append('fournisseur', produit.fournisseur);
-//       formData.append('promo', produit.promo);
+  const updateProduit = async (produit) => {
+    try {
+      const formData = new FormData();
+      formData.append('nom', produit.nom);
+      formData.append('imageUrl', produit.image);
+      formData.append('description', produit.description);
+      formData.append('quantite', produit.quantite);
+      formData.append('categorie', produit.categorie);
+      formData.append('prix', produit.prix);
       
-//       const response = await axiosInstance.put('/produits/' + idAModifie, formData, {
-//         headers: {
-//           'Content-Type': 'multipart/form-data'
-//         }
-//       });
+      const response = await axios.put('http://127.0.0.1:8000/api/products(id)' + idAModifie, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
   
-//       if (response.status === 200) { // Corrected to check for status 200
-//         toast.warning ('Produit modifié avec succès!');
-//         setShowModal(false);
-//         setTitreModal("Ajouter un produits")
-//         setSoumettre('Ajouter')
-//       } else {
-//         throw new Error('Erreur lors de la modification du produit');
-//       }
-//     } catch (error) {
-//       console.error('Erreur lors de la modification du produit:', error);
-//       toast.error('Erreur lors de la modification du produit!');
-//     }
-//   }  
+      if (response.status === 200) { // Corrected to check for status 200
+        // toast.warning ('Produit modifié avec succès!');
+        await Swal.fire({
+          icon: "success",
+          title: "Produit modifié avec succès!",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        setShowModal(false);
+        setTitreModal("Ajouter un produits")
+        setSoumettre('Ajouter')
+      } else {
+        throw new Error('Erreur lors de la modification du produit');
+      }
+    } catch (error) {
+      console.error('Erreur lors de la modification du produit:', error);
+      // toast.error('Erreur lors de la modification du produit!');
+      await Swal.fire({
+        icon: "error",
+        title: "Erreur lors de la modification du produit!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+  }  
 
-//   const hanldleUpdate = async (id) => {
-//     setShowModal(true)
-//     setTitreModal('Modification du produit')
-//     try {
-//       const response = await axiosInstance.get("/produits/" + id);
-//       const datasUpdates = response.data
-//         setNom(datasUpdates.nom)
-//         setTitre(datasUpdates.titre)
-//         setQuantite(datasUpdates.quantite)
-//         setCarracteristique(datasUpdates.carracteristique)
-//         setPrix(datasUpdates.prix)
-//         setCouleur(datasUpdates.couleur)
-//         setTaille(datasUpdates.taille)
-//         setFournisseur(datasUpdates.fournisseur)
-//         setPromo(datasUpdates.promo)
-//         setCategorie(datasUpdates.categorie)
-//         setCategorieId(datasUpdates.categorieId)
-//         setDescription(datasUpdates.description)
-//       } catch (error) {
-//         console.error("Erreur lors de la récupération des produits:", error);
-//       }
-//   }
+  const hanldleUpdate = async (id) => {
+    setShowModal(true)
+    setTitreModal('Modification du produit')
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/products" + id);
+      const datasUpdates = response.data
+        setNom(datasUpdates.nom)
+        setTitre(datasUpdates.titre)
+        setQuantite(datasUpdates.quantite)
+        // setCarracteristique(datasUpdates.carracteristique)
+        setPrix(datasUpdates.prix)
+        // setCouleur(datasUpdates.couleur)
+        // setTaille(datasUpdates.taille)
+        // setFournisseur(datasUpdates.fournisseur)
+        // setPromo(datasUpdates.promo)
+        setCategorie(datasUpdates.categorie)
+        // setCategorieId(datasUpdates.categorieId)
+        setDescription(datasUpdates.description)
+      } catch (error) {
+        console.error("Erreur lors de la récupération des produits:", error);
+      }
+  }
 
 
-//   const fetchCategories = async () => {
-//     try {
-//       const response = await axiosInstance.get("/categories");
-//       setCategories(response.data);
-//     } catch (error) {
-//       console.error("Erreur lors de la récupération des catégories:", error);
-//     }
-//   };
+  // const fetchCategories = async () => {
+  //   try {
+  //     const response = await axiosInstance.get("/categories");
+  //     setCategories(response.data);
+  //   } catch (error) {
+  //     console.error("Erreur lors de la récupération des catégories:", error);
+  //   }
+  // };
 
  
 
@@ -314,47 +293,42 @@ const ProduitContextProvider = ({ children }) => {
 //   }; 
 
   // Récupération de tous les produits
-//   const fetchProduit = async () => {
-//     try {
-//         const response = await axiosInstance.get("/produits");
-//         const produitsAvecQuantiteProd = response.data.map(produit => ({
-//             ...produit,
-//             quantiteProd: produit.quantite,
-//             // Supprimer la clé "quantite" de l'objet
-//             quantite: undefined
-//         }));
-//         setProduits(produitsAvecQuantiteProd);
-//     } catch (error) {
-//         console.error("Erreur lors de la récupération des produits:", error);
-//     }
-//   };
+  const fetchProduct = async () => {
+    try {
+        const response = await axios.get("http://127.0.0.1:8000/api/products");
+        const produitsAvecQuantiteProd = response.data.map(product => ({
+            ...product,
+            quantiteProd: product.quantite,
+            // Supprimer la clé "quantite" de l'objet
+            quantite: undefined
+        }));
+        setProducts(produitsAvecQuantiteProd);
+    } catch (error) {
+        console.error("Erreur lors de la récupération des produits:", error);
+    }
+  };
 
 
     
-//   const hanldleSubmit = (e) => {
-//     e.preventDefault()
-//     const recupInput = {
-//       nom, imageUrl, titre, description, quantite,
-//       categorie, categorieId, carracteristique, prix, couleur, taille, fournisseur, promo
-//     }
-//     if (soumettre === 'Ajouter') {
-//       addProduit(recupInput)
-//     }else{
-//       updateProduit(recupInput)
-//     }
-//     setNom('')
-//     setImageUrl('')
-//     setTitre('')
-//     setDescription('')
-//     setQuantite('')
-//     setCategorie('')
-//     setCarracteristique('')
-//     setPrix('')
-//     setCouleur('')
-//     setTaille('')
-//     setFournisseur('')
-//     setPromo('')
-//   }    
+  const hanldleSubmit = (e) => {
+    e.preventDefault()
+    const recupInput = {
+      nom, image, description, quantite,
+      categorie, prix,
+    }
+    if (soumettre === 'Ajouter') {
+      addProduit(recupInput)
+    }else{
+      updateProduit(recupInput)
+    }
+    setNom('')
+    setImage('')
+    setTitre('')
+    setDescription('')
+    setQuantite('')
+    setCategorie('')
+    setPrix('')
+    }    
   
 //   const fetchProduitsCategorie = async (idCategory) => {
 //     try {
@@ -386,7 +360,7 @@ const ProduitContextProvider = ({ children }) => {
   const value = {
     valueInput, 
     setValueInput,
-    // hanldleSubmit,
+    hanldleSubmit,
     selects,
     textarea,
     inputs,
@@ -398,24 +372,24 @@ const ProduitContextProvider = ({ children }) => {
     setCategoryNames,
     // categories,
     // handleSelectChange,
-    // filtreProduits, 
-    // setFiltreProduits,
-    // setProduits,
+    filtreProducts, 
+    setFiltreProducts,
+    setProducts,
     table, 
-    // produits,
-    // addProduit,
+    products,
+    addProduit,
     // fetchCategories,
     // setFiltreProduits,
     // filtreProdCategorie,
-    // fetchProduit,
-    // updateProduit,
+    fetchProduct,
+    updateProduit,
     titreModal,
      setTitreModal, 
     // corpModal, setCorpModal,
     actions,
-    nom, setNom, imageUrl, setImageUrl, titre, setTitre, description, setDescription, quantite, setQuantite, prix, setPrix,  setCategorie,categorie,
-    carracteristique, setCarracteristique,   couleur, setCouleur, taille, setTaille, fournisseur, setFournisseur, promo, setPromo,
-    // soumettre, setSoumettre , categorieId,setCategorieId ,
+    nom, setNom,   titre, setTitre, description, setDescription, quantite, setQuantite, prix, setPrix,  setCategorie,categorie,
+    soumettre, setSoumettre 
+    // categorieId,setCategorieId ,
   };
 
   return <ProduitsContext.Provider value={value}>{children}</ProduitsContext.Provider>;

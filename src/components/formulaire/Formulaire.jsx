@@ -59,7 +59,7 @@ const Formulaire = ({inputs, selects, textarea, onSubmit, handleSelectChange }) 
               name={input.name} 
               type={input.type}
               label={input.label} 
-              value={input.value}
+              // value={input.value}
               onChange={(e) => handleChangeFile(e, input.setValue)} 
             /> ) : (
               <Input

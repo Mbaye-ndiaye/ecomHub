@@ -6,17 +6,23 @@ import IsLogin from "../admin/isLogin";
 import Commande from "../../components/commandes/Commande";
 import Categorie from "../../components/categories/Categorie";
 import Produis from "../../components/produits/Produis";
+import GlobalContextProvider from "../../utils/context/GlobalContext";
+import ProduitContextProvider from "../../utils/context/ProduitsContext";
 
 function DashboardWithSidebar() {
   return (
-    <Sidebar>
-      <Routes>
-        <Route path="/dashboard" element={<IsLogin />} />
-        <Route path="/dashboard/commandes" element={<Commande />} />
-        <Route path="/dashboard/categories" element={<Categorie />} />
-        <Route path="/dashboard/produis" element={<Produis />} />
-      </Routes>
-    </Sidebar>
+    <GlobalContextProvider>
+      <ProduitContextProvider>
+        <Sidebar>
+          <Routes>
+            <Route path="/dashboard" element={<IsLogin />} />
+            <Route path="/dashboard/commandes" element={<Commande />} />
+            <Route path="/dashboard/categories" element={<Categorie />} />
+            <Route path="/dashboard/produis" element={<Produis />} />
+          </Routes>
+        </Sidebar>
+      </ProduitContextProvider>
+    </GlobalContextProvider>
   );
 }
 

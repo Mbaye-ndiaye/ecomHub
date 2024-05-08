@@ -14,6 +14,13 @@ import ContactEcom from "./components/navbarAdmin/naveLink/ContactEcom";
 import AproposEcom from "./components/navbarAdmin/naveLink/AproposEcom";
 import FormsShop from "./pages/admin/pageCreerShop/CreerShop";
 
+import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
+import CategoriesAdmin from "./components/categories/CategoriesAdmin";
+import Commande from "./components/commandes/Commande";
+import ProduitContextProvider from "./utils/context/ProduitsContext";
+import Produis from "./components/produits/Produis";
+// import CategoriesAdmin from "./components/categories/CategoriesAdmin";
+
 function App() {
   return (
     <div className="App">
@@ -25,7 +32,7 @@ function App() {
           <Route path="/" element={<InterfaceAdmin />} />
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
-          <Route path="//creeShop" element={<FormsShop />}></Route>
+          <Route path="/creeShop" element={<FormsShop />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
           <Route path="/Apropos" element={<AboutPage />}></Route>
           <Route path="/Contact" element={<ContactPage />}></Route>
@@ -34,6 +41,18 @@ function App() {
           <Route path="/AproposEcom" element={<AproposEcom />} />
           <Route path="/*" element={<DashboardWithSidebar />} />
         </Routes>
+
+        {/* <GlobalContextProvider>
+          <ProduitContextProvider>
+            <Routes>
+              <Route path="/Dash" element={<IsLogin />}></Route>
+              <Route path="/produits" element={<Produis />}></Route>
+              <Route path="/categories" element={<CategoriesAdmin />}></Route>
+              <Route path="/commandes" element={<Commande />}></Route>
+
+            </Routes>
+          </ProduitContextProvider>
+        </GlobalContextProvider> */}
       </Router>
     </div>
   );

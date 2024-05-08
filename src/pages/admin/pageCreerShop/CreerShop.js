@@ -20,8 +20,6 @@ function FormsShop() {
     user_id: localStorage.getItem("userId"),
   });
 
-  const [nameError, setNameError] = useState("");
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -72,8 +70,13 @@ function FormsShop() {
         }
       );
 
-      console.log(response.data);
+      // Here, you get the shop_id from the response
+      const shopId = response.data.id;
+      console.log(shopId);
 
+      localStorage.setItem("shopId", response.data.id);
+
+      console.log(response.data);
       // afficher le message de succès
       await Swal.fire({
         icon: "success",
@@ -84,17 +87,8 @@ function FormsShop() {
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.errors &&
-        error.response.data.errors.name
-      ) {
-        // Si le serveur renvoie une erreur concernant le nom déjà pris, affichez l'erreur
-        setNameError(error.response.data.errors.name[0]);
-      } else {
-        alert("Échec de l'ajout de la boutique");
-      }
+
+      alert("Échec de l'ajout de la boutique");
     }
   };
 
