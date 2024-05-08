@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Modal from "./modal/Modal";
+
 import { FaBars } from "react-icons/fa";
 import { FaXmark } from "react-icons/fa6";
-import FormsModal from "./modal/FormsModal";
 
 function NaveLinks({ className }) {
   let [open, setOpen] = useState(false);
@@ -11,9 +10,6 @@ function NaveLinks({ className }) {
   const navigate = useNavigate();
 
   // Fonction pour ouvrir et fermer la modal
-  const toggleModal = () => {
-    setOpen(!open);
-  };
 
   const handleCreateShopClick = () => {
     const token = localStorage.getItem("tokenClient");
@@ -109,11 +105,6 @@ function NaveLinks({ className }) {
           </div>
         </div>
       </nav>
-      {open && (
-        <Modal onClose={toggleModal}>
-          <FormsModal />
-        </Modal>
-      )}
     </>
   );
 }
