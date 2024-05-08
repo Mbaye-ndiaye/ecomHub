@@ -96,6 +96,14 @@ export default function FormsModal() {
       );
   
       console.log(response.data);
+
+      const shopId = response.data.id;
+
+      console.log('shopId', shopId)
+
+      localStorage.setItem('shopId', response.data.id);
+
+
   
       // afficher le message de succès
       await Swal.fire({
