@@ -63,7 +63,7 @@ export default function Login() {
         timer: 2000,
       });
 
-      navigate("/Admin");
+      navigate("/creeShop");
     } catch (error) {
       console.error(error);
       alert("Connexion echoue");
