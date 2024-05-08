@@ -41,6 +41,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
+
         "http://localhost:8000/api/login",formData)
 
         const token = response.data.access_token;
@@ -60,11 +61,10 @@ export default function Login() {
         showConfirmButton: false,
         timer: 2000,
       });
-
       navigate("/");
     } catch (error) {
       console.error(error);
-      alert("Connexion echoue");
+      alert("Connexion échouée");
     }
   };
 

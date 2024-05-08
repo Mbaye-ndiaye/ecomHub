@@ -21,6 +21,8 @@ export default function FormsModal() {
     user_id: localStorage.getItem("userId"),
   });
 
+
+
   // const updateShowPassword = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -82,6 +84,7 @@ export default function FormsModal() {
     formDataToSend.append("user_id", formData.user_id);
     
     console.log(formData.user_id)
+
     
     try {
       const response = await axios.post(
@@ -94,28 +97,26 @@ export default function FormsModal() {
           }
         }
       );
-  
-      console.log(response.data);
 
-      const shopId = response.data.id;
+        // Here, you get the shop_id from the response
+        const shopId = response.data.id;
+          console.log(shopId);
 
-      console.log('shopId', shopId)
-
-      localStorage.setItem('shopId', response.data.id);
-
-
-  
-      // afficher le message de succès
-      await Swal.fire({
-        icon: "success",
-        title: "Boutique ajoutée avec succès",
-        showConfirmButton: false,
-      });
-      navigate("/admin");
-    } catch (error) {
-      console.error(error);
-      alert("Échec de l'ajout de la boutique");
-    }
+          localStorage.setItem('shopId', response.data.id);
+      
+          console.log(response.data);
+      
+          // afficher le message de succès
+          await Swal.fire({
+            icon: "success",
+            title: "Boutique ajoutée avec succès",
+            showConfirmButton: false,
+          });
+          navigate("/Dash");
+        } catch (error) {
+          console.error(error);
+          alert("Échec de l'ajout de la boutique");
+        }
   };
   
 
