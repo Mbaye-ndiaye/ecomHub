@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function FormsModal() {
+function FormsShop() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,32 +19,6 @@ export default function FormsModal() {
     logo: null,
     user_id: localStorage.getItem("userId"),
   });
-
-
-
-  // const updateShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
-
-  // const updateButtonDisabled = () => {
-  //   if (
-  //     formData.name.trim() !== "" &&
-  //     formData.email.trim() !== "" &&
-  //     formData.banniere.trim() !== "" &&
-  //     formData.logo.trim() !== "" &&
-  //     formData.telephone.trim() !== "" &&
-  //     formData.adresse.trim() !== "" &&
-  //     formData.a_propos.trim() !== "" &&
-  //     formData.description.trim() !== ""
-  //   ) {
-  //     setIsButtonDisabled(false);
-  //   } else {
-  //     setIsButtonDisabled(true);
-  //   }
-  // };
-  // useEffect(() => {
-  //   updateButtonDisabled();
-  // }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,17 +35,17 @@ export default function FormsModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("tokenClient");
-    console.log('tokenClient', token)
 
+    const token = localStorage.getItem("tokenClient");
+    console.log("tokenClient", token);
     if (!token) {
-      alert('connectez vous abord avant de creer votre boutique')
+      alert("Connectez-vous d'abord avant de créer votre boutique");
       navigate("/connexion");
       return;
     }
-  
-    const formDataToSend = new FormData(); 
-  
+
+    const formDataToSend = new FormData();
+
     formDataToSend.append("name", formData.name);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("logo", formData.logo);
@@ -82,48 +55,50 @@ export default function FormsModal() {
     formDataToSend.append("adresse", formData.adresse);
     formDataToSend.append("a_propos", formData.a_propos);
     formDataToSend.append("user_id", formData.user_id);
-    
-    console.log(formData.user_id)
 
-    
+    console.log(formData.user_id);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
         formDataToSend,
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
-            "Content-Type": "multipart/form-data" 
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
-        // Here, you get the shop_id from the response
-        const shopId = response.data.id;
-          console.log(shopId);
+      // Here, you get the shop_id from the response
+      const shopId = response.data.id;
+      console.log(shopId);
 
-          localStorage.setItem('shopId', response.data.id);
-      
-          console.log(response.data);
-      
-          // afficher le message de succès
-          await Swal.fire({
-            icon: "success",
-            title: "Boutique ajoutée avec succès",
-            showConfirmButton: false,
-          });
-          navigate("/Dash");
-        } catch (error) {
-          console.error(error);
-          alert("Échec de l'ajout de la boutique");
-        }
+      localStorage.setItem("shopId", response.data.id);
+
+      console.log(response.data);
+      // afficher le message de succès
+      await Swal.fire({
+        icon: "success",
+        title: "Boutique ajoutée avec succès",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      navigate("/dashboard");
+    } catch (error) {
+      console.error(error);
+
+      alert("Échec de l'ajout de la boutique");
+    }
   };
-  
 
   return (
-    <div className="flex items-center justify-center w-full h-full ">
-      <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
-        <div className="flex flex-row gap-5 mb-2">
+    <div className="flex justify-center items-center  w-full h-auto p-[20px]">
+      <form className="bg-white p-8 rounded mt-5 mb-5" onSubmit={handleSubmit}>
+        <h1 className="text-gray-700 mb-5 text-2xl text-center">
+          Creer votre Boutique
+        </h1>
+        <div className="flex flex-row gap-5  mb-2">
           <div className="flex flex-col ">
             <label htmlFor="name" className="block text-sm font-medium ">
               Nom du boutique
@@ -133,7 +108,7 @@ export default function FormsModal() {
               type="text"
               id="name"
               name="name"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.name}
               onChange={handleChange}
             />
@@ -149,7 +124,7 @@ export default function FormsModal() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -169,7 +144,7 @@ export default function FormsModal() {
               type="file"
               id="banniere"
               name="banniere"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               onChange={handleImageChange}
             />
           </div>
@@ -183,7 +158,7 @@ export default function FormsModal() {
               type="file"
               id="logo"
               name="logo"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               onChange={handleImageChange}
             />
           </div>
@@ -198,7 +173,7 @@ export default function FormsModal() {
               type="number"
               id="telephone"
               name="telephone"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.telephone}
               onChange={handleChange}
             />
@@ -213,7 +188,7 @@ export default function FormsModal() {
               type="text"
               id="adresse"
               name="adresse"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem]  p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.adresse}
               onChange={handleChange}
             />
@@ -230,7 +205,7 @@ export default function FormsModal() {
             cols="16"
             id="a_propos"
             name="a_propos"
-            className="w-[31rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+            className="w-full  p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
             value={formData.a_propos}
             onChange={handleChange}
           />
@@ -246,7 +221,7 @@ export default function FormsModal() {
             cols="16"
             id="description"
             name="description"
-            className="w-[31rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+            className="w-full p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
             value={formData.description}
             onChange={handleChange}
           />
@@ -255,7 +230,7 @@ export default function FormsModal() {
         <button
           type="submit"
           // disabled={isButtonDisabled || isLoading}
-          className="w-full px-4 py-2 mt-8 text-white bg-gray-800 rounded-md md:w-1/2"
+          className="flex justify-center px-4 py-2 mt-8 text-white bg-gray-800 rounded-md md:w-1/2"
           //  ${
           // isButtonDisabled || isLoading
           // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
@@ -269,3 +244,4 @@ export default function FormsModal() {
     </div>
   );
 }
+export default FormsShop;

@@ -1,17 +1,20 @@
-
-import "./App.css";
+import './App.css'
 import CardsSidebar from "./CardsSidebar";
 import ContentHeader from "./ContentHeader";
 import TeachersList from "./TecherList";
 
+
 const ContentSidebar = () => {
   return (
+
     <>
-      <div className="w-[75%] ">
+      <div className="w-[100%] ">
         <ContentHeader />
         <CardsSidebar />
         <TeachersList />
       </div>
+
+      
     </>
   );
 };
@@ -19,7 +22,7 @@ const ContentSidebar = () => {
 export default ContentSidebar;
 
 // import { useState } from 'react'
-//
+// 
 // import ContentHeader from './ContentHeader'
 // import Sidebar from './Sidebare'
 // import TeachersList from './TecherList'
