@@ -1,4 +1,4 @@
- import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Modal from "./modal/Modal";
 import image2 from "../../assets/hero_image.png";
 import image3 from "../../assets/Image.png";
@@ -7,20 +7,53 @@ import { FaXmark } from "react-icons/fa6";
 import Footer from "../footer/footer";
 
 import FormsModal from "./modal/FormsModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Temoigne from "../temoigneAdmin/Temoigne";
+import { useFormContext } from "react-hook-form";
+import axios from "axios";
+
+
 
 const Header = () => {
+  // const {name} = useParams();
+  const navigate = useNavigate();
+  const {formData} = useFormContext();
   let Links = [
     { name: "APROPOS", link: "/" },
     { name: "CONTACT", link: "/" },
   ];
   let [open, setOpen] = useState(false);
+  const [boutiques, setBoutique] = useState([]);
+  const [selectedBoutique, setSelectedBoutique] = useState([])
+
+  useEffect(() => {
+    const fetchBoutique = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/shops");
+        setBoutique(response.data);
+        console.log("response.data", response.data);
+        
+      } catch (error) {
+        console.error("Erreur lors de la recuperer des donnees", error);
+        
+      }
+    }
+
+    fetchBoutique()
+  }, [])
+
+
+
+  const hanldeSelectedChange = (e) => {
+  setSelectedBoutique(e.target.value)
+  navigate(`/accueil/${e.target.value}`)
+}
+
 
   // Fonction pour ouvrir et fermer la modal
   const toggleModal = () => {
     setOpen(!open);
-  };
+  }; 
 
   return (
     <>
@@ -37,9 +70,9 @@ const Header = () => {
             <div className="md:flex items-center justify-between text-white py-4 md:px-10 px-7">
               {/* logo section */}
               <div className="font-bold text-2xl cursor-pointer flex items-center gap-1">
-                <Link to="/Accueil">
+                {/* <Link to="/Accueil"> */}
                   <h1 className="w-7 h-7 text-blue-600">ECOMHUB</h1>
-                </Link>
+                {/* </Link> */}
               </div>
               {/* Menu icon */}
               <div
@@ -54,6 +87,20 @@ const Header = () => {
                   open ? "top-12" : "top-[-490px]"
                 }`}
               >
+                <select 
+                className="btn bg-white text-black md:ml-8 font-semibold px-3 py-1 rounded duration-500 md:static w-48"
+                value={selectedBoutique}
+                onChange={hanldeSelectedChange}>
+                  <option value="">Voir des boutique</option>
+                  {boutiques?.map((boutique) => (
+                  
+                    <option key={boutique.id} value={boutique.id}>
+                      <img src={boutique.logo} alt={boutique.name} className="w-6 h-6 mr-2"/>
+                      {boutique.name}
+                    </option>
+                  ))}
+                  
+                </select>
                 {Links.map((link) => (
                   <li className="md:ml-8 md:my-0 my-7 font-semibold">
                     <a

@@ -18,12 +18,14 @@ import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
 import Produis from "./components/produits/Produis";
 import DetailCard from "./components/clients/details/DetailCard";
+import FormProvider from "./utils/context/FormShopContext";
 
 function App() {
   return (
     <div className="App">
       {/* <IsLogin/> */}
       <Router>
+        <FormProvider>
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
@@ -35,24 +37,24 @@ function App() {
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           {/* <Route path="/Dashboard" element={<ContentSidebar/>}></Route> */}
-          <Route path="/Accueil" element={<Accueil />}></Route>
-          <Route path="/Apropos" element={<AboutPage />}></Route>
-          <Route path="/Contact" element={<ContactPage />}></Route>
+          <Route path="/accueil/:name" element={<Accueil />}></Route>
+          <Route path="/apropos" element={<AboutPage />}></Route>
+          <Route path="/contact" element={<ContactPage />}></Route>
           <Route path="/profile" element={<FormProfilUser />} />
 
           <Route
-            path="/BoutiqueCategorie"
+            path="/boutiqueCategorie"
             element={<BoutiqueCategorie />}
           ></Route>
 
-          <Route path="/DetailCard" element={<DetailCard />}></Route>
-
+          <Route path="/detailCard" element={<DetailCard />}></Route>
           {/* <Route path="/Dashboard" element={<DashboardWithSidebar />} /> */}
         </Routes>
+          </FormProvider>
         <GlobalContextProvider>
           <ProduitContextProvider>
             <Routes>
-              <Route path="/Dash" element={<IsLogin />}></Route>
+              <Route path="/dash" element={<IsLogin />}></Route>
               <Route path="/produits" element={<Produis />}></Route>
               <Route path="/categories" element={<Categorie />}></Route>
               <Route path="/commandes" element={<Commande />}></Route>
