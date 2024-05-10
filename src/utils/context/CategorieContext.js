@@ -95,7 +95,15 @@ const handleChange = (e) => {
     //   fromDataToSend.append("name", formData.nom);
     //   fromDataToSend.append("shopId", formData.shopId);
       
+      console.log(formData.name);
       console.log(formData.shopId);
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          // Ajoutez ici d'autres en-têtes si nécessaire
+        }
+      };
       
       if (isEditing) {
           handleEditCategory(editingCategoryId, formData);
@@ -103,7 +111,8 @@ const handleChange = (e) => {
         try {
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/categories",
-                formData
+                formData,
+                config 
             );
         setShowModal(false);
         setNom("");
