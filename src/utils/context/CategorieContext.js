@@ -26,8 +26,9 @@ export default function CategorieContextProvider({children}) {
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
     name: "",
-    shopId: localStorage.getItem("shopId"),
+    shopId: "",
   });
+
 
   const table = [
       'Categorie', 'Nombre produit', 'Actions'
@@ -86,10 +87,11 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       
-      const formData = {
+      const dataToSend = {
         name: nom,
-        shopId: localStorage.getItem("shopId"), // Ajoutez l'ID de la boutique ici
+        shopId: localStorage.getItem("shopId"),
       };
+
     //   const fromDataToSend = new FormData();
       
     //   fromDataToSend.append("name", formData.nom);
@@ -103,7 +105,7 @@ const handleChange = (e) => {
         try {
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/categories",
-                formData
+                dataToSend, 
             );
         setShowModal(false);
         setNom("");
@@ -159,7 +161,7 @@ const handleChange = (e) => {
  
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/categories');
+      const response = await axios.get('http://127.0.0.1:8000/api/categories', formData);
       setCategories(response.data);
     } catch (error) {
       console.error('Erreur lors de la récupération des catégories :', error);
