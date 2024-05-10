@@ -98,11 +98,13 @@ import Swal from "sweetalert2";
             }
           }
         );
-        // const idBoutique = response.data.id
-        // console.log(idBoutique);
-        // localStorage.setItem('idBoutique', response.data.id)
-    
+        
+      const shopId = response.data.id;
+      console.log(shopId);
+
+      localStorage.setItem("shopId", response.data.id);
         console.log(response.data);
+
     
         // afficher le message de succès
         await Swal.fire({
@@ -110,7 +112,7 @@ import Swal from "sweetalert2";
           title: "Boutique ajoutée avec succès",
           showConfirmButton: false,
         });
-        navigate("/admin");
+        navigate("/dashboard");
       } catch (error) {
         console.error(error);
         alert("Échec de l'ajout de la boutique");

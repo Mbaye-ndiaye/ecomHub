@@ -1,18 +1,21 @@
+
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import useFormContext from "../../../utils/hooks/useFormContext";
 import { FormShopContext } from "../../../utils/context/FormShopContext";
 
-export default function FormsModal() {
-  const { handleSubmit, formData, handleChange, handleImageChange} = useContext(FormShopContext)
-
+function FormsShop() {
+  const { handleSubmit, formData, handleChange, handleImageChange} = useContext(FormShopContext)   
 
   return (
-    <div className="flex items-center justify-center w-full h-full ">
-      <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
-        <div className="flex flex-row gap-5 mb-2">
+    <div className="flex justify-center items-center  w-full h-auto p-[20px]">
+      <form className="bg-white p-8 rounded mt-5 mb-5" onSubmit={handleSubmit}>
+        <h1 className="text-gray-700 mb-5 text-2xl text-center">
+          Creer votre Boutique
+        </h1>
+        <div className="flex flex-row gap-5  mb-2">
           <div className="flex flex-col ">
             <label htmlFor="name" className="block text-sm font-medium ">
               Nom du boutique
@@ -22,7 +25,7 @@ export default function FormsModal() {
               type="text"
               id="name"
               name="name"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.name}
               onChange={handleChange}
             />
@@ -38,7 +41,7 @@ export default function FormsModal() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                 value={formData.email}
                 onChange={handleChange}
               />
@@ -58,7 +61,7 @@ export default function FormsModal() {
               type="file"
               id="banniere"
               name="banniere"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               onChange={handleImageChange}
             />
           </div>
@@ -72,7 +75,7 @@ export default function FormsModal() {
               type="file"
               id="logo"
               name="logo"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               onChange={handleImageChange}
             />
           </div>
@@ -87,7 +90,7 @@ export default function FormsModal() {
               type="number"
               id="telephone"
               name="telephone"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.telephone}
               onChange={handleChange}
             />
@@ -102,7 +105,7 @@ export default function FormsModal() {
               type="text"
               id="adresse"
               name="adresse"
-              className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              className="w-[24rem]  p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
               value={formData.adresse}
               onChange={handleChange}
             />
@@ -119,7 +122,7 @@ export default function FormsModal() {
             cols="16"
             id="a_propos"
             name="a_propos"
-            className="w-[31rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+            className="w-full  p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
             value={formData.a_propos}
             onChange={handleChange}
           />
@@ -135,7 +138,7 @@ export default function FormsModal() {
             cols="16"
             id="description"
             name="description"
-            className="w-[31rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+            className="w-full p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
             value={formData.description}
             onChange={handleChange}
           />
@@ -144,7 +147,7 @@ export default function FormsModal() {
         <button
           type="submit"
           // disabled={isButtonDisabled || isLoading}
-          className="w-full px-4 py-2 mt-8 text-white bg-gray-800 rounded-md md:w-1/2"
+          className="flex justify-center px-4 py-2 mt-8 text-white bg-gray-800 rounded-md md:w-1/2"
           //  ${
           // isButtonDisabled || isLoading
           // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
@@ -158,3 +161,4 @@ export default function FormsModal() {
     </div>
   );
 }
+export default FormsShop;

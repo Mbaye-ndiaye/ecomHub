@@ -24,19 +24,13 @@ const AboutPage = () => {
 	// }
 		try {
 		  const response = await axios.get("http://localhost:8000/api/shops" )
-		  if (response.data.length > 0) {
-            setApropos(response.data[0].a_propos);
-        } 
+		//   if (response.data.length > 0) {
+            setApropos(response.data);
+        // } 
 		} catch (error) {
 		  console.error('Erreur lors de la récupération des donnees:', error);
 		}
 	  };
-
-
-
-
-
-
 
 	return (
 		<section>

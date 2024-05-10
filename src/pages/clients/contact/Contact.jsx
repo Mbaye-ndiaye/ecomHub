@@ -12,25 +12,23 @@ import { useParams } from 'react-router-dom';
 const ContactPage = () => {
   const {name} = useParams()
 const {formData } = useFormContext();
-const [telephone, setTelephone] = useState([]);
-const [email, setEmail] = useState([]);
+const [boutique, setBoutique] = useState([])
+// const [telephone, setTelephone] = useState([]);
+// const [email, setEmail] = useState([]);
 
 useEffect(() => {
   fetchData();
   }, []);
   
-  
-  useEffect(() => {
-    fetchData();
-}, []);
 
 const fetchData = async () => {
     try {
-        const response = await axios.get("http://localhost:8000/api/shops/");
-        if (response.data.length > 0) {
-            setTelephone(response.data[0].telephone);
-            setEmail(response.data[0].email);
-        }
+        const response = await axios.get("http://localhost:8000/api/shops");
+        setBoutique(response.data);
+        // if (response.data.length > 0) {
+            // setTelephone(response.data);
+            // setEmail(response.data);
+        // }
     } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
     }
@@ -59,7 +57,7 @@ const fetchData = async () => {
                   Nous sommes disponibles 6j/7 de 9h à 19h
                 </p>
                 <p className="text-sm border-b-2 pb-9 border-slate-800">
-                  Téléphone: {telephone}
+                  Téléphone: {boutique?.telephone}
                 </p>
                 <h1 className="flex items-center gap-3 font-medium mt-7">
                   <div className="p-3 text-white rounded-full bg-slate-800">
@@ -71,7 +69,7 @@ const fetchData = async () => {
                   Remplissez notre formulaire et nous vous contacterons sous
                   24h
                 </p>
-              <p>Emails: {email}</p>
+              <p>Emails: {boutique?.email}</p>
               </div>
             </div>
           <div className="w-full px-4 border shadow-sm md:px-9 md:w-3/4">

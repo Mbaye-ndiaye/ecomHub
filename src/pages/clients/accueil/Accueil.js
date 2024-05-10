@@ -8,6 +8,7 @@ import HeaderBanner from "../../../components/clients/Header/HeaderBanner";
 import { useParams } from "react-router-dom";
 import useFormContext from "../../../utils/hooks/useFormContext";
 import axios from "axios";
+import NaveLinks from "../../../components/navbarAdmin/NavLinks";
 
 
 const Accueil = () => {
@@ -31,8 +32,7 @@ const Accueil = () => {
     afficheUneBoutique()
   }, [name])
 
-  if(!nomBoutique) 
-  return <div>Chargement en cour...</div>
+  
   
  
 
@@ -44,6 +44,7 @@ const Accueil = () => {
         style={{ backgroundImage: `url(${image2})` }}
       >
         <Navbar />
+        {/* <NaveLinks className="bg-gray-700"/> */}
 			<HeaderBanner /> 
       </div>
       
