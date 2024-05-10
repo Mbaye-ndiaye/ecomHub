@@ -19,19 +19,32 @@ import CategoriesAdmin from "./components/categories/CategoriesAdmin";
 import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
 import Produis from "./components/produits/Produis";
-// import CategoriesAdmin from "./components/categories/CategoriesAdmin";
+
+import DetailCard from "./components/clients/details/DetailCard";
+import FormProvider from "./utils/context/FormShopContext";
+import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
+
 
 function App() {
   return (
     <div className="App">
-      {/* <IsLogin/> */}
       <Router>
+        <FormProvider>
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/" element={<InterfaceAdmin />} />
           <Route path="/panier" element={<ShoppingCart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/panier" element={<ShoppingCart />}></Route>
+          <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/accueil/:name" element={<Accueil />}></Route>
+          <Route path="/apropos" element={<AboutPage />}></Route>
+          <Route path="/contact/:name" element={<ContactPage />}></Route>
+          <Route path="/profile" element={<FormProfilUser />} />
+
+          <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}></Route>
+          <Route path="/detailCard" element={<DetailCard />}></Route>
           <Route path="/creeShop" element={<FormsShop />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
           <Route path="/Apropos" element={<AboutPage />}></Route>
@@ -41,37 +54,10 @@ function App() {
           <Route path="/AproposEcom" element={<AproposEcom />} />
           <Route path="/*" element={<DashboardWithSidebar />} />
         </Routes>
-
-        {/* <GlobalContextProvider>
-          <ProduitContextProvider>
-            <Routes>
-              <Route path="/Dash" element={<IsLogin />}></Route>
-              <Route path="/produits" element={<Produis />}></Route>
-              <Route path="/categories" element={<CategoriesAdmin />}></Route>
-              <Route path="/commandes" element={<Commande />}></Route>
-
-            </Routes>
-          </ProduitContextProvider>
-        </GlobalContextProvider> */}
+          </FormProvider>
       </Router>
     </div>
   );
 }
 
 export default App;
-
-// function DashboardWithSidebar() {
-//   return (
-//     <>
-//       <Sidebare>
-//       <Router>
-//       <Routes>
-//         <Route path="/Dash" element={<Sidebar />} />
-//         <Route path="/Produis" element={<Produit />} />
-//         {/* Add other Dashboard-related routes here */}
-//       </Routes>
-//       </Router>
-//     </Sidebare>
-//     </>
-//   );
-// }

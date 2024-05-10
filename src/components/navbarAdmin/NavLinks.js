@@ -34,7 +34,7 @@ function NaveLinks({ className }) {
               to="/"
               className="font-bold text-2xl cursor-pointer flex items-center gap-1"
             >
-              <h1 className="w-[300px] h-7 text-blue-600">Marhaba Store</h1>
+              <h1 className="w-[300px] h-7 text-blue-600">MARHABA Store</h1>
             </NavLink>
             <div
               onClick={() => setOpen(!open)}
@@ -66,7 +66,7 @@ function NaveLinks({ className }) {
                   activeClassName="active"
                   onClick={handleClick}
                 >
-                  Boutique
+                  Voir les Boutique
                 </NavLink>
               </li>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
@@ -77,7 +77,7 @@ function NaveLinks({ className }) {
                   activeClassName="active"
                   onClick={handleClick}
                 >
-                  A_propos
+                  A propos
                 </NavLink>
               </li>
               <li className="md:ml-8 md:my-0 my-7 font-semibold">
@@ -87,7 +87,7 @@ function NaveLinks({ className }) {
                   to="/ContactEcom"
                   activeClassName="active"
                 >
-                  Contact Us
+                  Contact 
                 </NavLink>
               </li>
 
