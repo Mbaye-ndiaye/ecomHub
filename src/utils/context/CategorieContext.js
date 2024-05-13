@@ -26,7 +26,7 @@ export default function CategorieContextProvider({children}) {
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
     name: "",
-    shopId: "",
+    shop_id: localStorage.getItem("shopId"),
   });
 
 
@@ -38,7 +38,7 @@ export default function CategorieContextProvider({children}) {
     {
       label: "Nom catégorie",
       type: "text",
-      value: formData.nom,
+      value: nom,
       name: "catégorie",
       setValue: setNom,
     },
@@ -87,17 +87,18 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       
-      const dataToSend = {
-        name: nom,
-        shopId: localStorage.getItem("shopId"),
-      };
+      // const formData = {
+      //   name: nom,
+      //   shopId: localStorage.getItem("shopId"),
+      // };
 
-    //   const fromDataToSend = new FormData();
+      const fromDataToSend = new FormData();
       
-    //   fromDataToSend.append("name", formData.nom);
-    //   fromDataToSend.append("shopId", formData.shopId);
+      fromDataToSend.append("name", formData.name);
+      fromDataToSend.append("shop_id", formData.shop_id);
       
-      console.log(formData.shopId);
+      console.log(formData.shop_id);
+      console.log(formData.name);
       
       if (isEditing) {
           handleEditCategory(editingCategoryId, formData);
@@ -105,7 +106,15 @@ const handleChange = (e) => {
         try {
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/categories",
-                dataToSend, 
+                fromDataToSend, {
+                  
+                headers: {
+                    // Authorization:  `Bearer ${}`,
+                    "Content-Type": "application/formData",
+                },
+                // body: JSON.stringify(formData),
+                }
+                
             );
         setShowModal(false);
         setNom("");
