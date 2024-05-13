@@ -17,7 +17,7 @@
 // export default Produis;
 
 
-import React from "react";
+import React, {useEffect} from "react";
 import useProduit from '../../utils/hooks/useProduit';
 import HeaderTable from '../headerTable/HeaderTable';
 // import useSidebare from '../../utils/hooks/useSidebare';
@@ -31,19 +31,20 @@ const Produis = () => {
 
 
   const {table, actions, titreModal, setTitreModal, 
-        //   filtreProduits,
-          //  handleSelectChange,
+           filtreProducts,
+           handleSelectChange,
            products,
         //    produits,    
-        //   filtreProdCategorie,a
-        //   fetchProduit, 
-        //   setCategoryNames, 
-        //   setFiltreProduits, 
-        //   categories,
-        //   categoryNames, 
-        //   handleSelectChangeCategorie, 
+          // filtreProdCategorie,
+          fetchProduct, 
+          // setCategoryNames, 
+          // setFiltreProduits, 
+          // categories,
+          // categoryNames, 
+          // setCategoryNames,
+          // handleSelectChangeCategorie, 
           inputs, textarea, selects
-          // , hanldleSubmit,
+          , hanldleSubmit,
         //    fetchCategories
         } = useProduit();
 
@@ -54,19 +55,19 @@ const Produis = () => {
 
   
 
-//         useEffect(() => {    
-//           filtreProdCategorie()
-//           fetchProduit();
-//         }, [produits]);
+        useEffect(() => {    
+          // filtreProdCategorie()
+          fetchProduct();
+        }, [products]);
 
         
 //   useEffect(() => {
 // 		setCategoryNames(categories.map((categorie) => categorie.nom));
-// 		setFiltreProduits(produits)
+// 		setFiltreProduits(products)
 // 	  }, [categories]); 
 
 //     useEffect(() => {    
-//       fetchCategories();
+//       // fetchCategories();
 // }, []);
   
 
@@ -88,11 +89,11 @@ const Produis = () => {
         inputs={inputs}
         textarea={textarea}
         selects={selects}
-                // onSubmit={hanldleSubmit} 
-                // handleSelectChange = {handleSelectChange}
+                onSubmit={hanldleSubmit} 
+                handleSelectChange = {handleSelectChange}
             />} 
        />
-      <Table thead={table} tbody={products} actions={actions} />
+      <Table thead={table} tbody={filtreProducts} actions={actions} />
       {/* <ToastContainer /> */}
       </div>
 </div>

@@ -1,21 +1,53 @@
-import React from "react";
-import Input from "../../../components/clients/navbar/Input";
+import React, {useEffect, useState} from "react";
 import CardProduit from "../../../components/clients/card/CardProduit";
 import Navbar from "../../../components/clients/navbar/navbar";
 import Footer from "../../../components/footer/footer";
-import BackgroundImage from "../../../components/clients/bcakgroundImage/BackgroundImage";
 import image2 from "../../../assets/images.jpg";
 import TextAccueil from "../../../components/clients/text/TextAccueil";
+import HeaderBanner from "../../../components/clients/Header/HeaderBanner";
+import { useParams } from "react-router-dom";
+import useFormContext from "../../../utils/hooks/useFormContext";
+import axios from "axios";
+import NaveLinks from "../../../components/navbarAdmin/NavLinks";
+
 
 const Accueil = () => {
+  const {name} = useParams();
+  const {formData} = useFormContext();
+  const [nomBoutique, setNomBoutique] = useState();
+
+  useEffect(() => {
+    
+    const afficheUneBoutique = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/shops/${name}`)
+        setNomBoutique(response.data)
+        console.log("Accueil", response.data);
+
+      } catch (error) {
+        console.error("Erreur lors de la recuperation d'une boutique");
+        
+      }
+    }
+    afficheUneBoutique()
+  }, [name])
+
+  
+  
+ 
+
   return (
-    <div>
+    <div >
       <div
-        className="items-center bg-black "
+      
+        className="items-center bg-white "
         style={{ backgroundImage: `url(${image2})` }}
       >
         <Navbar />
+        {/* <NaveLinks className="bg-gray-700"/> */}
+			<HeaderBanner /> 
       </div>
+      
       <div>
         <CardProduit />
       </div>
