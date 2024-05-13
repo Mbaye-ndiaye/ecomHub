@@ -100,8 +100,7 @@ const handleChange = (e) => {
 
       const config = {
         headers: {
-          'Content-Type': 'multipart/form-data',
-          // Ajoutez ici d'autres en-têtes si nécessaire
+          'Content-Type': 'application/json',
         }
       };
       
@@ -110,7 +109,7 @@ const handleChange = (e) => {
         } else {
         try {
             const response = await axios.post(
-                "http://127.0.0.1:8000/api/categories",
+                "http://localhost:8000/api/categories",
                 formData,
                 config 
             );
