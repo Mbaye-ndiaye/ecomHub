@@ -99,10 +99,10 @@ import Swal from "sweetalert2";
           }
         );
         
-      const shopId = response.data.id;
-      console.log(shopId);
+      const shop_id = response.data.id;
+      console.log(shop_id);
 
-      localStorage.setItem("shopId", response.data.id);
+      localStorage.setItem("shop_id", response.data.id);
         console.log(response.data);
 
     
