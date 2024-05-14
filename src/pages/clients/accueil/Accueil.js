@@ -47,8 +47,8 @@ const Accueil = () => {
     <div >
       <div
       
-        className="items-center bg-white "
-        style={{ backgroundImage: `url(${image2})` }}
+        className="items-center bg-white bg-cover bg-no-repeat bg-center  w-full"
+        style={{ backgroundImage: `url(${boutique?.banniere})` }}
       >
         <Navbar />
         {/* <NaveLinks className="bg-gray-700"/> */}

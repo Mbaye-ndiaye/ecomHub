@@ -6,13 +6,13 @@ import useGlobal from '../hooks/useGlobal';
 import useProduit from '../hooks/useProduit';
 import axios from "axios";
 
-const CategorieContext = createContext();
+export const CategorieContext = createContext();
 
-export { CategorieContext };
+// { CategorieContext };
 
 export default function CategorieContextProvider({children}) {
 
-  const [test, setTest] = useState("Awa");
+  const [test, setTest] = useState("");
   const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
   const [categories, setCategories] = useState([])
@@ -97,8 +97,8 @@ const handleChange = (e) => {
       fromDataToSend.append("name", formData.name);
       fromDataToSend.append("shop_id", formData.shop_id);
       
-      console.log(formData.shop_id);
-      console.log(formData.name);
+      console.log("formData.shop_id", formData.shop_id);
+      console.log("formData.name", formData.name);
       
       if (isEditing) {
           handleEditCategory(editingCategoryId, formData);
