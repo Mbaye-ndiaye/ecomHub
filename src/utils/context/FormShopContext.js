@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 //  export { FormShopContext };
 
  const FormProvider = ({ children }) => {
-  // const {id} = useParams();
+   const {id} = useParams();
     const navigate = useNavigate();
     const [boutique, setBoutique] = useState();
     // console.log("id", id);
@@ -102,10 +102,10 @@ import Swal from "sweetalert2";
           }
         );
         
-      const shopId = response.data.id;
-      console.log(shopId);
+      const shop_id = response.data.id;
+      console.log(shop_id);
 
-      localStorage.setItem("shopId", response.data.id);
+      localStorage.setItem("shop_id", response.data.id);
         console.log(response.data);
 
     
@@ -151,8 +151,8 @@ import Swal from "sweetalert2";
     }
   }
   useEffect(() => {
-    afficheUneBoutique()
-  }, [])
+    afficheUneBoutique(id)
+  }, [id])
 
     const valueContext = {
         formData,

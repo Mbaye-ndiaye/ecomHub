@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +6,8 @@ import useFormContext from "../../../utils/hooks/useFormContext";
 import { FormShopContext } from "../../../utils/context/FormShopContext";
 
 function FormsShop() {
-  const { handleSubmit, formData, handleChange, handleImageChange} = useContext(FormShopContext)   
+  const { handleSubmit, formData, handleChange, handleImageChange } =
+    useContext(FormShopContext);
 
   return (
     <div className="flex justify-center items-center  w-full h-auto p-[20px]">
