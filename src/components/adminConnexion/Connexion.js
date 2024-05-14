@@ -62,7 +62,6 @@ export default function Login() {
         showConfirmButton: false,
         timer: 2000,
       });
-
       navigate("/creeShop");
     } catch (error) {
       console.error(error);

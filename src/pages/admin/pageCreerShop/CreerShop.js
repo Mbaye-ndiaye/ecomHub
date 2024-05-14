@@ -1,96 +1,14 @@
-import React, { useState } from "react";
+
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useFormContext from "../../../utils/hooks/useFormContext";
+import { FormShopContext } from "../../../utils/context/FormShopContext";
+
 
 function FormsShop() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    telephone: "",
-    adresse: "",
-    a_propos: "",
-    description: "",
-    banniere: null,
-    logo: null,
-    user_id: localStorage.getItem("userId"),
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      [e.target.name]: file,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("tokenClient");
-    console.log("tokenClient", token);
-    if (!token) {
-      alert("Connectez-vous d'abord avant de créer votre boutique");
-      navigate("/connexion");
-      return;
-    }
-
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("logo", formData.logo);
-    formDataToSend.append("banniere", formData.banniere);
-    formDataToSend.append("telephone", formData.telephone);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("adresse", formData.adresse);
-    formDataToSend.append("a_propos", formData.a_propos);
-    formDataToSend.append("user_id", formData.user_id);
-
-    console.log(formData.user_id);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/shops",
-        formDataToSend,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      // Here, you get the shop_id from the response
-      const shopId = response.data.id;
-      console.log(shopId);
-
-      localStorage.setItem("shopId", response.data.id);
-
-      console.log(response.data);
-      // afficher le message de succès
-      await Swal.fire({
-        icon: "success",
-        title: "Boutique ajoutée avec succès",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-      navigate("/dashboard");
-    } catch (error) {
-      console.error(error);
-
-      alert("Échec de l'ajout de la boutique");
-    }
-  };
+  const { handleSubmit, formData, handleChange, handleImageChange} = useContext(FormShopContext)   
 
   return (
     <div className="flex justify-center items-center  w-full h-auto p-[20px]">
