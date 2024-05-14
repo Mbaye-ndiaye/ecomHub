@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect, useContext, createContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from "sweetalert2";
 
 
@@ -8,7 +8,11 @@ import Swal from "sweetalert2";
 //  export { FormShopContext };
 
  const FormProvider = ({ children }) => {
+   const {id} = useParams();
     const navigate = useNavigate();
+    const [boutique, setBoutique] = useState();
+    // console.log("id", id);
+
 
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -88,9 +92,8 @@ import Swal from "sweetalert2";
       console.log(formData.user_id)
       
       try {
-        const response = await axios.post(
-          "http://localhost:8000/api/shops",
-          formDataToSend,
+        const response = await axios.post("http://localhost:8000/api/shops", 
+        formDataToSend,
           {
             headers: {
               Authorization: `Bearer ${token}`, 
@@ -119,22 +122,45 @@ import Swal from "sweetalert2";
       }
     };
 
-    const fetchShopById = async (id) => {
-      try {
-          const response = await axios.get(`http://localhost:8000/api/shops/${id}`);
-          console.log("response.data", response.data);
-          return response.data;
-      } catch (error) {
-          console.error('Erreur lors de la récupération des détails de la boutique :', error);
-      }
-  };
+  //   const fetchShopById = async (id) => {
+  //     try {
+  //         const response = await axios.get(`http://localhost:8000/api/shops/${id}`);
+  //         setBoutique(response.data)
+
+  //         console.log("DATA", response.data);
+  //         //  return response.data;
+  //     } catch (error) {
+  //         console.error('Erreur lors de la récupération des détails de la boutique :', error);
+  //     }
+  // };
+
+  // useEffect(() => {
+  //   fetchShopById()
+  // }, [id])
+
+  
+  const afficheUneBoutique = async (id) => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/shops/"+ id)
+      setBoutique(response.data)
+      console.log("Accueil", response.data);
+      
+    } catch (error) {
+      console.error("Erreur lors de la recuperation d'une boutique");
+      
+    }
+  }
+  useEffect(() => {
+    afficheUneBoutique(id)
+  }, [id])
 
     const valueContext = {
         formData,
         handleChange,
         handleImageChange,
         handleSubmit,
-        fetchShopById
+         afficheUneBoutique,
+        boutique
     }
     
     

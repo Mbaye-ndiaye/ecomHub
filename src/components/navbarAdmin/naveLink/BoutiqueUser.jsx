@@ -29,12 +29,12 @@ const BoutiqueUser = () => {
     fetchBoutique()
   }, [])
 
-  const hanldeSelectedChange = (e) => {
-    setSelectedBoutique(e.target.value)
-    navigate(`/accueil/${e.target.value}`)
-  }
+//   const hanldeSelectedChange = (e) => {
+//     setSelectedBoutique(e.target.value)
+//     navigate(`/accueil/${e.target.value}`)
+//   }
   const uniqueBoutiqueIds = boutiques.map((boutique) => boutique.id);
-  console.log("uniqueBoutiqueIds", uniqueBoutiqueIds);
+//   console.log("uniqueBoutiqueIds", uniqueBoutiqueIds);
 
   const nmbreBoutique = uniqueBoutiqueIds.length;
   console.log("nmbreBoutique", nmbreBoutique);
@@ -47,9 +47,10 @@ const BoutiqueUser = () => {
             
         // Filtrer les données de la boutique correspondant à l'identifiant unique
         const uniqueBoutiqueData = boutiques.find((boutique) => boutique.id === boutiqueId);
+        // console.log("uniqueBoutiqueData", uniqueBoutiqueData);
         return (
             <div key={uniqueBoutiqueData.id}>
-            <Link to={`/boutique/${uniqueBoutiqueData.name}`}>
+            <Link to={`/accueil/${uniqueBoutiqueData.id}`}>
             
           <div className="shadow-lg p-5 mx-1 my-2 bg-white md:rounded ">
             <div className="flex gap-3">

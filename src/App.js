@@ -24,22 +24,18 @@ function App() {
     <div className="App">
       <Router>
         <FormProvider>
-          <Routes>
-            <Route path="/connexion" element={<Login />} />
-            <Route path="inscription" element={<Inscription />} />
-            <Route path="/" element={<InterfaceAdmin />} />
-            <Route path="/panier" element={<ShoppingCart />}></Route>
-            <Route path="/checkout" element={<CheckoutPage />}></Route>
-            <Route path="/panier" element={<ShoppingCart />}></Route>
-            <Route path="/checkout" element={<CheckoutPage />}></Route>
-            <Route path="/accueil/:name" element={<Accueil />}></Route>
-            <Route path="/apropos" element={<AboutPage />}></Route>
-            <Route path="/contact/:name" element={<ContactPage />}></Route>
-            <Route path="/profile" element={<FormProfilUser />} />
 
-            <Route
-              path="/boutiqueCategorie"
-              element={<BoutiqueCategorie />}
+        <Routes>
+          <Route path="/connexion" element={<Login />} />
+          <Route path="inscription" element={<Inscription />} />
+          <Route path="/" element={<InterfaceAdmin />} />
+          <Route path="/panier" element={<ShoppingCart />}></Route>
+          <Route path="/checkout" element={<CheckoutPage />}></Route>
+          <Route path="/accueil/:name" element={<Accueil />}></Route>
+          <Route path="/apropos" element={<AboutPage />}></Route>
+          <Route path="/contact" element={<ContactPage />}></Route>
+          <Route path="/profile" element={<FormProfilUser />} />
+            <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}
             ></Route>
             <Route path="/detailCard" element={<DetailCard />}></Route>
             <Route path="/creeShop" element={<FormsShop />}></Route>

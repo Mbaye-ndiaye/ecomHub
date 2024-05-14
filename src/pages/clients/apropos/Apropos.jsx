@@ -1,36 +1,38 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import Navbar from '../../../components/clients/navbar/navbar';
 import Footer from './../../../components/footer/footer';
 import { useFormContext } from 'react-hook-form';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { FormShopContext } from '../../../utils/context/FormShopContext';
 
 
 
 
 const AboutPage = () => {
-	const { formData } = useFormContext({
-		idBoutique: localStorage.getItem("idBoutique")
-	});
+	const {name} = useParams();
+	const {afficheUneBoutique, boutique} = useContext(FormShopContext)
+
 	const [apropos, setApropos] = useState([]);
 
 	useEffect(() => {
-		fetchData();
-	  }, []);
+		afficheUneBoutique(name)
+	  }, [name, afficheUneBoutique]);
 	  
-	  const fetchData = async (id) => {
-	// const form =  {
+	//   const fetchData = async (id) => {
+	// // const form =  {
 
-	// 	idBoutique: localStorage
-	// }
-		try {
-		  const response = await axios.get("http://localhost:8000/api/shops" )
-		//   if (response.data.length > 0) {
-            setApropos(response.data);
-        // } 
-		} catch (error) {
-		  console.error('Erreur lors de la récupération des donnees:', error);
-		}
-	  };
+	// // 	idBoutique: localStorage
+	// // }
+	// 	try {
+	// 	  const response = await axios.get("http://localhost:8000/api/shops" )
+	// 	//   if (response.data.length > 0) {
+    //         setApropos(response.data);
+    //     // } 
+	// 	} catch (error) {
+	// 	  console.error('Erreur lors de la récupération des donnees:', error);
+	// 	}
+	//   };
 
 	return (
 		<section>
@@ -48,7 +50,7 @@ const AboutPage = () => {
 							)}
 							</div>
 							))} */}
-							<p className="mt-4 text-lg text-gray-500">{apropos}</p>
+							<p className="mt-4 text-lg text-gray-500">{boutique?.a_propos}</p>
 
 						{/* <p className="mt-4 text-lg text-gray-500">
 							Fusce ultrices velit id nisi volutpat, nec malesuada velit
