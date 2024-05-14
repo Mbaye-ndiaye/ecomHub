@@ -8,40 +8,35 @@ const ContentHeader = () => {
   const [shopName, setShopName] = useState("");
 
   useEffect(() => {
+    // Récupérer le nom de la boutique depuis la base de données en utilisant l'ID de l'utilisateur
     const user_Id = localStorage.getItem("userId");
+    console.log("tokenClient", user_Id);
 
+    const token = localStorage.getItem("tokenClient");
+    console.log("tokenClient", token);
+
+    if (!token) {
+      alert("connectez vous d" / "abord avant de creer votre boutique");
+      navigate("/connexion");
+      return;
+    }
     const fetchShopName = async () => {
       try {
-        // Créer une nouvelle requête OPTIONS
-        const optionsResponse = await fetch(
+        const response = await axios.get(
           `http://localhost:8000/api/shops/${user_Id}`,
           {
-            method: "OPTIONS",
             headers: {
-              // Assurez-vous d'inclure tous les en-têtes requis, par exemple :
-              Authorization: `Bearer ${user_Id}`,
-              "Content-Type": "application/json", // Assurez-vous d'adapter le type de contenu en fonction de votre API
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
             },
           }
         );
-
-        // Afficher la réponse de la requête OPTIONS dans la console
-        console.log("OPTIONS Response:", optionsResponse);
-
-        // Analyser la réponse pour extraire les en-têtes CORS
-        const accessControlAllowOrigin = optionsResponse.headers.get(
-          "Access-Control-Allow-Origin"
-        );
-        console.log("Access-Control-Allow-Origin:", accessControlAllowOrigin);
-
-        // Si vous recevez une réponse 200 OK, la requête OPTIONS a réussi
-        // Vous pouvez ensuite continuer avec la requête GET ou POST comme d'habitude
-        // N'oubliez pas d'ajuster la configuration en fonction de la réponse OPTIONS que vous obtenez
+        setShopName(response.data.name);
+        console.log("response", response.data.name);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchShopName();
   }, []);
 

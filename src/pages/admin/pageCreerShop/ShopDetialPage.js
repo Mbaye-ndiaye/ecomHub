@@ -1,4 +1,3 @@
-// ShopDetailPage.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -26,6 +25,11 @@ const ShopDetailPage = () => {
     };
     fetchShopDetails();
   }, [shop_Id]);
+
+  // Vérifier si shopDetails est null avant d'essayer d'accéder à ses propriétés
+  if (!shopDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
