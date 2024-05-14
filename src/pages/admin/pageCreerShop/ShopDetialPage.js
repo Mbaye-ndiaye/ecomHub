@@ -27,10 +27,6 @@ const ShopDetailPage = () => {
     fetchShopDetails();
   }, [shop_Id]);
 
-  if (!shopDetails) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <h1>{shopDetails.name}</h1>

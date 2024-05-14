@@ -8,27 +8,40 @@ const ContentHeader = () => {
   const [shopName, setShopName] = useState("");
 
   useEffect(() => {
-    // Récupérer le nom de la boutique depuis la base de données en utilisant l'ID de l'utilisateur
     const user_Id = localStorage.getItem("userId");
-    console.log("tokenClient", user_Id);
 
     const fetchShopName = async () => {
       try {
-        const response = await axios.get(
+        // Créer une nouvelle requête OPTIONS
+        const optionsResponse = await fetch(
           `http://localhost:8000/api/shops/${user_Id}`,
           {
+            method: "OPTIONS",
             headers: {
+              // Assurez-vous d'inclure tous les en-têtes requis, par exemple :
               Authorization: `Bearer ${user_Id}`,
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json", // Assurez-vous d'adapter le type de contenu en fonction de votre API
             },
           }
         );
-        setShopName(response.data.name);
-        console.log("response", response.data.name);
+
+        // Afficher la réponse de la requête OPTIONS dans la console
+        console.log("OPTIONS Response:", optionsResponse);
+
+        // Analyser la réponse pour extraire les en-têtes CORS
+        const accessControlAllowOrigin = optionsResponse.headers.get(
+          "Access-Control-Allow-Origin"
+        );
+        console.log("Access-Control-Allow-Origin:", accessControlAllowOrigin);
+
+        // Si vous recevez une réponse 200 OK, la requête OPTIONS a réussi
+        // Vous pouvez ensuite continuer avec la requête GET ou POST comme d'habitude
+        // N'oubliez pas d'ajuster la configuration en fonction de la réponse OPTIONS que vous obtenez
       } catch (error) {
         console.error(error);
       }
     };
+
     fetchShopName();
   }, []);
 
@@ -36,7 +49,7 @@ const ContentHeader = () => {
     <div className="flex items-center justify-between">
       <h1 className="text-[#526d82] text-2xl">
         Bienvenue sur le tableau de bord de :{" "}
-        <Link to={`/ShopDetail`}>Seck</Link>
+        <Link to={`/ShopDetail`}>{shopName}</Link>
       </h1>
       <div className="flex items-center gap-[20px]">
         <div className="bg-blue-300 px-5 py-1 rounded flex items-center">
