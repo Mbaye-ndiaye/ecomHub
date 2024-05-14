@@ -11,7 +11,7 @@ const CardList = () => {
       try {
         const response = await axios.get('https://fakestoreapi.com/products');
         setProducts(response.data);
-        console.log("response", response);
+        // console.log("response", response);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
