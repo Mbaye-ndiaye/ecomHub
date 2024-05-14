@@ -34,7 +34,7 @@ const ShopDetailPage = () => {
   return (
     <div>
       <h1>{shopDetails.name}</h1>
-      <p>Description: {shopDetails.description}</p>
+      <p>Des: {shopDetails.description}</p>
       {/* Affichez d'autres détails de la boutique ici */}
     </div>
   );
