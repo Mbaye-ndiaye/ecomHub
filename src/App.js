@@ -19,6 +19,7 @@ import CategoriesAdmin from "./components/categories/CategoriesAdmin";
 import Commande from "./components/commandes/Commande";
 import ProduitContextProvider from "./utils/context/ProduitsContext";
 import Produis from "./components/produits/Produis";
+import ShopDetailPage from "./pages/admin/pageCreerShop/ShopDetialPage";
 // import CategoriesAdmin from "./components/categories/CategoriesAdmin";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Boutique" element={<BoutiqueUser />} />
           <Route path="/ContactEcom" element={<ContactEcom />} />
           <Route path="/AproposEcom" element={<AproposEcom />} />
+          <Route path="/ShopDetail" element={<ShopDetailPage />} />
           <Route path="/*" element={<DashboardWithSidebar />} />
         </Routes>
 
