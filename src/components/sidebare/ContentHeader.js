@@ -55,9 +55,11 @@ const ContentHeader = () => {
           />
           <BiSearch className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
         </div>
+        <Link to={'/dashboard/FormProfilUser'}>
         <div className="bg-[#dde6ed] p-[12px] rounded text-[#969393] flex items-center justify-center ">
           <BiNotification className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
         </div>
+        </Link>
       </div>
     </div>
   );

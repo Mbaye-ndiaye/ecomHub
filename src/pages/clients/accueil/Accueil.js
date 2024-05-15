@@ -10,36 +10,24 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import NaveLinks from "../../../components/navbarAdmin/NavLinks";
 import { FormShopContext } from "../../../utils/context/FormShopContext";
+import SpinnerLoader from "../../../components/spinnerLoader/SpinnerLoader";
 
 
 const Accueil = () => {
   const { name } = useParams();
   const { afficheUneBoutique, boutique } = useContext(FormShopContext);
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
   afficheUneBoutique(name)
+  .then(() => setLoading(false)) // Arrête le chargement une fois que les données sont chargées
+  .catch(() => setLoading(false)); // Arrête le chargement en cas d'erreur
   }, [name, afficheUneBoutique])
-  // const {formData} = useFormContext();
-  //  const [boutique, setBoutique] = useState();
+
+
+  if(loading) 
+    return <SpinnerLoader />
   
-
-  // useEffect(() => {
-    
-  //   const afficheUneBoutique = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:8000/api/shops/${name}`)
-  //       setBoutique(response.data)
-  //       console.log("Accueil", response.data);
-
-  //     } catch (error) {
-  //       console.error("Erreur lors de la recuperation d'une boutique");
-        
-  //     }
-  //   }
-  //   afficheUneBoutique()
-  // }, [name])
-
-  if(!boutique) 
-  return <div>Chargement en cour...</div>
+   
   
  
 

@@ -10,6 +10,7 @@ import GlobalContextProvider from "../../utils/context/GlobalContext";
 import ProduitContextProvider from "../../utils/context/ProduitsContext";
 import CategoriesAdmin from "../../components/categories/CategoriesAdmin";
 
+
 function DashboardWithSidebar() {
   return (
     <GlobalContextProvider>
@@ -20,6 +21,7 @@ function DashboardWithSidebar() {
             <Route path="/dashboard/commandes" element={<Commande />} />
             <Route path="/dashboard/categories" element={<CategoriesAdmin />} />
             <Route path="/dashboard/produis" element={<Produis />} />
+
           </Routes>
         </Sidebar>
       </ProduitContextProvider>

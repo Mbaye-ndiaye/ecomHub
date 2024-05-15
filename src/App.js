@@ -13,11 +13,12 @@ import BoutiqueUser from "./components/navbarAdmin/naveLink/BoutiqueUser";
 import ContactEcom from "./components/navbarAdmin/naveLink/ContactEcom";
 import AproposEcom from "./components/navbarAdmin/naveLink/AproposEcom";
 import FormsShop from "./pages/admin/pageCreerShop/CreerShop";
-import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 import ShopDetailPage from "./pages/admin/pageCreerShop/ShopDetialPage";
 import DetailCard from "./components/clients/details/DetailCard";
 import FormProvider from "./utils/context/FormShopContext";
 import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
+import FormProfilUser from "./pages/admin/profilUser/FormProfilUser"
+
 
 function App() {
   return (
@@ -34,9 +35,8 @@ function App() {
           <Route path="/accueil/:name" element={<Accueil />}></Route>
           <Route path="/apropos" element={<AboutPage />}></Route>
           <Route path="/contact" element={<ContactPage />}></Route>
-          <Route path="/profile" element={<FormProfilUser />} />
-            <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}
-            ></Route>
+          <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}></Route>
+          <Route path="/dashboard/FormProfilUser" element={<FormProfilUser />} />
             <Route path="/detailCard" element={<DetailCard />}></Route>
             <Route path="/creeShop" element={<FormsShop />}></Route>
             <Route path="/Accueil" element={<Accueil />}></Route>

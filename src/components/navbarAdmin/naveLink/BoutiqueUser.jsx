@@ -3,14 +3,15 @@ import image1 from "../../../assets/exclusive_image.png"
 import { Link, useNavigate } from "react-router-dom";
 import useFormContext from "../../../utils/hooks/useFormContext";
 import axios from "axios";
+import LoaderCard from "../../../pages/clients/loaderCard/LoaderCard";
+
 
 
 
 const BoutiqueUser = () => {
-    const navigate = useNavigate();
     const {formData} = useFormContext();
     const [boutiques, setBoutique] = useState([]);
-  const [selectedBoutique, setSelectedBoutique] = useState([])
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
@@ -18,10 +19,12 @@ const BoutiqueUser = () => {
       try {
         const response = await axios.get("http://localhost:8000/api/shops");
         setBoutique(response.data);
+        setLoading(false)
         console.log("response.data", response.data);
         
       } catch (error) {
         console.error("Erreur lors de la recuperer des donnees", error);
+        setLoading(false)
         
       }
     }
@@ -29,12 +32,14 @@ const BoutiqueUser = () => {
     fetchBoutique()
   }, [])
 
-//   const hanldeSelectedChange = (e) => {
-//     setSelectedBoutique(e.target.value)
-//     navigate(`/accueil/${e.target.value}`)
-//   }
+
+  if (loading) {
+    return <LoaderCard />;
+
+  }
+
+
   const uniqueBoutiqueIds = boutiques.map((boutique) => boutique.id);
-//   console.log("uniqueBoutiqueIds", uniqueBoutiqueIds);
 
   const nmbreBoutique = uniqueBoutiqueIds.length;
   console.log("nmbreBoutique", nmbreBoutique);
