@@ -32,12 +32,12 @@ const Accueil = () => {
  
 
   return (
-    <div >
+    <div className="bg-gray-100">
+      
       <div
       
         className="items-center bg-white bg-cover bg-no-repeat bg-center  w-full"
-        style={{ backgroundImage: `url(${boutique?.banniere})` }}
-      >
+        style={{ backgroundImage: `url(${boutique?.banniere})` }}>
         <Navbar />
         {/* <NaveLinks className="bg-gray-700"/> */}
 			<HeaderBanner /> 

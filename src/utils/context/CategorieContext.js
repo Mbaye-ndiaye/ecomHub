@@ -62,11 +62,11 @@ export default function CategorieContextProvider({children}) {
       handleClick: (category) => {
         categories.map((categorie) => {
           if (categorie._id === category) {
-            setNom(categorie.nom);
+            setNom(categorie.name);
           }
         });
         setIsEditing(true);
-        setShowModal(true);
+        // setShowModal(true);
         setEditingCategoryId(category);
       },
     },
@@ -160,7 +160,7 @@ export default function CategorieContextProvider({children}) {
   const handleEditCategory = (categoryId, newData) => {
     setEditData(newData);
     handleEdit(categoryId, newData);
-    setShowModal(false);
+    // setShowModal(false);
   };
 
   // const handleDelete = async (categoryId) => {

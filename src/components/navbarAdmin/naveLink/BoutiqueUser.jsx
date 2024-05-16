@@ -45,8 +45,8 @@ const BoutiqueUser = () => {
   console.log("nmbreBoutique", nmbreBoutique);
 
     return (
-        <div className="bg-gray-200 p-5 h-screen">
-            <h1 className="text-blue-600 font-bold text-2xl text-center mb-5">Le nombre de boutique existe:  {nmbreBoutique}</h1>
+        <div className="bg-[#494C4F] p-5 h-screen">
+            <h1 className="text-white font-bold text-2xl text-center mb-5">Le nombre de boutique existe:  {nmbreBoutique}</h1>
             <div className="grid grid-cols-4 gap-7">
             {[...uniqueBoutiqueIds].map((boutiqueId) => {
             
@@ -57,16 +57,18 @@ const BoutiqueUser = () => {
             <div key={uniqueBoutiqueData.id}>
             <Link to={`/accueil/${uniqueBoutiqueData.id}`}>
             
-          <div className="shadow-lg p-5 mx-1 my-2 bg-white md:rounded ">
-            <div className="flex gap-3">
+          <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
+            <div className="flex gap-3 mx-4">
               <img
                 src={uniqueBoutiqueData.logo}
                 className="w-[30px] h-[30px] rounded-full"
                 alt="/"
                 />
-              <h1 className="text-lg text-black font-medium">{uniqueBoutiqueData.name}</h1>
             </div>
-            <p className="text-center">{uniqueBoutiqueData.email}</p>
+            <div className="">
+              <h1 className="text-lg text-black font-bold">{uniqueBoutiqueData.name}</h1>
+            <p className="text-center text-sm">{uniqueBoutiqueData.email}</p>
+          </div>
           </div>
           </Link>
                 </div>

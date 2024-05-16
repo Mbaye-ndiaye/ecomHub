@@ -9,12 +9,14 @@ import Produis from "../../components/produits/Produis";
 import GlobalContextProvider from "../../utils/context/GlobalContext";
 import ProduitContextProvider from "../../utils/context/ProduitsContext";
 import CategoriesAdmin from "../../components/categories/CategoriesAdmin";
+import SidebareContextProvider from "../../utils/context/SidebareContext";
 
 
 function DashboardWithSidebar() {
   return (
-    <GlobalContextProvider>
-      <ProduitContextProvider>
+    // <GlobalContextProvider>
+      <SidebareContextProvider>
+      {/* <ProduitContextProvider> */}
         <Sidebar>
           <Routes>
             <Route path="/dashboard" element={<IsLogin />} />
@@ -24,8 +26,9 @@ function DashboardWithSidebar() {
 
           </Routes>
         </Sidebar>
-      </ProduitContextProvider>
-    </GlobalContextProvider>
+      {/* </ProduitContextProvider> */}
+      </SidebareContextProvider>
+
   );
 }
 

@@ -1,6 +1,5 @@
+import axios from 'axios';
 import React, { createContext, useState } from 'react';
-// import axiosInstance from '../axiosInstance';
-
 export const SidebareContext = createContext();
 
 const SidebareContextProvider = ({ children }) => {
@@ -52,22 +51,22 @@ const SidebareContextProvider = ({ children }) => {
     }
   };
 
-//   const profile = () => {
-//     const token = localStorage.getItem('token');
+  const profile = () => {
+    const token = localStorage.getItem('token');
 
-//     axiosInstance
-//       .get('/auth/profile', {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       })
-//       .then((res) => {
-//         setUser(res.data);
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   };
+    axios
+      .get('/api/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const value = {
     open,
@@ -85,7 +84,7 @@ const SidebareContextProvider = ({ children }) => {
     setOpen,
     updateUserProfile,
     handleToggle,
-    // profile,
+    profile,
     setUser,
   };
 
