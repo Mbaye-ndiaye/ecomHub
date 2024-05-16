@@ -2,7 +2,7 @@ import React from "react";
 import Login from "./components/adminConnexion/Connexion";
 import Inscription from "./components/adminInscription/Inscription";
 import InterfaceAdmin from "./components/interfaceAdmin/InterfaceAdmin";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
@@ -13,17 +13,22 @@ import BoutiqueUser from "./components/navbarAdmin/naveLink/BoutiqueUser";
 import ContactEcom from "./components/navbarAdmin/naveLink/ContactEcom";
 import AproposEcom from "./components/navbarAdmin/naveLink/AproposEcom";
 import FormsShop from "./pages/admin/pageCreerShop/CreerShop";
-import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 import ShopDetailPage from "./pages/admin/pageCreerShop/ShopDetialPage";
 import DetailCard from "./components/clients/details/DetailCard";
 import FormProvider from "./utils/context/FormShopContext";
 import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategorie";
+import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
+import GlobalContextProvider from "./utils/context/GlobalContext";
+import CategorieContextProvider from "./utils/context/CategorieContext";
+
+
 
 function App() {
   return (
     <div className="App">
-      <Router>
+     
         <FormProvider>
+      {/* <Router> */}
 
         <Routes>
           <Route path="/connexion" element={<Login />} />
@@ -34,9 +39,8 @@ function App() {
           <Route path="/accueil/:name" element={<Accueil />}></Route>
           <Route path="/apropos" element={<AboutPage />}></Route>
           <Route path="/contact" element={<ContactPage />}></Route>
-          <Route path="/profile" element={<FormProfilUser />} />
-            <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}
-            ></Route>
+          <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}></Route>
+          <Route path="/dashboard/FormProfilUser" element={<FormProfilUser />} />
             <Route path="/detailCard" element={<DetailCard />}></Route>
             <Route path="/creeShop" element={<FormsShop />}></Route>
             <Route path="/Accueil" element={<Accueil />}></Route>
@@ -48,10 +52,13 @@ function App() {
             <Route path="/ShopDetail" element={<ShopDetailPage />} />
             <Route path="/*" element={<DashboardWithSidebar />} />
           </Routes>
+      {/* </Router> */}
         </FormProvider>
-      </Router>
+        {/* </CategorieContextProvider>
+        </GlobalContextProvider> */}
     </div>
   );
 }
 
 export default App;
+

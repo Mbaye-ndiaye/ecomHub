@@ -85,7 +85,7 @@ export default function Login() {
           className="max-w-[400px] w-full mx-auto bg-white p-8 rounded"
           onSubmit={handleSubmit}
         >
-          <h2 className="py-4 text-4xl font-bold text-center">EcomHub</h2>
+          <h2 className="py-4 text-4xl font-bold text-center">Marhaba Store</h2>
 
           <div className="relative flex flex-col mb-4">
             <label htmlFor="email" className="block text-sm font-medium ">
