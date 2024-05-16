@@ -1,28 +1,33 @@
 import React from "react";
 import { FaCamera } from "react-icons/fa";
-// import profile from "../../assets/images/profile.png";
+ import profile from "../../../assets/img1.jpeg";
 
-const Form = () => {
+const Form = ({ editedUser, handleSubmit, handleChange, user }) => {
   const handleImageClick = () => {
     document.getElementById("fileInput").click();
   };
 
   return (
-    <div className="mb-5  gap-5 flex flex-row align-center p-28 rounded shadow">
+    <form onSubmit={handleSubmit}>
+    <div className="mb-5  gap-5 flex flex-row align-center p-28 rounded shadow bg-slate-600">
         <div className="w-80 h-[300px] bg-white rounded">
-          <h1 className="text-center mt-5 text-[#120808] text-2xl">John Doe</h1>
-            <h2 className="text-center mt-5 text-[#120808]">@john_doe</h2>
-          <figure className="flex flex-row justify-center rounded mt-5">
+          <div className="flex flex-row justify-center rounded mt-5">
         <label
           htmlFor="fileInput"
           className="block text-sm font-medium text-gray-600 cursor-pointer"
         >
           <div className="md:relative">
-            <div
+          <img
+              src={profile}
+               
+              alt="Shoes"
+              className="w-20 h-20 rounded-full object-cover"
+              />
+          <div
               onChange={handleImageClick}
               className="md:absolute md:inset-0  flex items-center md:items-end justify-center md:justify-end  rounded-full cursor-pointer"
             >
-              <FaCamera className="text-[white] w-6 h-6 mr-1 bg-black p-1 rounded-lg " />
+              <FaCamera className="text-[white] w-6 h-6 mr-3 bg-black p-1 rounded-lg " />
             </div>
             <input
               type="file"
@@ -30,23 +35,17 @@ const Form = () => {
               name="imgProfile"
               accept="image/*"
               className="hidden"
-              //   onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
         </label>
-            <img
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-              alt="Shoes"
-              className="rounded-full w-28 h-28"
-              />
-          </figure>
-          <div className="card-body items-center text-center mt-10">
-            <p className="text-[black]">Member since : 03 mai 2024</p>
-            
+           
           </div>
+          <h1 className="text-center mt-9 text-[#120808] text-2xl">John Doe</h1>
+          
         </div>
 
-        <form className="bg-white basis-1/2 rounded w-52">
+        <div className="bg-white basis-1/2 rounded w-52">
       
       
 
@@ -63,8 +62,8 @@ const Form = () => {
               type="text"
               id="prenom"
               name="prenom"
-              //   value={user.prenom}
-              //   onChange={handleChange}
+              // value={user.prenom}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
@@ -79,8 +78,8 @@ const Form = () => {
               type="text"
               id="nom"
               name="nom"
-              //   value={user.nom}
-              //   onChange={handleChange}
+              // value={user.nom}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
@@ -97,24 +96,24 @@ const Form = () => {
               type="Email"
               id="Email"
               name="Email"
-              //   value={user.telephone}
-              //   onChange={handleChange}
+              // value={user.telephone}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
           <div className="mb-4 mt- w-full md:w-1/2">
             <label
-              htmlFor="email"
+              htmlFor="password"
               className="block text-sm font-medium text-gray-600 mb-3"
             >
-              Email Confirm
+              Password
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              //   value={user.email}
-              //   onChange={handleChange}
+              type="password"
+              id="password"
+              name="password"
+              // value={user.password}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
@@ -122,33 +121,33 @@ const Form = () => {
         <div className="flex w-full mt- align-center justify-center flex-col  md:flex-row gap-5">
           <div className="mb-5 mt- w-full md:w-1/2">
             <label
-              htmlFor="password"
+              htmlFor="telephone"
               className="block text-sm font-medium text-gray-600 mb-3"
             >
-              Mot de pass
+              Telephone
             </label>
             <input
-              type="password"
-              id="password"
-              name="password"
-              //   value={user.telephone}
-              //   onChange={handleChange}
+              type="telephone"
+              id="telephone"
+              name="telephone"
+              // value={user.telephone}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
           <div className="mb-4 mt- w-full md:w-1/2">
             <label
-              htmlFor="password"
+              htmlFor="adresse"
               className="block text-sm font-medium text-gray-600 mb-3"
             >
-              Confirmé Mot de pass
+              Adresse
             </label>
             <input
-              type="password"
-              id="password"
-              name="password"
-              //   value={user.email}
-              //   onChange={handleChange}
+              type="text"
+              id="adresse"
+              name="adresse"
+              // value={user.adresse}
+              onChange={handleChange}
               className="mt-1 p-2 border focus:border text-gray-400 focus:border-double focus:border-sky-600 outline-none rounded-md w-full"
             />
           </div>
@@ -163,8 +162,11 @@ const Form = () => {
           Enregistrer
         </button>
         </div>
-    </form>
       </div>
+      </div>
+
+    </form>
+
   );
 };
 

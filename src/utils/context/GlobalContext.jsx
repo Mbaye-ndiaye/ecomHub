@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 // import axiosInstance from "../axiosInstance";
 
 export let prenom;
@@ -9,7 +11,7 @@ export const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
-  const [client, setClient] = useState("");
+  const [admin, setAdmin] = useState("");
 //   const [commandes, setCommandes] = useState([]);
   const [password, setPassword] = useState("");
   const [dropdown, setDropdown] = useState(false);
@@ -109,28 +111,28 @@ const GlobalContextProvider = ({ children }) => {
   //   //   });
   // };
 
-//   const profileUser = async () => {
-//     const token = localStorage.getItem("tokenclient");
+  const profileUser = async () => {
+    const token = localStorage.getItem("tokenclient");
 
-//     if (!token) {
-//       return;
-//     }
+    if (!token) {
+      return;
+    }
 
-//     try {
-//       const res = await axiosInstance.get("/authclient/profile", {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
+    try {
+      const res = await axios.get("/api/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-//       setClient(res.data);
-//       // console.log(res.data);
-//       prenom = res.data.prenom;
-//       // console.log(client, 'client');
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
+      setAdmin(res.data);
+       console.log(res.data);
+      prenom = res.data.prenom;
+       console.log(admin, 'admin');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   //   const fetchProduits = async () => {
   //     try {
@@ -168,10 +170,10 @@ const GlobalContextProvider = ({ children }) => {
 //     }
 //   };
 
-//   useEffect(() => {
-//     profileUser();
-//     fetchCommandes();
-//   }, [commandes]);
+  useEffect(() => {
+    profileUser();
+    // fetchCommandes();
+  }, []);
 
   const value = {
     showModal,
@@ -184,14 +186,14 @@ const GlobalContextProvider = ({ children }) => {
     handleLogout,
     isLoggedIn,
     handleLogoutUser,
-    // profileUser,
+    profileUser,
     handleToggle,
     produitAimer,
     setProduitAimer,
     // handleLikeToggle,
-    client,
+    admin,
     // isLoading,
-    setClient,
+    setAdmin,
     // commandes,
     dropdown,
     setDropdown,
