@@ -34,8 +34,8 @@ const Categories = () => {
 
   return (
     <div className="flex bg-gray-700 p-[20px]   gap[20px]">
-      <Sidebare />
-      <div className="bg-white rounded-[20px] p-[2rem] flex-1 gap-[1.5rem] justify-between mb-5 h-auto ml-8">
+      {/* <Sidebare /> */}
+      <div className="bg-white rounded-[20px] p-[2rem] flex-1 mb-5 h-auto ">
         <HeaderTable
           title="Liste categories"
           nomAjout="Ajouter un nouveau categorie"
