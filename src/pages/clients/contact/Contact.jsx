@@ -1,38 +1,42 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {  useFormContext } from 'react-hook-form';
 import Navbar from '../../../components/clients/navbar/navbar';
 import Footer from './../../../components/footer/footer';
 import { BsTelephone } from 'react-icons/bs';
-import { VscMail } from 'react-icons/vsc';
+import { VscMail, VscSymbolNamespace } from 'react-icons/vsc';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { FormShopContext } from '../../../utils/context/FormShopContext';
+
 
 
 
 const ContactPage = () => {
-  const {name} = useParams()
-const {formData } = useFormContext();
-const [boutique, setBoutique] = useState([])
+  const {id} = useParams()
+  const { afficheUneBoutique, boutique } = useContext(FormShopContext);
+  useEffect(() => {
+    afficheUneBoutique(id)
+  }, [id, afficheUneBoutique])
+
+// const [boutique, setBoutique] = useState([])
 // const [telephone, setTelephone] = useState([]);
 // const [email, setEmail] = useState([]);
 
-useEffect(() => {
-  fetchData();
-  }, []);
+// useEffect(() => {
+//   fetchData();
   
+//   }, []);
+ 
 
-const fetchData = async () => {
-    try {
-        const response = await axios.get("http://localhost:8000/api/shops");
-        setBoutique(response.data);
-        // if (response.data.length > 0) {
-            // setTelephone(response.data);
-            // setEmail(response.data);
-        // }
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
-    }
-};
+
+// const fetchData = async () => {
+//     try {
+//         const response = await axios.get("http://localhost:8000/api/shops/");
+//         setBoutique(response.data);
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des données:', error);
+//     }
+// };
 
 // const telephone = formData.find((items) => items.telephone === telephone)
 // console.log("telephone",telephone );

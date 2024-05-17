@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const CardList = () => {
+const CardList = ({produit}) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const CardList = () => {
       try {
         const response = await axios.get('https://fakestoreapi.com/products');
         setProducts(response.data);
-        console.log("response", response);
+        // console.log("response", response);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -21,9 +21,9 @@ const CardList = () => {
   }, []);
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container px-5">
       <h1 className="text-3xl font-bold text-start my-8">categorie</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-4 gap-10">
         {products.map((product, index) => (
           <div key={index} className="bg-white rounded-lg  overflow-hidden shadow-lg">
             <div>

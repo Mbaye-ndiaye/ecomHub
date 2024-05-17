@@ -1,47 +1,52 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbEyeShare } from "react-icons/tb";
 import { MdEdit } from "react-icons/md";
-import useGlobal from '../hooks/useGlobal';
-import useProduit from '../hooks/useProduit';
+import useGlobal from "../hooks/useGlobal";
+import useProduit from "../hooks/useProduit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const CategorieContext = createContext();
 
-export { CategorieContext };
+
+export const CategorieContext = createContext();
+
+// { CategorieContext };
 
 export default function CategorieContextProvider({children}) {
 
-  const [test, setTest] = useState("Awa");
+  const [test, setTest] = useState("");
+
+
   const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
-  const [categories, setCategories] = useState([])
-  const [categoriesProd, setCategoriesProd] = useState([])
+  const [categories, setCategories] = useState([]);
+  const [categoriesProd, setCategoriesProd] = useState([]);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
   const [quantiteParCategorie, setQuantiteParCategorie] = useState({});
   const navigate = useNavigate();
-  const { setShowModal } = useGlobal();  
+  const { setShowModal } = useGlobal();
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
     name: "",
-    shopId: localStorage.getItem("shopId"),
+    shop_id: localStorage.getItem("shopId"),
   });
 
-  const table = [
-      'Categorie', 'Nombre produit', 'Actions'
-  ]
+  const table = ["Categorie", "Nombre produit", "Actions"];
 
-  const inputs = [
-    {
-      label: "Nom catégorie",
-      type: "text",
-      value: formData.name,
-      name: "catégorie",
-    },
-  ];    
-    
+  // const inputs = [
+  //   {
+  //     label: "Nom catégorie",
+  //     type: "text",
+  //     value: nom,
+  //     name: "catégorie",
+  //     setValue: setNom,
+  //   },
+  // ];
+
+
   const actions = [
     {
       icon: <TbEyeShare />,
@@ -56,13 +61,13 @@ export default function CategorieContextProvider({children}) {
       icon: <MdEdit />,
       color: "bg-orange-500",
       handleClick: (category) => {
-        categories.map((categorie) =>{
+        categories.map((categorie) => {
           if (categorie._id === category) {
-            setNom(categorie.nom)            
+            setNom(categorie.name);
           }
-        })
+        });
         setIsEditing(true);
-        setShowModal(true);
+        // setShowModal(true);
         setEditingCategoryId(category);
       },
     },
@@ -74,43 +79,61 @@ export default function CategorieContextProvider({children}) {
     //   },
     // }
   ];
-  
-//   const [shopId, setShopId] = useState("");
 
-const handleChange = (e) => {
+  //   const [shopId, setShopId] = useState("");
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  
-  const handleSubmit = async (e) => {
-      e.preventDefault();
-      
-      
-    //   fromDataToSend.append("name", formData.nom);
-    //   fromDataToSend.append("shopId", formData.shopId);
-      
-      console.log(formData.name);
-      console.log(formData.shopId);
 
-      const config = {
-        headers: {
-          "Content-Type": "application/json" 
-        }
-      };
-      
-      if (isEditing) {
-          handleEditCategory(editingCategoryId, formData);
-        } else {
-        try {
-            const response = await axios.post(
-                "http://localhost:8000/api/categories",
-                formData,
-                config 
-            );
-        setShowModal(false);
-        setNom("");
-        console.log("response :", response.data);
-        // console.log("ID :", response.category.id)
+
+  const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    const token = localStorage.getItem("tokenClient");
+    console.log("tokenClient", token);
+
+    if (!token) {
+      alert("connectez vous d" / "abord avant de creer votre boutique");
+      navigate("/connexion");
+      return;
+    }
+
+    const fromDataToSend = new FormData();
+
+    fromDataToSend.append("name", formData.name);
+    fromDataToSend.append("shop_id", formData.shop_id);
+
+    console.log("formData.shop_id", formData.shop_id);
+    console.log("formData.name", formData.name);
+
+    if (isEditing) {
+      handleEditCategory(editingCategoryId, formData);
+    } else {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/api/categories",
+          fromDataToSend,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // afficher le message de succès
+        await Swal.fire({
+          icon: "success",
+          title: "Categorie joutée avec succès",
+          showConfirmButton: false,
+         timer: 9000,
+
+        });
+        // setNom("");
+        console.log("respose :", response);
         fetchCategories();
       } catch (error) {
         console.error("Erreur lors de l'ajout de la catégorie:", error);
@@ -130,19 +153,18 @@ const handleChange = (e) => {
         newData
       );
 
-      
       fetchCategories();
     } catch (error) {
       console.error("Erreur lors de la modification de la catégorie:", error);
     }
   };
-  
+
   const handleEditCategory = (categoryId, newData) => {
     setEditData(newData);
     handleEdit(categoryId, newData);
-    setShowModal(false);
+    // setShowModal(false);
   };
-  
+
   // const handleDelete = async (categoryId) => {
   //   try {
   //     await axiosInstance.delete(`/categorie/${categoryId}`);
@@ -159,71 +181,87 @@ const handleChange = (e) => {
   //   }
   // };
 
- 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/categories');
+      const response = await axios.get(
+        "http://127.0.0.1:8000/api/categories",
+        formData
+      );
       setCategories(response.data);
     } catch (error) {
-      console.error('Erreur lors de la récupération des catégories :', error);
+      console.error("Erreur lors de la récupération des catégories :", error);
     }
-  };    
+  };
 
   const updateCategoryQuantities = async () => {
     try {
       const updatedCategories = await Promise.all(
         categories.map(async (category) => {
           try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/produits/categorie/${category._id}`);
+            const response = await axios.get(
+              `http://127.0.0.1:8000/api/produits/categorie/${category._id}`
+            );
             const produitsCategorie = response.data;
             const quantite = produitsCategorie.length;
-  
+
             // Mettre à jour la quantité dans la base de données
-            await axios.put(`http://127.0.0.1:8000/api/categories/${category._id}`, { quantite });
-  
+            await axios.put(
+              `http://127.0.0.1:8000/api/categories/${category._id}`,
+              { quantite }
+            );
+
             return { ...category, quantite };
           } catch (error) {
-            console.error('Erreur lors de la mise à jour de la quantité pour la catégorie', category._id, ':', error);
+            console.error(
+              "Erreur lors de la mise à jour de la quantité pour la catégorie",
+              category._id,
+              ":",
+              error
+            );
             return category;
           }
         })
       );
-  
+
       setCategories(updatedCategories);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour des quantités de produits :', error);
+      console.error(
+        "Erreur lors de la mise à jour des quantités de produits :",
+        error
+      );
     }
-  };  
-  
+  };
+
   const valueContext = {
     test,
-        produits,
-        filtreProduits,
-        fetchCategories,
-        updateCategoryQuantities,
-        handleEditCategory,
-        handleEdit,
-        handleSubmit,
-        editData,
-        setEditData,
-        categoriesProd, 
-        setCategoriesProd,
-        handleDetail,
-        editingCategoryId,
-        setEditingCategoryId,
-        isEditing,
-        setIsEditing,
-        table,
-        actions,
-        inputs,
-        categories,
-        nom,
-        quantite,
-        setNom,
-        setQuantite,
-        setCategories,
-        handleChange
-  }
+    produits,
+    filtreProduits,
+    fetchCategories,
+    updateCategoryQuantities,
+    handleEditCategory,
+    handleEdit,
+    handleSubmit,
+    editData,
+    setEditData,
+    categoriesProd,
+    setCategoriesProd,
+    handleDetail,
+    editingCategoryId,
+    setEditingCategoryId,
+    isEditing,
+    setIsEditing,
+    table,
+    actions,
+    // inputs,
+    formData,
+    categories,
+    nom,
+    quantite,
+    setNom,
+    setQuantite,
+    setCategories,
+    handleChange,
+  };
 
   return (
     <CategorieContext.Provider value={valueContext}>

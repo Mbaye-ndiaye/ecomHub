@@ -40,6 +40,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true)
       const response = await axios.post(
         "http://localhost:8000/api/login",
         formData
@@ -66,6 +67,8 @@ export default function Login() {
     } catch (error) {
       console.error(error);
       alert("Connexion échouée");
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -82,7 +85,7 @@ export default function Login() {
           className="max-w-[400px] w-full mx-auto bg-white p-8 rounded"
           onSubmit={handleSubmit}
         >
-          <h2 className="py-4 text-4xl font-bold text-center">EcomHub</h2>
+          <h2 className="py-4 text-4xl font-bold text-center">Marhaba Store</h2>
 
           <div className="relative flex flex-col mb-4">
             <label htmlFor="email" className="block text-sm font-medium ">
@@ -116,9 +119,9 @@ export default function Login() {
           <button
             type="submit"
             disabled={isButtonDisabled || isLoading}
-            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md md:w-1/2 flex gap-4 items-center justify-center ${
+            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center  ${
               isButtonDisabled || isLoading
-                ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+                ? "bg-gray-800  cursor-not-allowed text-disabled text-black relative"
                 : "bg-gray-900 text-active text-white hover:bg-gray-900"
             } ${isLoading ? "relative" : ""}`}
           >

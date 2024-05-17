@@ -6,7 +6,8 @@ import useFormContext from "../../../utils/hooks/useFormContext";
 import { FormShopContext } from "../../../utils/context/FormShopContext";
 
 function FormsShop() {
-  const { handleSubmit, formData, handleChange, handleImageChange} = useContext(FormShopContext)   
+  const { handleSubmit, formData, handleChange, handleImageChange } =
+    useContext(FormShopContext);
 
 
 	return (

@@ -8,30 +8,27 @@ import { Link, useParams } from 'react-router-dom';
 import Input from './Input';
 import { useFormContext } from 'react-hook-form';
 import axios from 'axios';
+import { FormShopContext } from '../../../utils/context/FormShopContext';
 
 const Navbar = () => {
-  // const {name} = useParams();
+   const {name} = useParams();
+   const {afficheUneBoutique, boutique} = useContext(FormShopContext) 
 
   // État local pour contrôler l'ouverture du menu
   const [isOpen, setIsOpen] = useState(false);
-const {formData } = useFormContext();
-const [logos, setLogo] = useState([]);
 
 useEffect(() => {
-  fetchData();
-}, []);
+  afficheUneBoutique(name);
+}, [afficheUneBoutique, name]);
 
-const fetchData = async () => {
-  try {
-    const response = await axios.get("http://localhost:8000/api/shops")
-    if (response.data.length > 0) {
-      setLogo(response.data[0].logo);
-      // console.log("response.data", response.data);
-    }
-  } catch (error) {
-    console.error('Erreur lors de la récupération des donnees:', error);
-  }
-};
+// const fetchData = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:8000/api/shops")
+    
+//   } catch (error) {
+//     console.error('Erreur lors de la récupération des donnees:', error);
+//   }
+// };
 
   // Fonction pour basculer l'état du menu
   const toggleMenu = () => {
@@ -40,16 +37,17 @@ const fetchData = async () => {
 
   return (
     <>
-      <div className="flex justify-between p-2 bg-black p-2 w-full fixed top-0">
+      <div className="flex justify-between p-2 bg-gray-700 p-2 w-full fixed top-0">
         <nav className="">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <div className="flex items-center">
-              
-                <img src={logos} alt='logo boutique' className='mx-4 w-10 h-10 rounded-full' />
+              <Link to="/accueil">
+                <img src={boutique?.logo} alt='logo boutique' className='mx-4 w-10 h-10 rounded-full' />
+                </Link>
               <div className="flex mx-4 mx-auto text-white items-center">
-                <Link to="/BoutiqueCategorie"><p className='mx-4'>Boutique</p></Link>
-                <Link to="/Apropos"><p className="mx-4">About</p></Link>
-                <Link to="/Contact"><p className="mx-4">Contact</p></Link>
+                <Link to="/boutiqueCategorie"><p className='mx-4'>Boutique</p></Link>
+                <Link to="/apropos"><p className="mx-4">About</p></Link>
+                <Link to="/contact"><p className="mx-4">Contact</p></Link>
               </div>
             </div>
           </div>
