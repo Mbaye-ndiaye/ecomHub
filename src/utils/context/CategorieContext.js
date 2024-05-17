@@ -37,9 +37,8 @@ export default function CategorieContextProvider({children}) {
     {
       label: "Nom catégorie",
       type: "text",
-      value: formData.nom,
+      value: formData.name,
       name: "catégorie",
-      setValue: setNom,
     },
   ];    
     
@@ -86,11 +85,6 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
       e.preventDefault();
       
-      const formData = {
-        name: nom,
-        shopId: localStorage.getItem("shopId"), // Ajoutez l'ID de la boutique ici
-      };
-    //   const fromDataToSend = new FormData();
       
     //   fromDataToSend.append("name", formData.nom);
     //   fromDataToSend.append("shopId", formData.shopId);
@@ -100,7 +94,7 @@ const handleChange = (e) => {
 
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json" 
         }
       };
       
@@ -115,7 +109,8 @@ const handleChange = (e) => {
             );
         setShowModal(false);
         setNom("");
-        console.log("respose :", response);
+        console.log("response :", response.data);
+        // console.log("ID :", response.category.id)
         fetchCategories();
       } catch (error) {
         console.error("Erreur lors de l'ajout de la catégorie:", error);

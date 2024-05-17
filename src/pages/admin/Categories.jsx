@@ -42,10 +42,10 @@ const Categories = () => {
 				title="Liste categories"
 				nomAjout="Ajouter un nouveau categorie"
 				body={
-					<Formulaire
+					<Formulaire	
 						inputs={inputs}
 						onSubmit={handleSubmit}
-						OnChange={handleChange}
+						onChange={handleChange}
 						handleSelectChange={handleSelectChange}
 					/>
 				}
