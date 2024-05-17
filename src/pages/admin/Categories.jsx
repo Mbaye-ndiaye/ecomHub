@@ -32,6 +32,7 @@ const Categories = () => {
 
   const handleSelectChange = (e) => {};
 
+
   return (
     <div className="flex bg-gray-700 p-[20px]   gap[20px]">
       <Sidebare />
