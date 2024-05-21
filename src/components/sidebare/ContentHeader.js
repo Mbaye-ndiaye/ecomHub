@@ -37,7 +37,7 @@ const ContentHeader = () => {
 
   return (
     <div className="flex items-center justify-between">
-      <h1>Sélectionnez une boutique :</h1>
+      {/* <h1>Sélectionnez une boutique :</h1> */}
       <select value={selectedShop} onChange={handleShopChange}>
         <option value="">Choisissez une boutique</option>
         {userShops.map((shop) => (

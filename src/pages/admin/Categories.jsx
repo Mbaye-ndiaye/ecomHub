@@ -17,6 +17,7 @@ const Categories = () => {
     updateCategoryQuantities,
     fetchCategories,
     handleChange,
+    userShops,
     produits,
   } = useContext(CategorieContext);
 
@@ -33,7 +34,7 @@ const Categories = () => {
   const handleSelectChange = (e) => {};
 
   return (
-    <div className="flex bg-gray-700 p-[20px]   gap[20px]">
+    <div className="">
       {/* <Sidebare /> */}
       <div className="bg-white rounded-[20px] p-[2rem] flex-1 mb-5 h-auto ">
         <HeaderTable
@@ -41,18 +42,32 @@ const Categories = () => {
           nomAjout="Ajouter un nouveau categorie"
           body={
             <form onSubmit={handleSubmit}>
-              <label htmlFor="name" className="block text-sm font-medium ">
-                Nom du boutique
-              </label>
-              <input
-                required
-                type="text"
-                id="name"
-                name="name"
-                className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-                value={formData.name}
-                onChange={handleChange}
-              />
+              <div>
+                <label>Nom de la catégorie</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div>
+                <label>Choisissez une boutique</label>
+                <select
+                  name="shop_id"
+                  value={formData.shop_id}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Sélectionnez une boutique</option>
+                  {userShops.map((shop) => (
+                    <option key={shop.id} value={shop.id}>
+                      {shop.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <button
                 type="submit"
                 className="mx-3 text-white bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-500 dark:focus:ring-gray-850 shadow-lg shadow-gray-500/50 dark:shadow-sm font-medium rounded-lg text-sm px-5 py-3 text-center  me-2 mb-2"

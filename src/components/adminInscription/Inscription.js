@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import Swal from "sweetalert2";
+import loginImg from "../../assets/imagesback.jfif";
 
-import trees from "../../assets/images.jfif";
+import trees from "../../assets/amie.avif";
 
 export default function Inscription() {
   const navigate = useNavigate();
@@ -78,10 +79,15 @@ export default function Inscription() {
     }
   };
   return (
-    <div className="flex w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 ">
+    <div className="relative flex w-full h-screen">
+    <img
+      className="absolute object-cover w-full h-full mix-blend-overlay"
+      src={loginImg}
+      alt="/"
+    />
       <div className="  grid grid-cols-2 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
         <div className="w-full h-[550px] hidden md:block">
-          <img className="w-[130rem] h-full" src={trees} alt="/" />
+          <img className=" w-[190rem] h-full" src={trees} alt="/" />
         </div>
         <div className="flex flex-col justify-center items-center w-[35rem] bg-white ">
           <h1 className="text-3xl text-center">Inscription</h1>
@@ -191,7 +197,7 @@ export default function Inscription() {
             <button
               type="submit"
               disabled={isButtonDisabled || isLoading}
-              className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
+              className={`w-full mt-8 px-4 py-2 text-white rounded-md  ${
                 isButtonDisabled || isLoading
                   ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
                   : "bg-gray-900 text-active text-white hover:bg-gray-900"
