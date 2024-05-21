@@ -27,88 +27,9 @@ const FormProvider = ({ children }) => {
     // user_id: localStorage.getItem("userId"),
   });
 
-<<<<<<< HEAD
-  // const updateShowPassword = () => {
-  //   setShowPassword(!showPassword);
-  // };
 
-  // const updateButtonDisabled = () => {
-  //   if (
-  //     formData.name.trim() !== "" &&
-  //     formData.email.trim() !== "" &&
-  //     formData.banniere.trim() !== "" &&
-  //     formData.logo.trim() !== "" &&
-  //     formData.telephone.trim() !== "" &&
-  //     formData.adresse.trim() !== "" &&
-  //     formData.a_propos.trim() !== "" &&
-  //     formData.description.trim() !== ""
-  //   ) {
-  //     setIsButtonDisabled(false);
-  //   } else {
-  //     setIsButtonDisabled(true);
-  //   }
-  // };
-  // useEffect(() => {
-  //   updateButtonDisabled();
-  // }, [formData.name, formData.email]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({
-      ...formData,
-      [e.target.name]: file,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("tokenClient");
-    const user_id = localStorage.getItem("userId");
-    console.log("tokenClient", token);
-
-    if (!token) {
-      alert("connectez vous d" / "abord avant de creer votre boutique");
-      navigate("/connexion");
-      return;
-    }
-
-    const formDataToSend = new FormData();
-
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("logo", formData.logo);
-    formDataToSend.append("banniere", formData.banniere);
-    formDataToSend.append("telephone", formData.telephone);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("adresse", formData.adresse);
-    formDataToSend.append("a_propos", formData.a_propos);
-    formDataToSend.append("user_id", user_id);
-
-    console.log("user_Id", user_id);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/shops",
-=======
-    const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    const [formData, setFormData] = useState({
-      nom: "",
-      email: "",
-      telephone: "",
-      adresse: "",
-      a_propos: "",
-      description: "",
-      banniere: null,
-      logo: null,
-      user_id: localStorage.getItem("userId"),
-    });
+ 
   
     // const updateShowPassword = () => {
     //   setShowPassword(!showPassword);
@@ -174,7 +95,7 @@ const FormProvider = ({ children }) => {
       
       try {
         const response = await axios.post("http://localhost:8000/api/shops", 
->>>>>>> b137030d5599f86e19f83e83940c51c1bd98aeb9
+
         formDataToSend,
         {
           headers: {
