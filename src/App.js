@@ -21,15 +21,10 @@ import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 import GlobalContextProvider from "./utils/context/GlobalContext";
 import CategorieContextProvider from "./utils/context/CategorieContext";
 
-
-
 function App() {
   return (
     <div className="App">
-     
-        <FormProvider>
-      {/* <Router> */}
-
+      <FormProvider>
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
@@ -39,26 +34,31 @@ function App() {
           <Route path="/accueil/:name" element={<Accueil />}></Route>
           <Route path="/apropos" element={<AboutPage />}></Route>
           <Route path="/contact" element={<ContactPage />}></Route>
-          <Route path="/boutiqueCategorie" element={<BoutiqueCategorie />}></Route>
-          <Route path="/dashboard/FormProfilUser" element={<FormProfilUser />} />
-            <Route path="/detailCard" element={<DetailCard />}></Route>
-            <Route path="/creeShop" element={<FormsShop />}></Route>
-            <Route path="/Accueil" element={<Accueil />}></Route>
-            <Route path="/Apropos" element={<AboutPage />}></Route>
-            <Route path="/Contact" element={<ContactPage />}></Route>
-            <Route path="/Boutique" element={<BoutiqueUser />} />
-            <Route path="/ContactEcom" element={<ContactEcom />} />
-            <Route path="/AproposEcom" element={<AproposEcom />} />
-            <Route path="/ShopDetail" element={<ShopDetailPage />} />
-            <Route path="/*" element={<DashboardWithSidebar />} />
-          </Routes>
-      {/* </Router> */}
-        </FormProvider>
-        {/* </CategorieContextProvider>
+          <Route
+            path="/boutiqueCategorie"
+            element={<BoutiqueCategorie />}
+          ></Route>
+          <Route
+            path="/dashboard/FormProfilUser"
+            element={<FormProfilUser />}
+          />
+          <Route path="/detailCard" element={<DetailCard />}></Route>
+          <Route path="/creeShop" element={<FormsShop />}></Route>
+          <Route path="/Accueil" element={<Accueil />}></Route>
+          <Route path="/Apropos" element={<AboutPage />}></Route>
+          <Route path="/Contact" element={<ContactPage />}></Route>
+          <Route path="/Boutique" element={<BoutiqueUser />} />
+          <Route path="/ContactEcom" element={<ContactEcom />} />
+          <Route path="/AproposEcom" element={<AproposEcom />} />
+          <Route path="/ShopDetail" element={<ShopDetailPage />} />
+          <Route path="/*" element={<DashboardWithSidebar />} />
+        </Routes>
+        {/* </Router> */}
+      </FormProvider>
+      {/* </CategorieContextProvider>
         </GlobalContextProvider> */}
     </div>
   );
 }
 
 export default App;
-

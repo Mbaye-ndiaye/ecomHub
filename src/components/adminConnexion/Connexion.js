@@ -40,7 +40,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await axios.post(
         "http://localhost:8000/api/login",
         formData
@@ -68,7 +68,7 @@ export default function Login() {
       console.error(error);
       alert("Connexion échouée");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 

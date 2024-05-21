@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbEyeShare } from "react-icons/tb";
 import { MdEdit } from "react-icons/md";
@@ -7,16 +7,12 @@ import useProduit from "../hooks/useProduit";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-
-
 export const CategorieContext = createContext();
 
 // { CategorieContext };
 
-export default function CategorieContextProvider({children}) {
-
+export default function CategorieContextProvider({ children }) {
   const [test, setTest] = useState("");
-
 
   const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
@@ -25,6 +21,7 @@ export default function CategorieContextProvider({children}) {
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
+  const [userShops, setUserShops] = useState([]);
   const [quantiteParCategorie, setQuantiteParCategorie] = useState({});
   const navigate = useNavigate();
   const { setShowModal } = useGlobal();
@@ -80,13 +77,30 @@ export default function CategorieContextProvider({children}) {
     // }
   ];
 
-  //   const [shopId, setShopId] = useState("");
+  useEffect(() => {
+    const fetchUserShops = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/user/shops",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
+            },
+          }
+        );
+        setUserShops(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserShops();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
 
   const handleSubmit = async (e) => {
 
@@ -129,8 +143,7 @@ export default function CategorieContextProvider({children}) {
           icon: "success",
           title: "Categorie joutée avec succès",
           showConfirmButton: false,
-         timer: 9000,
-
+          timer: 9000,
         });
         // setNom("");
         console.log("respose :", response);
@@ -250,6 +263,7 @@ export default function CategorieContextProvider({children}) {
     setEditingCategoryId,
     isEditing,
     setIsEditing,
+    userShops,
     table,
     actions,
     // inputs,
