@@ -11,8 +11,8 @@ const Input = ({label, type, value, name, onChange}) => {
   }
 
   return (
-    <div className="w-full md:w-1/2 px-3 my-6 md:mb-0">
-      <label className="block text-sm font-semibold  text-gray-900">
+    <div className="w-full px-3 my-6 md:w-1/2 md:mb-0">
+      <label className="block text-sm font-semibold text-gray-900">
         { label }
       </label>
       <input className={classInput} name={name} value={value} type={type} onChange={onChange} required={isRequired ? "required" : undefined} />
@@ -22,9 +22,9 @@ const Input = ({label, type, value, name, onChange}) => {
 
 const Select = ({label, options, handleSelectChange }) => {
   return(
-    <div className="w-full md:w-1/2 px-3 my-6 md:mb-0">
-      <label className="block text-sm font-semibold  text-gray-900">{label}</label>
-      <select onChange={handleSelectChange} defaultValue=""  className="mt-1 p-2 bg-gray-200 border focus:border text-gray-700 focus:border-double focus:border-sky-600 outline-none rounded-md w-full">
+    <div className="w-full px-3 my-6 md:w-1/2 md:mb-0">
+      <label className="block text-sm font-semibold text-gray-900">{label}</label>
+      <select onChange={handleSelectChange} defaultValue=""  className="w-full p-2 mt-1 text-gray-700 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600">
         <option value="" disabled>Sélectionnez une catégorie</option>
         {options.map((option)=>(
           <option key={option._id} value={option}>{option}</option>
@@ -40,7 +40,9 @@ const Formulaire = ({inputs, selects, textarea, onSubmit, handleSelectChange }) 
       setter(e.target.files[0]);
   }
   const handleChange = (e, setter) => {
+    if (setter) {
       setter(e.target.value);
+    }
   }
 
   // useEffect(() => {
@@ -88,16 +90,16 @@ const Formulaire = ({inputs, selects, textarea, onSubmit, handleSelectChange }) 
         }
 
         {textarea ?
-          <div className="w-full md:w-2/2 px-3 my-6 md:mb-0">
-            <label className='block text-sm font-semibold  text-gray-900'>Description</label>
-            <textarea className="mt-1 p-2 bg-gray-200 border focus:border text-gray-700 focus:border-double focus:border-sky-600 outline-none rounded-md w-full" value={textarea.value} onChange={(e) => handleChange(e, textarea.setValue)} >{textarea.value}</textarea>
+          <div className="w-full px-3 my-6 md:w-2/2 md:mb-0">
+            <label className='block text-sm font-semibold text-gray-900'>Description</label>
+            <textarea className="w-full p-2 mt-1 text-gray-700 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600" value={textarea.value} onChange={(e) => handleChange(e, textarea.setValue)} >{textarea.value}</textarea>
           </div>
               : null
         }
       </div>
 
-      <div className=' w-full'>        
-        <button className='mx-3 text-white bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-500 dark:focus:ring-gray-850 shadow-lg shadow-gray-500/50 dark:shadow-sm font-medium rounded-lg text-sm px-5 py-3 text-center  me-2 mb-2'>
+      <div className='w-full '>        
+        <button className='px-5 py-3 mx-3 mb-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg shadow-lg focus:ring-4 focus:outline-none focus:ring-gray-500 dark:focus:ring-gray-850 shadow-gray-500/50 dark:shadow-sm me-2'>
           Enregistrer
         </button>
       </div>

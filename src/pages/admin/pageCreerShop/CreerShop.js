@@ -228,7 +228,7 @@ function FormsShop() {
                 type="file"
                 id="banniere"
                 name="banniere"
-                className="w-[20rem] p-2 mt-1 hidden  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                className="w-[20rem] p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                 onChange={handleImageChange}
               />
               {bannierePreview && (
@@ -320,4 +320,5 @@ function FormsShop() {
     </>
   );
 }
+
 export default FormsShop;

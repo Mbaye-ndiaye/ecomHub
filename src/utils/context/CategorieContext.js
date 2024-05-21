@@ -43,6 +43,7 @@ export default function CategorieContextProvider({ children }) {
   //   },
   // ];
 
+
   const actions = [
     {
       icon: <TbEyeShare />,
@@ -102,6 +103,7 @@ export default function CategorieContextProvider({ children }) {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     const token = localStorage.getItem("tokenClient");

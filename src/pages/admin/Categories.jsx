@@ -33,6 +33,7 @@ const Categories = () => {
 
   const handleSelectChange = (e) => {};
 
+
   return (
     <div className="">
       {/* <Sidebare /> */}
