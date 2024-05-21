@@ -88,11 +88,7 @@ function FormsShop() {
     }
 
     const token = localStorage.getItem("tokenClient");
-    if (!token) {
-      alert("Connectez-vous d'abord avant de créer votre boutique");
-      navigate("/connexion");
-      return;
-    }
+    
 
     const formDataToSend = new FormData();
 

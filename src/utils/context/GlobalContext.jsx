@@ -206,3 +206,38 @@ const GlobalContextProvider = ({ children }) => {
 };
 
 export default GlobalContextProvider;
+
+
+
+
+
+
+
+
+
+// await Swal.fire({
+//   icon: "success",
+//   title: "Connexion réussie!",
+//   showConfirmButton: false,
+//   timer: 2000,
+// });
+// navigate("/creeShop");
+// } catch (error) {
+// console.error("Erreur de connexion:", error.response || error.message);
+// if (error.response && error.response.status === 401) {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Connexion échouée",
+//     text: "Email ou mot de passe incorrect.",
+//   });
+// } else {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Erreur",
+//     text: "Une erreur s'est produite. Veuillez réessayer.",
+//   });
+// }
+// } finally {
+// setIsLoading(false);
+// }
+// };

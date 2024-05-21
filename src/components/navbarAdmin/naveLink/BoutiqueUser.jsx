@@ -16,22 +16,9 @@ const BoutiqueUser = () => {
 
   useEffect(() => {
     const fetchBoutique = async () => {
-      const token = localStorage.getItem("tokenClient");
-      console.log('tokenClient', token)
-      if (!token) {
-        alert('connectez vous d'/'abord avant de creer votre boutique')
-        // navigate("/connexion");
-        return;
-      }
+      
       try {
-        const response = await axios.get("http://localhost:8000/api/shops",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-            "Content-Type": "multipart/form-data" 
-          }
-        }
-        );
+        const response = await axios.get("http://localhost:8000/api/shops" );
         
         setBoutique(response.data);
         setLoading(false)

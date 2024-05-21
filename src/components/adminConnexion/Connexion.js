@@ -39,17 +39,22 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("tokenClient");
+
     try {
       setIsLoading(true);
       const response = await axios.post(
         "http://localhost:8000/api/login",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
-      const token = response.data.access_token;
-
-      localStorage.setItem("tokenClient", token);
-      localStorage.setItem("userId", response.data.user.id);
+  
 
       console.log(response.data);
       console.log("token:", token);

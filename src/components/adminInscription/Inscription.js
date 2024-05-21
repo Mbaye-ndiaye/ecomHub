@@ -93,9 +93,9 @@ export default function Inscription() {
           <h1 className="text-3xl text-center">Inscription</h1>
           <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
             <div className="flex flex-row gap-5 mb-4">
-              <div className="flex flex-col ">
-                <label htmlFor="prenom" className="block text-sm font-medium ">
-                  Prenom
+            <div className="relative flex flex-col mb-4">
+                <label htmlFor="name" className="block text-sm font-medium ">
+                  prenom
                 </label>
                 <input
                   required
@@ -125,13 +125,13 @@ export default function Inscription() {
             </div>
 
             <div className="flex flex-row gap-5 mb-4">
-              <div className="flex flex-col mb-2">
-                <label htmlFor="email" className="block text-sm font-medium ">
+            <div className="relative flex flex-col mb-4">
+                <label htmlFor="name" className="block text-sm font-medium ">
                   Email
                 </label>
                 <input
                   required
-                  type="email"
+                  type="text"
                   id="email"
                   name="email"
                   className="w-[15rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
