@@ -11,6 +11,7 @@ function FormsShop() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +24,11 @@ function FormsShop() {
     logo: null,
     user_id: localStorage.getItem("userId"),
   });
+=======
+    
+
+  
+>>>>>>> b137030d5599f86e19f83e83940c51c1bd98aeb9
 
   const [errors, setErrors] = useState({});
   const [logoPreview, setLogoPreview] = useState(null);
