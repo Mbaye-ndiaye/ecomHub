@@ -15,7 +15,7 @@ const GlobalContextProvider = ({ children }) => {
 //   const [commandes, setCommandes] = useState([]);
   const [password, setPassword] = useState("");
   const [dropdown, setDropdown] = useState(false);
-//   const [isLoading, setIsLoading] = useState(false);
+   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [produitAimer, setProduitAimer] = useState(() => {
     const listesEnvies = localStorage.getItem("produitAimer");

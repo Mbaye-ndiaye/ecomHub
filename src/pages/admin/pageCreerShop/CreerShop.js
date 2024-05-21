@@ -9,6 +9,8 @@ function FormsShop() {
   const { handleSubmit, formData, handleChange, handleImageChange } =
     useContext(FormShopContext);
 
+    
+
   return (
     <div className="flex justify-center items-center  w-full h-auto p-[20px]">
       <form className="bg-white p-8 rounded mt-5 mb-5" onSubmit={handleSubmit}>

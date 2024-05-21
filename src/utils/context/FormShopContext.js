@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
     const [isLoading, setIsLoading] = useState(false);
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [formData, setFormData] = useState({
-      name: "",
+      nom: "",
       email: "",
       telephone: "",
       adresse: "",
@@ -79,7 +79,7 @@ import Swal from "sweetalert2";
     
       const formDataToSend = new FormData(); 
     
-      formDataToSend.append("name", formData.name);
+      formDataToSend.append("name", formData.nom);
       formDataToSend.append("description", formData.description);
       formDataToSend.append("logo", formData.logo);
       formDataToSend.append("banniere", formData.banniere);
