@@ -16,8 +16,23 @@ const BoutiqueUser = () => {
 
   useEffect(() => {
     const fetchBoutique = async () => {
+      const token = localStorage.getItem("tokenClient");
+      console.log('tokenClient', token)
+      if (!token) {
+        alert('connectez vous d'/'abord avant de creer votre boutique')
+        // navigate("/connexion");
+        return;
+      }
       try {
-        const response = await axios.get("http://localhost:8000/api/shops");
+        const response = await axios.get("http://localhost:8000/api/shops",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "multipart/form-data" 
+          }
+        }
+        );
+        
         setBoutique(response.data);
         setLoading(false)
         console.log("response.data", response.data);
@@ -39,35 +54,38 @@ const BoutiqueUser = () => {
   }
 
 
-  const uniqueBoutiqueIds = boutiques.map((boutique) => boutique.id);
+  // const uniqueBoutiqueIds = boutiques.map((boutique) => boutique.id);
+  const nmbreBoutique = boutiques.length;
 
-  const nmbreBoutique = uniqueBoutiqueIds.length;
+  // const nmbreBoutique = uniqueBoutiqueIds.length;
   console.log("nmbreBoutique", nmbreBoutique);
+
+  // useEffect(() => {
+    if (nmbreBoutique > 0) {
+      alert("Vous avez déjà créé une boutique.");
+    }
+  // }, [nmbreBoutique]);
 
     return (
         <div className="bg-[#494C4F] p-5 h-screen">
             <h1 className="text-white font-bold text-2xl text-center mb-5">Le nombre de boutique existe:  {nmbreBoutique}</h1>
             <div className="grid grid-cols-4 gap-7">
-            {[...uniqueBoutiqueIds].map((boutiqueId) => {
-            
-        // Filtrer les données de la boutique correspondant à l'identifiant unique
-        const uniqueBoutiqueData = boutiques.find((boutique) => boutique.id === boutiqueId);
-        // console.log("uniqueBoutiqueData", uniqueBoutiqueData);
+            {boutiques.map((boutique) => {
         return (
-            <div key={uniqueBoutiqueData.id}>
-            <Link to={`/accueil/${uniqueBoutiqueData.id}`}>
+            <div key={boutique.id}>
+            <Link to={`/accueil/${boutique.id}`}>
             
           <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
             <div className="flex gap-3 mx-4">
               <img
-                src={uniqueBoutiqueData.logo}
+                src={boutique.logo}
                 className="w-[30px] h-[30px] rounded-full"
                 alt="/"
                 />
             </div>
             <div className="">
-              <h1 className="text-lg text-black font-bold">{uniqueBoutiqueData.name}</h1>
-            <p className="text-center text-sm">{uniqueBoutiqueData.email}</p>
+              <h1 className="text-lg text-black font-bold">{boutique.nom}</h1>
+            <p className="text-center text-sm">{boutique.email}</p>
           </div>
           </div>
           </Link>
