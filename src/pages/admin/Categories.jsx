@@ -33,7 +33,6 @@ const Categories = () => {
 
   const handleSelectChange = (e) => {};
 
-
   return (
     <div className="">
       {/* <Sidebare /> */}
@@ -42,32 +41,20 @@ const Categories = () => {
           title="Liste categories"
           nomAjout="Ajouter un nouveau categorie"
           body={
-            <form onSubmit={handleSubmit}>
-              <div>
-                <label>Nom de la catégorie</label>
+            <form className="flex gap-5" onSubmit={handleSubmit}>
+              <div className="flex flex-col ">
+                <label htmlFor="name" className="block text-sm font-medium ">
+                  Nom du boutique
+                </label>
                 <input
+                  required
                   type="text"
+                  id="name"
                   name="name"
+                  className="w-[20rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                   value={formData.name}
                   onChange={handleChange}
-                  required
                 />
-              </div>
-              <div>
-                <label>Choisissez une boutique</label>
-                <select
-                  name="shop_id"
-                  value={formData.shop_id}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">Sélectionnez une boutique</option>
-                  {userShops.map((shop) => (
-                    <option key={shop.id} value={shop.id}>
-                      {shop.name}
-                    </option>
-                  ))}
-                </select>
               </div>
               <button
                 type="submit"
