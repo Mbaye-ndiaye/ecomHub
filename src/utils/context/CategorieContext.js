@@ -76,25 +76,16 @@ export default function CategorieContextProvider({ children }) {
     // }
   ];
 
-  useEffect(() => {
-    const fetchUserShops = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/user/shops",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
-            },
-          }
-        );
-        setUserShops(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUserShops();
-  }, []);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/categories", {
+        params: { shop_id: localStorage.getItem("shopId") },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des catégories :", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -185,20 +176,6 @@ export default function CategorieContextProvider({ children }) {
   //     console.error("Erreur lors de la suppression de la catégorie:", error);
   //   }
   // };
-
-  const fetchCategories = async () => {
-    try {
-      const token = localStorage.getItem("tokenClient");
-      const response = await axios.get("http://127.0.0.1:8000/api/categories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des catégories :", error);
-    }
-  };
 
   const updateCategoryQuantities = async () => {
     try {

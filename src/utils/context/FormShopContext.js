@@ -29,6 +29,27 @@ const FormProvider = ({ children }) => {
 
   // const updateShowPassword = () => {
   //   setShowPassword(!showPassword);
+  // };
+
+  // const updateButtonDisabled = () => {
+  //   if (
+  //     formData.name.trim() !== "" &&
+  //     formData.email.trim() !== "" &&
+  //     formData.banniere.trim() !== "" &&
+  //     formData.logo.trim() !== "" &&
+  //     formData.telephone.trim() !== "" &&
+  //     formData.adresse.trim() !== "" &&
+  //     formData.a_propos.trim() !== "" &&
+  //     formData.description.trim() !== ""
+  //   ) {
+  //     setIsButtonDisabled(false);
+  //   } else {
+  //     setIsButtonDisabled(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateButtonDisabled();
+  // }, [formData.name, formData.email]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

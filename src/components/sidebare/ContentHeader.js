@@ -6,8 +6,7 @@ import { BiSearch } from "react-icons/bi";
 
 const ContentHeader = () => {
   const navigate = useNavigate();
-  const [userShop, setUserShop] = useState("");
-  const [selectedShop, setSelectedShop] = useState("");
+  const [userShop, setUserShop] = useState(null);
 
   useEffect(() => {
     const fetchUserShops = async () => {
@@ -21,13 +20,8 @@ const ContentHeader = () => {
             },
           }
         );
-        // if (response.data.length > 0) {
-        setUserShop(response.data.name); // Suppose que le premier magasin est celui de l'utilisateur
-        console.log("response", response.data.name);
-        // } else {
-        //   console.log("No shops found");
-        // }
-        // console.log("response", response.data.name);
+        setUserShop(response.data);
+        console.log("response", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -36,11 +30,15 @@ const ContentHeader = () => {
     fetchUserShops();
   }, []);
 
+  if (!userShop) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <span>Votre boutique : {userShop}</span>
-        <Link to={`/accueil/${userShop}`}>Voir mon boutique</Link>
+        <span>Votre boutique : {userShop.name}</span>
+        <Link to={`/accueil/${userShop.id}`}>Voir mon boutique</Link>
       </div>
 
       <div className="flex items-center gap-[20px]">

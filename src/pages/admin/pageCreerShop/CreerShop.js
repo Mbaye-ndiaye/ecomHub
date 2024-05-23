@@ -9,7 +9,6 @@ import NaveLinks from "../../../components/navbarAdmin/NavLinks";
 function FormsShop() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -23,6 +22,7 @@ function FormsShop() {
     user_id: localStorage.getItem("userId"),
   });
 
+  const [errors, setErrors] = useState({});
   const [logoPreview, setLogoPreview] = useState(null);
   const [bannierePreview, setBannierePreview] = useState(null);
 
