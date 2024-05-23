@@ -27,74 +27,71 @@ const FormProvider = ({ children }) => {
     // user_id: localStorage.getItem("userId"),
   });
 
+  // const updateShowPassword = () => {
+  //   setShowPassword(!showPassword);
+  // };
 
+  // const updateButtonDisabled = () => {
+  //   if (
+  //     formData.name.trim() !== "" &&
+  //     formData.email.trim() !== "" &&
+  //     formData.banniere.trim() !== "" &&
+  //     formData.logo.trim() !== "" &&
+  //     formData.telephone.trim() !== "" &&
+  //     formData.adresse.trim() !== "" &&
+  //     formData.a_propos.trim() !== "" &&
+  //     formData.description.trim() !== ""
+  //   ) {
+  //     setIsButtonDisabled(false);
+  //   } else {
+  //     setIsButtonDisabled(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   updateButtonDisabled();
+  // }, [formData.name, formData.email]);
 
- 
-  
-    // const updateShowPassword = () => {
-    //   setShowPassword(!showPassword);
-    // };
-  
-    // const updateButtonDisabled = () => {
-    //   if (
-    //     formData.name.trim() !== "" &&
-    //     formData.email.trim() !== "" &&
-    //     formData.banniere.trim() !== "" &&
-    //     formData.logo.trim() !== "" &&
-    //     formData.telephone.trim() !== "" &&
-    //     formData.adresse.trim() !== "" &&
-    //     formData.a_propos.trim() !== "" &&
-    //     formData.description.trim() !== ""
-    //   ) {
-    //     setIsButtonDisabled(false);
-    //   } else {
-    //     setIsButtonDisabled(true);
-    //   }
-    // };
-    // useEffect(() => {
-    //   updateButtonDisabled();
-    // }, [formData.name, formData.email]);
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
-    };
-  
-    const handleImageChange = (e) => {
-      const file = e.target.files[0];
-      setFormData({
-        ...formData,
-        [e.target.name]: file,
-      });
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      const token = localStorage.getItem("tokenClient");
-      console.log('tokenClient', token)
-  
-      if (!token) {
-        alert('connectez vous d'/'abord avant de creer votre boutique')
-        navigate("/connexion");
-        return;
-      }
-    
-      const formDataToSend = new FormData(); 
-    
-      formDataToSend.append("name", formData.nom);
-      formDataToSend.append("description", formData.description);
-      formDataToSend.append("logo", formData.logo);
-      formDataToSend.append("banniere", formData.banniere);
-      formDataToSend.append("telephone", formData.telephone);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("adresse", formData.adresse);
-      formDataToSend.append("a_propos", formData.a_propos);
-      formDataToSend.append("user_id", formData.user_id);
-      
-      console.log(formData.user_id)
-      
-      try {
-        const response = await axios.post("http://localhost:8000/api/shops", 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setFormData({
+      ...formData,
+      [e.target.name]: file,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("tokenClient");
+    console.log("tokenClient", token);
+
+    if (!token) {
+      alert("connectez vous d" / "abord avant de creer votre boutique");
+      navigate("/connexion");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+
+    formDataToSend.append("name", formData.nom);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("logo", formData.logo);
+    formDataToSend.append("banniere", formData.banniere);
+    formDataToSend.append("telephone", formData.telephone);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("adresse", formData.adresse);
+    formDataToSend.append("a_propos", formData.a_propos);
+    formDataToSend.append("user_id", formData.user_id);
+
+    console.log(formData.user_id);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/shops",
 
         formDataToSend,
         {

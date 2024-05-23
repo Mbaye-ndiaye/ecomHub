@@ -39,6 +39,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // const token = localStorage.getItem("tokenClient");
     try {
       setIsLoading(true);
       const response = await axios.post(
