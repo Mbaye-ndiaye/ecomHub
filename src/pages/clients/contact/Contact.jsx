@@ -51,16 +51,15 @@ const ContactPage = () => {
         <div className="flex flex-col w-full gap-4 pt-4 md:px-9 md:flex-row md:gap-7">
             <div className="w-full py-4 border border-gray-200 rounded-md shadow-sm md:w-1/4">
               <div className='p-5'>
-              <div className='flex flex-col gap-12'>
-              <h1>Let's get in touch</h1>
-              <p>We're open for any suggestion or just to have a chat</p>
+              <div className='flex gap-2'>
+              <h1>telephone:</h1>
+              <p>{boutique?.telephone}</p>
               </div>
               <div>
               <div className='flex gap-4'>
               
               <p className='flex gap-2'>
-              <b>Address:</b>
-              198 West 21th Street, Suite 721 New York NY 10016</p>
+              <b>adresse: {boutique?.adresse}</b></p>
               </div>
               </div>
               </div>

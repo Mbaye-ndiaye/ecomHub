@@ -23,6 +23,8 @@ const FormProvider = ({ children }) => {
     logo: null,
   });
 
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -30,23 +32,36 @@ const FormProvider = ({ children }) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    setFormData({ ...formData, [e.target.name]: file });
+    setFormData({
+      ...formData,
+      [e.target.name]: file,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("tokenClient");
+    console.log("tokenClient", token);
 
-    if (!token) {
-      Swal.fire("Veuillez vous connecter pour créer une boutique");
-      navigate("/connexion");
-      return;
-    }
+    // if (!token) {
+    //   alert("connectez vous d" / "abord avant de creer votre boutique");
+    //   navigate("/connexion");
+    //   return;
+    // }
 
     const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      formDataToSend.append(key, formData[key]);
-    });
+
+    formDataToSend.append("name", formData.nom);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("logo", formData.logo);
+    formDataToSend.append("banniere", formData.banniere);
+    formDataToSend.append("telephone", formData.telephone);
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("adresse", formData.adresse);
+    formDataToSend.append("a_propos", formData.a_propos);
+    formDataToSend.append("user_id", formData.user_id);
+
+    console.log(formData.user_id);
 
     try {
       const response = await axios.post(
@@ -60,6 +75,11 @@ const FormProvider = ({ children }) => {
         }
       );
 
+       // if (!token) {
+    //   Swal.fire("Veuillez vous connecter pour créer une boutique");
+    //   navigate("/connexion");
+    //   return;
+    // }
       localStorage.setItem("shop_id", response.data.id);
 
       await Swal.fire({

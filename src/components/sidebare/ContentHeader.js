@@ -6,8 +6,7 @@ import { BiSearch } from "react-icons/bi";
 
 const ContentHeader = () => {
   const navigate = useNavigate();
-  const [userShops, setUserShops] = useState([]);
-  const [selectedShop, setSelectedShop] = useState("");
+  const [userShop, setUserShop] = useState(null);
 
   useEffect(() => {
     const fetchUserShops = async () => {
@@ -21,8 +20,8 @@ const ContentHeader = () => {
             },
           }
         );
-        setUserShops(response.data);
-        console.log("catégories", response.data);
+        setUserShop(response.data);
+        console.log("response", response.data);
       } catch (error) {
         console.error(error);
       }
@@ -31,24 +30,17 @@ const ContentHeader = () => {
     fetchUserShops();
   }, []);
 
-  const handleShopChange = (event) => {
-    setSelectedShop(event.target.value);
-  };
+  if (!userShop) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex items-center justify-between">
-      {/* <h1>Sélectionnez une boutique :</h1> */}
-      <select value={selectedShop} onChange={handleShopChange}>
-        <option value="">Choisissez une boutique</option>
-        {userShops.map((shop) => (
-          <option key={shop.id} value={shop.id}>
-            {shop.name}
-          </option>
-        ))}
-      </select>
-      {selectedShop && (
-        <Link to={`/accueil/${selectedShop}`}>Voir les détails</Link>
-      )}
+      <div className="flex items-center gap-4">
+        <span>Votre boutique : {userShop.name}</span>
+        <Link to={`/accueil/${userShop.id}`}>Voir mon boutique</Link>
+      </div>
+
       <div className="flex items-center gap-[20px]">
         <div className="bg-blue-300 px-5 py-1 rounded flex items-center">
           <input

@@ -14,14 +14,14 @@ export const CategorieContext = createContext();
 export default function CategorieContextProvider({ children }) {
   const [test, setTest] = useState("");
 
-  const [nom, setNom] = useState("");
+  // const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
   const [categories, setCategories] = useState([]);
   const [categoriesProd, setCategoriesProd] = useState([]);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
-  const [userShops, setUserShops] = useState([]);
+  const [userShops, setUserShops] = useState("");
   const [quantiteParCategorie, setQuantiteParCategorie] = useState({});
   const navigate = useNavigate();
   const { setShowModal } = useGlobal();
@@ -43,7 +43,6 @@ export default function CategorieContextProvider({ children }) {
   //   },
   // ];
 
-
   const actions = [
     {
       icon: <TbEyeShare />,
@@ -60,7 +59,7 @@ export default function CategorieContextProvider({ children }) {
       handleClick: (category) => {
         categories.map((categorie) => {
           if (categorie._id === category) {
-            setNom(categorie.name);
+            // setNom(categorie.name);
           }
         });
         setIsEditing(true);
@@ -77,43 +76,28 @@ export default function CategorieContextProvider({ children }) {
     // }
   ];
 
-  useEffect(() => {
-    const fetchUserShops = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/user/shops",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
-            },
-          }
-        );
-        setUserShops(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchUserShops();
-  }, []);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/categories", {
+        params: { shop_id: localStorage.getItem("shopId") },
+      });
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des catégories :", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     const token = localStorage.getItem("tokenClient");
     console.log("tokenClient", token);
-
-    if (!token) {
-      alert("connectez vous d" / "abord avant de creer votre boutique");
-      navigate("/connexion");
-      return;
-    }
 
     const fromDataToSend = new FormData();
 
@@ -143,8 +127,9 @@ export default function CategorieContextProvider({ children }) {
           icon: "success",
           title: "Categorie joutée avec succès",
           showConfirmButton: false,
-          timer: 9000,
+          timer: 2000,
         });
+        setFormData.name('')
         // setNom("");
         console.log("respose :", response);
         fetchCategories();
@@ -193,18 +178,6 @@ export default function CategorieContextProvider({ children }) {
   //     console.error("Erreur lors de la suppression de la catégorie:", error);
   //   }
   // };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/categories",
-        formData
-      );
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des catégories :", error);
-    }
-  };
 
   const updateCategoryQuantities = async () => {
     try {
@@ -269,9 +242,9 @@ export default function CategorieContextProvider({ children }) {
     // inputs,
     formData,
     categories,
-    nom,
+    // nom,
     quantite,
-    setNom,
+    // setNom,
     setQuantite,
     setCategories,
     handleChange,

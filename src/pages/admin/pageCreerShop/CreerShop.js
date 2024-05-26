@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import imgFrom from "../../../assets/imgFrom.avif";
 import Footer from "../../../components/footer/footer";
 import NaveLinks from "../../../components/navbarAdmin/NavLinks";
-import EditorShop from "./EditorShop";
 
 function FormsShop() {
   const { id } = useParams();
   const navigate = useNavigate();
-
-
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -24,10 +21,6 @@ function FormsShop() {
     logo: null,
     user_id: localStorage.getItem("userId"),
   });
-    
-
-  
-
 
   const [errors, setErrors] = useState({});
   const [logoPreview, setLogoPreview] = useState(null);
@@ -53,42 +46,12 @@ function FormsShop() {
     }
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.name.trim()) newErrors.name = "Le nom est requis.";
-    if (!formData.email.trim()) {
-      newErrors.email = "L'email est requis.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "L'email est invalide.";
-    }
-    if (!formData.telephone.trim()) {
-      newErrors.telephone = "Le téléphone est requis.";
-    } else if (!/^\d+$/.test(formData.telephone)) {
-      newErrors.telephone =
-        "Le téléphone doit contenir uniquement des chiffres.";
-    }
-    if (!formData.adresse.trim()) newErrors.adresse = "L'adresse est requise.";
-    if (!formData.a_propos.trim())
-      newErrors.a_propos = "La section 'A propos' est requise.";
-    if (!formData.description.trim())
-      newErrors.description = "La description est requise.";
-    if (!formData.banniere) newErrors.banniere = "La bannière est requise.";
-    if (!formData.logo) newErrors.logo = "Le logo est requis.";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
-
     const token = localStorage.getItem("tokenClient");
-    
+
+    console.log("tokenClient", token);
 
     const formDataToSend = new FormData();
 
@@ -102,6 +65,8 @@ function FormsShop() {
     formDataToSend.append("a_propos", formData.a_propos);
     formDataToSend.append("user_id", formData.user_id);
 
+    console.log(formData.user_id);
+
     try {
       const response = await axios.post(
         "http://localhost:8000/api/shops",
@@ -114,9 +79,14 @@ function FormsShop() {
         }
       );
 
+      // Here, you get the shop_id from the response
       const shopId = response.data.id;
+      console.log(shopId);
+
       localStorage.setItem("shopId", response.data.id);
 
+      console.log(response.data);
+      // afficher le message de succès
       await Swal.fire({
         icon: "success",
         title: "Boutique ajoutée avec succès",
@@ -126,52 +96,28 @@ function FormsShop() {
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
-      alert("Échec de l'ajout de la boutique");
-    }
-  };
-
-  const handleDashboardClick = async () => {
-    const user_Id = localStorage.getItem("userId");
-    const token = localStorage.getItem("tokenClient");
-
-    if (!user_Id || !token) {
-      navigate("/connexion");
-      return;
-    }
-
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/users/${user_Id}/shop`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data) {
-        navigate("/dashboard");
+      // Display error message if user already has a shop
+      if (error.response && error.response.status === 403) {
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur",
+          text: "Vous avez déjà une boutique. Vous ne pouvez pas en créer une autre.",
+        });
       } else {
-        Swal.fire({
-          icon: "info",
-          title: "Créer une boutique",
-          text: "Vous devez créer une boutique avant d'accéder au tableau de bord.",
+        await Swal.fire({
+          icon: "error",
+          title: "Erreur",
+          text: "Échec de l'ajout de la boutique.",
         });
       }
-    } catch (error) {
-      console.error("Erreur lors de la vérification de la boutique", error);
-      Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "Une erreur est survenue lors de la vérification de la boutique.",
-      });
     }
   };
 
   return (
     <>
+      {/* <div className="bg-gray-700 py-[20px] h-auto "> */}
       {/* <NaveLinks className="mb-[8%]" /> */}
-      <div className="flex gap-10 w-screen h-screen ">
+      <div className="flex justify-between  w-screen h-screen ">
         <img className=" w-[40%] object-cover h-screen" src={imgFrom} alt="/" />
         <form className=" p-5 mt-3  mb-3 rounded" onSubmit={handleSubmit}>
           <h1 className="text-gray-700 mb-5 text-2xl text-center">
@@ -191,9 +137,6 @@ function FormsShop() {
                 value={formData.name}
                 onChange={handleChange}
               />
-              {errors.name && (
-                <span className="text-red-500">{errors.name}</span>
-              )}
             </div>
 
             <div className="flex flex-col mb-2">
@@ -210,9 +153,6 @@ function FormsShop() {
                   value={formData.email}
                   onChange={handleChange}
                 />
-                {errors.email && (
-                  <span className="text-red-500">{errors.email}</span>
-                )}
               </div>
             </div>
 
@@ -229,7 +169,7 @@ function FormsShop() {
                 type="file"
                 id="banniere"
                 name="banniere"
-                className="w-[20rem] p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                className="w-[20rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                 onChange={handleImageChange}
               />
               {bannierePreview && (
@@ -238,9 +178,6 @@ function FormsShop() {
                   alt="Bannière Preview"
                   className="h-[10rem] w-[15rem]"
                 />
-              )}
-              {errors.banniere && (
-                <span className="text-red-500">{errors.banniere}</span>
               )}
             </div>
 
@@ -253,7 +190,7 @@ function FormsShop() {
                 type="file"
                 id="logo"
                 name="logo"
-                className="w-[20rem] p-2 mt-1  bg-gray-200 border-0 rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                className="w-[20rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
                 onChange={handleImageChange}
               />
               {logoPreview && (
@@ -262,9 +199,6 @@ function FormsShop() {
                   alt="Logo Preview"
                   className="h-[10rem] w-[15rem]"
                 />
-              )}
-              {errors.logo && (
-                <span className="text-red-500">{errors.logo}</span>
               )}
             </div>
           </div>
@@ -282,9 +216,6 @@ function FormsShop() {
                 value={formData.telephone}
                 onChange={handleChange}
               />
-              {errors.telephone && (
-                <span className="text-red-500">{errors.telephone}</span>
-              )}
             </div>
 
             <div className="relative flex flex-col mb-2">
@@ -300,26 +231,59 @@ function FormsShop() {
                 value={formData.adresse}
                 onChange={handleChange}
               />
-              {errors.adresse && (
-                <span className="text-red-500">{errors.adresse}</span>
-              )}
             </div>
           </div>
 
           <div className="relative flex flex-col mb-2">
-            <EditorShop />
+            <label htmlFor="a_propos" className="block text-sm font-medium ">
+              Apropos du site
+            </label>
+            <textarea
+              required
+              row="5"
+              cols="16"
+              id="a_propos"
+              name="a_propos"
+              className="w-full  p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              value={formData.a_propos}
+              onChange={handleChange}
+            />
           </div>
 
+          <div className="relative flex flex-col mb-2">
+            <label htmlFor="description" className="block text-sm font-medium ">
+              Description du site
+            </label>
+            <textarea
+              required
+              row="5"
+              cols="16"
+              id="description"
+              name="description"
+              className="w-full p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+              value={formData.description}
+              onChange={handleChange}
+            />
+          </div>
+          {/* <Link to={"/Dashboard"}> */}
           <button
             type="submit"
+            // disabled={isButtonDisabled || isLoading}
             className="flex justify-center px-4 py-2 mt-8 text-white bg-gray-800 rounded-md m-auto text-center flex items-center justify-center"
+            //  ${
+            // isButtonDisabled || isLoading
+            // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
+            // : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            // } ${isLoading ? "relative" : ""}`}
           >
             Enregistrer
           </button>
+          {/* </Link> */}
         </form>
       </div>
+      {/* <Footer /> */}
+      {/* </div> */}
     </>
   );
 }
-
 export default FormsShop;

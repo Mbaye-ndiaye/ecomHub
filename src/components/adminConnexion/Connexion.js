@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import loginImg from "../../assets/imagesback.jfif";
+import LoadingSpinner from "./LoadingSpinner";  // Assurez-vous que ce composant existe et est correctement importé
+
 export default function Login() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +18,7 @@ export default function Login() {
   const handleSignUpClick = () => {
     navigate("/inscription");
   };
+
   const updateShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -28,6 +30,7 @@ export default function Login() {
       setIsButtonDisabled(true);
     }
   };
+
   useEffect(() => {
     updateButtonDisabled();
   }, [formData.email, formData.password]);
@@ -39,29 +42,17 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("tokenClient");
-
+    setIsLoading(true);
     try {
-      setIsLoading(true);
       const response = await axios.post(
         "http://localhost:8000/api/login",
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        formData
       );
 
-  
+      const token = response.data.access_token;
+      localStorage.setItem("tokenClient", token);
+      localStorage.setItem("userId", response.data.user.id);
 
-      console.log(response.data);
-      console.log("token:", token);
-
-      console.log("UserID:", response.data.user.id);
-
-      // afficher le message succes
       await Swal.fire({
         icon: "success",
         title: "Connexion réussie!",
@@ -71,7 +62,13 @@ export default function Login() {
       navigate("/creeShop");
     } catch (error) {
       console.error(error);
-      alert("Connexion échouée");
+      await Swal.fire({
+        icon: "error",
+        title: "Votre mot de passe ou email incorrect",
+        text: "Veuillez vérifier vos informations et réessayer.",
+        // showConfirmButton: false,
+        timer: 2000,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -82,10 +79,10 @@ export default function Login() {
       <img
         className="absolute object-cover w-full h-full mix-blend-overlay"
         src={loginImg}
-        alt="/"
+        alt="Background"
       />
 
-      <div className="flex items-center justify-center h-full ">
+      <div className="flex items-center justify-center h-full">
         <form
           className="max-w-[400px] w-full mx-auto bg-white p-8 rounded"
           onSubmit={handleSubmit}
@@ -93,7 +90,7 @@ export default function Login() {
           <h2 className="py-4 text-4xl font-bold text-center">Marhaba Store</h2>
 
           <div className="relative flex flex-col mb-4">
-            <label htmlFor="email" className="block text-sm font-medium ">
+            <label htmlFor="email" className="block text-sm font-medium">
               Email
             </label>
             <input
@@ -106,9 +103,9 @@ export default function Login() {
               onChange={handleChange}
             />
           </div>
-          <div className="relative flex flex-col ">
-            <label htmlFor="password" className="block text-sm font-medium ">
-              Mot de pass
+          <div className="relative flex flex-col">
+            <label htmlFor="password" className="block text-sm font-medium">
+              Mot de passe
             </label>
             <input
               required
@@ -120,19 +117,17 @@ export default function Login() {
               onChange={handleChange}
             />
           </div>
-          {/* <Link to={"/Admin"}> */}
           <button
             type="submit"
             disabled={isButtonDisabled || isLoading}
-            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center  ${
+            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center ${
               isButtonDisabled || isLoading
-                ? "bg-gray-800  cursor-not-allowed text-disabled text-black relative"
+                ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
                 : "bg-gray-900 text-active text-white hover:bg-gray-900"
-            } ${isLoading ? "relative" : ""}`}
+            }`}
           >
-            Sign In
+            {isLoading ? <LoadingSpinner /> : "Connexion"}
           </button>
-          {/* </Link> */}
           <p className="flex items-center mt-2">
             <input className="mr-2" type="checkbox" />
             Remember Me
@@ -140,10 +135,7 @@ export default function Login() {
 
           <p className="mt-8 text-center">
             Not a member?{" "}
-            <span
-              className="relative cursor-pointer"
-              onClick={handleSignUpClick}
-            >
+            <span className="relative cursor-pointer" onClick={handleSignUpClick}>
               Sign up now
             </span>
           </p>
