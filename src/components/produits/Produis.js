@@ -1,21 +1,3 @@
-// import FormsModal from "../navbarAdmin/modal/FormsModal";
-// import Modal from "../navbarAdmin/modal/Modal";
-// import Table from "../table/Table"
-
-// const Produis = ({title}) => {
-//     return(
-//         <div>
-//             <Table title={'Liste des produits'}/>
-//             {/* <Modal/> */}
-//             {/* <Modal >
-//                 <FormsModal/>
-//             </Modal> */}
-//         </div>
-//     )
-// }
-
-// export default Produis;
-
 import React, { useEffect } from "react";
 import useProduit from "../../utils/hooks/useProduit";
 import HeaderTable from "../headerTable/HeaderTable";
@@ -23,7 +5,7 @@ import HeaderTable from "../headerTable/HeaderTable";
 import Formulaire from "././../formulaire/Formulaire";
 import Table from "../table/Table";
 import Sidebare from "../sidebare/Sidebare";
-// import Select from '../cards-et-filtre/Select';
+import Select from "./Select";
 // import { ToastContainer } from 'react-toastify';
 
 const Produis = () => {
@@ -32,23 +14,24 @@ const Produis = () => {
     actions,
     titreModal,
     setTitreModal,
-    filtreProducts,
+    filtreProduits,
     handleSelectChange,
     products,
     //    produits,
-    // filtreProdCategorie,
+    filtreProdCategorie,
     fetchProduct,
     // setCategoryNames,
     // setFiltreProduits,
-    // categories,
-    // categoryNames,
-    // setCategoryNames,
-    // handleSelectChangeCategorie,
+    categories,
+    categoryNames,
+    setCategoryNames,
+    handleSelectChangeCategorie,
     inputs,
     textarea,
     selects,
     hanldleSubmit,
-    //    fetchCategories
+    fetchCategories,
+    //  selects
   } = useProduit();
 
   // const {titreModal, setTitreModal,  textarea,  ...otherValues } = useProduit();
@@ -57,18 +40,18 @@ const Produis = () => {
   // const inputs = otherValues.inputs || [];
 
   useEffect(() => {
-    // filtreProdCategorie()
+    // filtreProdCategorie();
     fetchProduct();
   }, [products]);
 
-  //   useEffect(() => {
-  // 		setCategoryNames(categories.map((categorie) => categorie.nom));
-  // 		setFiltreProduits(products)
-  // 	  }, [categories]);
+  // useEffect(() => {
+  //   setCategoryNames(categories.map((categorie) => categorie.name));
+  //   // setFiltreProduits(products)
+  // }, [categories]);
 
-  //     useEffect(() => {
-  //       // fetchCategories();
-  // }, []);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   // const {open, closedrop} = useSidebare()
 
@@ -79,6 +62,13 @@ const Produis = () => {
       <div className="bg-white rounded-[20px] p-[2rem] flex-1  mb-5 h-auto ">
         <HeaderTable
           title="Produits"
+          filtre={
+            <Select
+              contenus={categoryNames}
+              handleSelectChange={handleSelectChangeCategorie}
+              Title="Catégorie"
+            />
+          }
           nomAjout={titreModal}
           test="test"
           body={
@@ -91,7 +81,7 @@ const Produis = () => {
             />
           }
         />
-        <Table thead={table} tbody={filtreProducts} actions={actions} />
+        <Table thead={table} tbody={filtreProduits} actions={actions} />
         {/* <ToastContainer /> */}
       </div>
     </div>

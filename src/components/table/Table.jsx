@@ -118,7 +118,7 @@ import React from "react";
 export const Thead = ({ thead }) => {
   return (
     <thead>
-      <tr className="font-semibold tracking-wide text-center text-white uppercase bg-gray-800 border border-x-0 border-top border-gray-300 text-sm">
+      <tr className="font-semibold tracking-wide text-center text-white uppercase bg-gray-700 border border-x-0 border-top border-gray-300 text-sm">
         {thead.map((th, index) => (
           <th key={index} className="px-4 py-3">
             {th}
