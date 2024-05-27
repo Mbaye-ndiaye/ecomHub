@@ -269,18 +269,37 @@ function FormsShop() {
               onChange={handleChange}
             />
           </div>
-          {/* <Link to={"/Dashboard"}> */}
           <button
             type="submit"
-            // disabled={isButtonDisabled || isLoading}
-            className="flex justify-center px-4 py-2 mt-8 text-white bg-gray-800 rounded-md m-auto text-center flex items-center justify-center"
-            //  ${
-            // isButtonDisabled || isLoading
-            // ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-            // : "bg-gray-900 text-active text-white hover:bg-gray-900"
-            // } ${isLoading ? "relative" : ""}`}
+            disabled={isLoading}
+            className={`flex justify-center px-4 py-2 mt-8 text-white bg-gray-800 rounded-md m-auto text-center flex items-center justify-center ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Enregistrer
+            {isLoading ? (
+              <svg
+                className="animate-spin h-5 w-5 mr-3 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Enregistrer"
+            )}
           </button>
           {/* </Link> */}
         </form>

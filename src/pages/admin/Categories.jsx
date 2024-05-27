@@ -43,16 +43,19 @@ const Categories = () => {
           body={
             <form className="flex gap-5" onSubmit={handleSubmit}>
               <div className="flex flex-col ">
-                <label htmlFor="name" className="block text-sm font-medium ">
+                <label
+                  htmlFor="categories"
+                  className="block text-sm font-medium "
+                >
                   Nom du boutique
                 </label>
                 <input
                   required
                   type="text"
-                  id="name"
-                  name="name"
+                  id="categories"
+                  name="categories"
                   className="w-[20rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-                  value={formData.name}
+                  value={formData.categories}
                   onChange={handleChange}
                 />
               </div>

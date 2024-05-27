@@ -124,9 +124,9 @@ export default function Login() {
               isButtonDisabled || isLoading
                 ? "bg-gray-800  cursor-not-allowed text-disabled text-black relative"
                 : "bg-gray-900 text-active text-white hover:bg-gray-900"
-            } ${isLoading ? "relative" : ""}`}
+            } $ {isLoading ? "Enregistrement..." : "Enregistrer"}`}
           >
-            Sign In
+            Connecter
           </button>
           {/* </Link> */}
           <p className="flex items-center mt-2">
