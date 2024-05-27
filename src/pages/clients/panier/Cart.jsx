@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, usePanier} from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../../components/footer/footer';
 import { FaTrash } from 'react-icons/fa';
@@ -6,8 +6,19 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 import { FaPlus } from 'react-icons/fa6';
 import { FaMinus } from 'react-icons/fa6';
 import Navbar from '../../../components/clients/navbar/navbar';
+import { PanierContext } from '../../../utils/context/PanierContext';
 
-export default function ShoppingCart() {
+
+export default function Cart() {
+	const {
+		items,
+		totalItems,
+		removeItem,
+		quantity,
+		cartQuantities,
+		updateQuantity,
+	} = useContext(PanierContext);
+
 	return (
 		<section>
 			<Navbar />
@@ -17,7 +28,7 @@ export default function ShoppingCart() {
 						<div className="w-full bg-white rounded-lg shadow-md lg:w-1/2">
 							<div className="flex justify-between p-5">
 								<h5 className="text-xl font-bold">votre Panier</h5>
-								<h5 className="">2 Produits</h5>
+								<h5 className="">{totalItems} Produits</h5>
 							</div>
 							<hr />
 							<div className="flex justify-between p-3">
@@ -120,15 +131,15 @@ export default function ShoppingCart() {
 									<hr className="w-full mt-4 bg-black" />
 									<ul className="py-3 list-disc">
 										<li className="flex items-center justify-between my-4">
-											<span>Products</span>
+											<span>Produits</span>
 											<span>$53.98</span>
 										</li>
 										<li className="flex items-center justify-between mb-4">
-											<span>Shipping</span>
+											<span>Quantité</span>
 											<span>$2</span>
 										</li>
 										<li className="flex items-center justify-between">
-											<strong>Total amount</strong>
+											<strong>Total </strong>
 											<span className="text-lg font-bold text-red-500">
 												$53.98
 											</span>

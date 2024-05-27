@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { FaShoppingCart } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import usePanier from '../../../utils/hooks/usePanier';
+import { PanierContext } from '../../../utils/context/PanierContext';
 
-const CardList = ({produit}) => {
+
+
+const CardList = () => {
+  const { addProduitToCart } = useContext(PanierContext);
   const [products, setProducts] = useState([]);
+
+  const handleAddProduitToCart = (product) => {
+    addProduitToCart(product)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +47,11 @@ const CardList = ({produit}) => {
               <p className="text-black text-xs mb-2">{product.category}</p>
               <div className='flex justify-between items-center px-0'>
               <p className="text-gray-900 font-bold">${product.price}</p>
-              <button className=" bottom-0 left-10  bg-red-500 text-white px-2 py-1 rounded-lg">
-                <FaShoppingCart /> 
+              <button 
+              onClick={() => handleAddProduitToCart(product)}
+              className=" bottom-0 left-10  bg-red-500 text-white px-2 py-1 rounded-lg">
+                <FaShoppingCart 
+                /> 
               </button>
               </div>
             </div>

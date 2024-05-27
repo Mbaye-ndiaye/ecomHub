@@ -3,7 +3,6 @@ import Login from "./components/adminConnexion/Connexion";
 import Inscription from "./components/adminInscription/Inscription";
 import InterfaceAdmin from "./components/interfaceAdmin/InterfaceAdmin";
 import { Routes, Route } from "react-router-dom";
-import ShoppingCart from "./pages/clients/panier/Panier";
 import CheckoutPage from "./pages/clients/checkout/Checkout";
 import Accueil from "./pages/clients/accueil/Accueil";
 import AboutPage from "./pages/clients/apropos/Apropos";
@@ -20,16 +19,20 @@ import BoutiqueCategorie from "./pages/clients/boutiqueCategorie/BoutiqueCategor
 import FormProfilUser from "./pages/admin/profilUser/FormProfilUser";
 import GlobalContextProvider from "./utils/context/GlobalContext";
 import CategorieContextProvider from "./utils/context/CategorieContext";
+import PanierContextProvider from "./utils/context/PanierContext";
+import Cart from "./pages/clients/panier/Cart";
+
 
 function App() {
   return (
     <div className="App">
       <FormProvider>
+        <PanierContextProvider>
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/" element={<InterfaceAdmin />} />
-          <Route path="/panier" element={<ShoppingCart />}></Route>
+          <Route path="/panier" element={<Cart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           <Route path="/accueil/:name" element={<Accueil />}></Route>
           <Route path="/apropos" element={<AboutPage />}></Route>
@@ -54,6 +57,7 @@ function App() {
           <Route path="/*" element={<DashboardWithSidebar />} />
         </Routes>
         {/* </Router> */}
+        </PanierContextProvider>
       </FormProvider>
       {/* </CategorieContextProvider>
         </GlobalContextProvider> */}
