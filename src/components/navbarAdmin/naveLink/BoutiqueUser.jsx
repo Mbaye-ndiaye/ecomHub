@@ -46,13 +46,13 @@ const BoutiqueUser = () => {
   console.log("nmbreBoutique", nmbreBoutique);
 
   // useEffect(() => {
-  if (nmbreBoutique > 0) {
-    alert("Vous avez déjà créé une boutique.");
-  }
+  // if (nmbreBoutique > 0) {
+  //   alert("Vous avez déjà créé une boutique.");
+  // }
   // }, [nmbreBoutique]);
 
   return (
-    <div className="bg-[#494C4F] p-5 h-screen">
+    <div className="bg-[#494C4F] p-5 h-auto">
       <h1 className="text-white font-bold text-2xl text-center mb-5">
         Le nombre de boutique existe: {nmbreBoutique}
       </h1>
