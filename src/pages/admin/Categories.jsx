@@ -47,7 +47,7 @@ const Categories = () => {
                   htmlFor="categories"
                   className="block text-sm font-medium "
                 >
-                  Nom du boutique
+                  Nom du catégorie
                 </label>
                 <input
                   required

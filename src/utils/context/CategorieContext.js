@@ -14,7 +14,7 @@ export default function CategorieContextProvider({ children }) {
 
   // const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
-  const [categorie, setCategorie] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [categoriesProd, setCategoriesProd] = useState([]);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -45,7 +45,7 @@ export default function CategorieContextProvider({ children }) {
       icon: <MdEdit />,
       color: "bg-orange-500",
       handleClick: (category) => {
-        categorie.map((categorie) => {
+        categories.map((categorie) => {
           if (categorie._id === category) {
             // setNom(categorie.name);
           }
@@ -65,7 +65,9 @@ export default function CategorieContextProvider({ children }) {
           params: { shop_id: localStorage.getItem("shopId") },
         }
       );
-      setCategorie(response.data);
+      console.log("Catégories récupérées :", response.data);
+      // localStorage.setItem("categories", JSON.stringify(response.data));
+      setCategories(response.data);
     } catch (error) {
       console.error("Erreur lors de la récupération des catégories :", error);
     }
@@ -90,7 +92,6 @@ export default function CategorieContextProvider({ children }) {
     console.log("tokenClient", token);
 
     const formDataToSend = new FormData();
-
     formDataToSend.append("shop_id", formData.shop_id);
 
     // Vérifiez que categories est un tableau
@@ -107,13 +108,14 @@ export default function CategorieContextProvider({ children }) {
     }
 
     console.log("formData.shop_id", formData.shop_id);
-    console.log("formData.name", formData.categories);
+    console.log("formData.categories", formData.categories);
 
     try {
+      let response;
       if (isEditing) {
         handleEditCategory(editingCategoryId, formData);
       } else {
-        const response = await axios.post(
+        response = await axios.post(
           `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
           formDataToSend,
           {
@@ -124,15 +126,33 @@ export default function CategorieContextProvider({ children }) {
           }
         );
 
-        await Swal.fire({
-          icon: "success",
-          title: "Categorie ajoutée avec succès",
-          showConfirmButton: false,
-          timer: 9000,
-        });
+        // Log the complete response
+        console.log("Réponse du serveur complète :", response);
+        console.log("Données de la réponse :", response.data);
 
-        console.log("response :", response);
-        fetchCategories();
+        // Vérifiez la structure de la réponse
+        if (response.data && response.data.categories) {
+          const createdCategories = response.data.categories;
+          if (createdCategories.length > 0) {
+            const createdCategoryId = createdCategories[0].id; // Assurez-vous de gérer plusieurs catégories si nécessaire
+            localStorage.setItem("categorie", createdCategoryId);
+            console.log("Catégorie créée ID :", createdCategoryId);
+          }
+
+          await Swal.fire({
+            icon: "success",
+            title: "Categorie ajoutée avec succès",
+            showConfirmButton: false,
+            timer: 9000,
+          });
+
+          fetchCategories();
+        } else {
+          console.error(
+            "La réponse ne contient pas les catégories créées:",
+            response.data
+          );
+        }
       }
     } catch (error) {
       console.error("Erreur lors de l'ajout de la catégorie:", error);
@@ -167,7 +187,7 @@ export default function CategorieContextProvider({ children }) {
   const updateCategoryQuantities = async () => {
     try {
       const updatedCategories = await Promise.all(
-        categorie.map(async (category) => {
+        categories.map(async (category) => {
           try {
             const response = await axios.get(
               `http://127.0.0.1:8000/api/produits/categorie/${category._id}`
@@ -193,7 +213,7 @@ export default function CategorieContextProvider({ children }) {
         })
       );
 
-      setCategorie(updatedCategories);
+      setCategories(updatedCategories);
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour des quantités de produits :",
@@ -224,10 +244,10 @@ export default function CategorieContextProvider({ children }) {
     table,
     actions,
     formData,
-    categorie,
+    categories,
     quantite,
     setQuantite,
-    setCategorie,
+    setCategories,
     handleChange,
   };
 
