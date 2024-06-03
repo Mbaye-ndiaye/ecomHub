@@ -12,7 +12,7 @@ const GlobalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [admin, setAdmin] = useState("");
-//   const [commandes, setCommandes] = useState([]);
+  const [client, setClient] = useState('')
   const [password, setPassword] = useState("");
   const [dropdown, setDropdown] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,7 @@ const GlobalContextProvider = ({ children }) => {
   // Fonction pour supprimer le token du local storage après la déconnexion
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/admin");
+    navigate("/connexion");
   };
 
   const handleLogoutUser = () => {
@@ -192,7 +192,8 @@ const GlobalContextProvider = ({ children }) => {
     setProduitAimer,
     // handleLikeToggle,
     admin,
-    // isLoading,
+    client,
+    setClient,
     setAdmin,
     // commandes,
     dropdown,

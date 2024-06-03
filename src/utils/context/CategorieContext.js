@@ -9,14 +9,12 @@ import Swal from "sweetalert2";
 
 export const CategorieContext = createContext();
 
-// { CategorieContext };
-
 export default function CategorieContextProvider({ children }) {
   const [test, setTest] = useState("");
 
   // const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
-  const [categories, setCategories] = useState([]);
+  const [categorie, setCategorie] = useState([]);
   const [categoriesProd, setCategoriesProd] = useState([]);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -27,21 +25,11 @@ export default function CategorieContextProvider({ children }) {
   const { setShowModal } = useGlobal();
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
-    name: "",
+    categories: [],
     shop_id: localStorage.getItem("shopId"),
   });
 
   const table = ["Categorie", "Nombre produit", "Actions"];
-
-  // const inputs = [
-  //   {
-  //     label: "Nom catégorie",
-  //     type: "text",
-  //     value: nom,
-  //     name: "catégorie",
-  //     setValue: setNom,
-  //   },
-  // ];
 
   const actions = [
     {
@@ -57,7 +45,7 @@ export default function CategorieContextProvider({ children }) {
       icon: <MdEdit />,
       color: "bg-orange-500",
       handleClick: (category) => {
-        categories.map((categorie) => {
+        categorie.map((categorie) => {
           if (categorie._id === category) {
             // setNom(categorie.name);
           }
@@ -67,21 +55,17 @@ export default function CategorieContextProvider({ children }) {
         setEditingCategoryId(category);
       },
     },
-    // {
-    //   icon: <MdOutlineDelete />,
-    //   color: "bg-red-600",
-    //   handleClick: (categoryId) => {
-    //     handleDelete(categoryId);
-    //   },
-    // }
   ];
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/categories", {
-        params: { shop_id: localStorage.getItem("shopId") },
-      });
-      setCategories(response.data);
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
+        {
+          params: { shop_id: localStorage.getItem("shopId") },
+        }
+      );
+      setCategorie(response.data);
     } catch (error) {
       console.error("Erreur lors de la récupération des catégories :", error);
     }
@@ -89,8 +73,14 @@ export default function CategorieContextProvider({ children }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    
+
+    // Ajoutez une validation pour vous assurer que formData.categories reste un tableau
+    if (name === "categories") {
+      let categoriesArray = value.split(",").map((item) => item.trim());
+      setFormData({ ...formData, categories: categoriesArray });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -99,21 +89,33 @@ export default function CategorieContextProvider({ children }) {
     const token = localStorage.getItem("tokenClient");
     console.log("tokenClient", token);
 
-    const fromDataToSend = new FormData();
+    const formDataToSend = new FormData();
 
-    fromDataToSend.append("name", formData.name);
-    fromDataToSend.append("shop_id", formData.shop_id);
+    formDataToSend.append("shop_id", formData.shop_id);
+
+    // Vérifiez que categories est un tableau
+    if (Array.isArray(formData.categories)) {
+      formData.categories.forEach((category, index) => {
+        formDataToSend.append(`categories[${index}]`, category);
+      });
+    } else {
+      console.error(
+        "formData.categories n'est pas un tableau:",
+        formData.categories
+      );
+      return;
+    }
 
     console.log("formData.shop_id", formData.shop_id);
-    console.log("formData.name", formData.name);
+    console.log("formData.name", formData.categories);
 
-    if (isEditing) {
-      handleEditCategory(editingCategoryId, formData);
-    } else {
-      try {
+    try {
+      if (isEditing) {
+        handleEditCategory(editingCategoryId, formData);
+      } else {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/categories",
-          fromDataToSend,
+          `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
+          formDataToSend,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -122,25 +124,25 @@ export default function CategorieContextProvider({ children }) {
           }
         );
 
-        // afficher le message de succès
         await Swal.fire({
           icon: "success",
-          title: "Categorie joutée avec succès",
+          title: "Categorie ajoutée avec succès",
           showConfirmButton: false,
-          timer: 2000,
+          timer: 9000,
         });
-        setFormData.name('')
-        // setNom("");
-        console.log("respose :", response);
+
+        console.log("response :", response);
         fetchCategories();
-      } catch (error) {
-        console.error("Erreur lors de l'ajout de la catégorie:", error);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de la catégorie:", error);
+      if (error.response) {
+        console.log("Erreur détaillée:", error.response.data);
       }
     }
   };
 
   const handleDetail = (categoryId) => {
-    // Récupérer l'ID de la catégorie depuis le stockage local
     const categorieIdCli = localStorage.getItem("categorieIdCli");
   };
 
@@ -160,29 +162,12 @@ export default function CategorieContextProvider({ children }) {
   const handleEditCategory = (categoryId, newData) => {
     setEditData(newData);
     handleEdit(categoryId, newData);
-    // setShowModal(false);
   };
-
-  // const handleDelete = async (categoryId) => {
-  //   try {
-  //     await axiosInstance.delete(`/categorie/${categoryId}`);
-  //     const updatedCategories = categories.filter(
-  //       (category) => category._id !== categoryId
-  //     );
-  //     setCategories(updatedCategories);
-  //     console.log("Catégorie supprimée avec succès");
-
-  //     // Actualisez la liste des catégories après la suppression
-  //     fetchCategories();
-  //   } catch (error) {
-  //     console.error("Erreur lors de la suppression de la catégorie:", error);
-  //   }
-  // };
 
   const updateCategoryQuantities = async () => {
     try {
       const updatedCategories = await Promise.all(
-        categories.map(async (category) => {
+        categorie.map(async (category) => {
           try {
             const response = await axios.get(
               `http://127.0.0.1:8000/api/produits/categorie/${category._id}`
@@ -190,7 +175,6 @@ export default function CategorieContextProvider({ children }) {
             const produitsCategorie = response.data;
             const quantite = produitsCategorie.length;
 
-            // Mettre à jour la quantité dans la base de données
             await axios.put(
               `http://127.0.0.1:8000/api/categories/${category._id}`,
               { quantite }
@@ -209,7 +193,7 @@ export default function CategorieContextProvider({ children }) {
         })
       );
 
-      setCategories(updatedCategories);
+      setCategorie(updatedCategories);
     } catch (error) {
       console.error(
         "Erreur lors de la mise à jour des quantités de produits :",
@@ -239,14 +223,11 @@ export default function CategorieContextProvider({ children }) {
     userShops,
     table,
     actions,
-    // inputs,
     formData,
-    categories,
-    // nom,
+    categorie,
     quantite,
-    // setNom,
     setQuantite,
-    setCategories,
+    setCategorie,
     handleChange,
   };
 

@@ -63,11 +63,20 @@ const PanierContextProvider = ({ children }) => {
         setTotalPrice(newTotalPrice);
     }, [items, cartQuantities]);
 
+    // const addProduitToCart = (newItem) => {
+    //     if (!newItem || typeof newItem.price !== 'number' || !newItem.name) {
+    //         console.error("L'article ajouté est invalide ou manque un champ requis (price ou name).");
+    //         return;
+    //     }
+
+
     const addProduitToCart = (newItem) => {
         if (!newItem || typeof newItem.price !== 'number') {
             console.error("L'article ajouter est invalide ou manque un price");
             return;
         }
+
+        
 
         setItems((prevItems) => {
             const existingItem = prevItems.find((item) => item.id === newItem.id);

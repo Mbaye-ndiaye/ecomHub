@@ -22,6 +22,7 @@ const FormProvider = ({ children }) => {
     banniere: null,
     logo: null,
   });
+  console.log('Route parameter id:', id);
 
 
 
@@ -100,7 +101,7 @@ const FormProvider = ({ children }) => {
     }
   };
 
-  const afficheUneBoutique = async (id) => {
+  const afficheUneBoutique = async () => {
     try {
       const token = localStorage.getItem("tokenClient");
 

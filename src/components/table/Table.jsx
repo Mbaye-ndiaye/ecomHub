@@ -118,7 +118,7 @@ import React from "react";
 export const Thead = ({ thead }) => {
   return (
     <thead>
-      <tr className="font-semibold tracking-wide text-center text-white uppercase bg-gray-800 border border-x-0 border-top border-gray-300 text-sm">
+      <tr className="font-semibold tracking-wide text-center text-white uppercase bg-gray-700 border border-x-0 border-top border-gray-300 text-sm">
         {thead.map((th, index) => (
           <th key={index} className="px-4 py-3">
             {th}
@@ -171,6 +171,18 @@ export const Tbody = ({ tbody, actions }) => {
                 </span>
               </td>
             )}
+            {td.telephone && (
+              <td className="px-4 py-3 text-center border text-md">
+                <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm">
+                  {td.telephone}
+                </span>
+              </td>
+            )}
+            {td.statut && (
+             <td className="px-4 py-5 text-xl text-center border">
+               {td.statut}
+             </td>
+           )}
             {td.nombreDeProduit && (
               <td className="px-4 py-3 text-center border text-md">
                 <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm">

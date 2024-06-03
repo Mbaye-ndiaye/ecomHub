@@ -3,10 +3,19 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { BiNotification } from "react-icons/bi";
 import { BiSearch } from "react-icons/bi";
+import useGlobal from "../../utils/hooks/useGlobal";
+
 
 const ContentHeader = () => {
   const navigate = useNavigate();
   const [userShop, setUserShop] = useState(null);
+  const { handleLogout } = useGlobal()
+
+  const deconnexion = () => {
+    handleLogout()
+
+  }
+ 
 
   useEffect(() => {
     const fetchUserShops = async () => {
@@ -55,6 +64,9 @@ const ContentHeader = () => {
             <BiNotification className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
           </div>
         </Link>
+        <button onClick={deconnexion} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            Déconnexion
+          </button>
       </div>
     </div>
   );

@@ -124,9 +124,11 @@ export default function Login() {
               isButtonDisabled || isLoading
                 ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
                 : "bg-gray-900 text-active text-white hover:bg-gray-900"
+
             }`}
           >
             {isLoading ? <LoadingSpinner /> : "Connexion"}
+
           </button>
           <p className="flex items-center mt-2">
             <input className="mr-2" type="checkbox" />
