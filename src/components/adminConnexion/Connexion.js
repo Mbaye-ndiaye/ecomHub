@@ -57,6 +57,16 @@ export default function Login() {
 
       console.log("UserID:", response.data.user.id);
 
+      const shopCheckResponse = await axios.get(
+        `http://localhost:8000/api/shops/user/${response.data.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const hasShop = shopCheckResponse.data.hasShop;
       // afficher le message succes
       await Swal.fire({
         icon: "success",
@@ -64,10 +74,19 @@ export default function Login() {
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/creeShop");
+      // Navigate based on whether the user has a shop
+      if (hasShop) {
+        navigate("/dashboard");
+      } else {
+        navigate("/creeShop");
+      }
     } catch (error) {
       console.error(error);
-      alert("Connexion échouée");
+      await Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "Connexion échouée",
+      });
     } finally {
       setIsLoading(false);
     }
