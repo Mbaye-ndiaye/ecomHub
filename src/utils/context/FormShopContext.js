@@ -1,14 +1,14 @@
 import axios from "axios";
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export const FormShopContext = createContext();
 
 const FormProvider = ({ children }) => {
-  const { id } = useParams();
+  const { idShop: idShopParam } = useParams();
   const navigate = useNavigate();
-  const [boutique, setBoutique] = useState();
+  const [boutique, setBoutique] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -21,10 +21,15 @@ const FormProvider = ({ children }) => {
     description: "",
     banniere: null,
     logo: null,
+    idShop: localStorage.getItem("shopId"),
   });
-  console.log('Route parameter id:', id);
 
-
+  useEffect(() => {
+    if (idShopParam) {
+      setFormData((prev) => ({ ...prev, idShop: idShopParam }));
+      afficheUneBoutique(idShopParam);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,17 +47,9 @@ const FormProvider = ({ children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("tokenClient");
-    console.log("tokenClient", token);
-
-    // if (!token) {
-    //   alert("connectez vous d" / "abord avant de creer votre boutique");
-    //   navigate("/connexion");
-    //   return;
-    // }
 
     const formDataToSend = new FormData();
-
-    formDataToSend.append("name", formData.nom);
+    formDataToSend.append("name", formData.name);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("logo", formData.logo);
     formDataToSend.append("banniere", formData.banniere);
@@ -61,8 +58,6 @@ const FormProvider = ({ children }) => {
     formDataToSend.append("adresse", formData.adresse);
     formDataToSend.append("a_propos", formData.a_propos);
     formDataToSend.append("user_id", formData.user_id);
-
-    console.log(formData.user_id);
 
     try {
       const response = await axios.post(
@@ -75,12 +70,6 @@ const FormProvider = ({ children }) => {
           },
         }
       );
-
-       // if (!token) {
-    //   Swal.fire("Veuillez vous connecter pour créer une boutique");
-    //   navigate("/connexion");
-    //   return;
-    // }
       localStorage.setItem("shop_id", response.data.id);
 
       await Swal.fire({
@@ -101,7 +90,7 @@ const FormProvider = ({ children }) => {
     }
   };
 
-  const afficheUneBoutique = async () => {
+  const afficheUneBoutique = async (idShop) => {
     try {
       const token = localStorage.getItem("tokenClient");
 
@@ -111,12 +100,13 @@ const FormProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.get(`http://localhost:8000/api/shops/${id}`, {
+      const response = await axios.get(`http://localhost:8000/api/shops/${idShop}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       setBoutique(response.data);
+      console.log("Récupérer une seule boutique", response.data);
     } catch (error) {
       console.error("Erreur lors de la récupération d'une boutique", error);
       if (error.response && error.response.status === 401) {
@@ -126,11 +116,10 @@ const FormProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (id) {
-      afficheUneBoutique(id);
-    }
-  }, [id]);
+  const handleBoutiqueClick = (id) => {
+    setFormData((prev) => ({ ...prev, idShop: id }));
+    afficheUneBoutique(id);
+  };
 
   const valueContext = {
     formData,
@@ -139,6 +128,7 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
+    handleBoutiqueClick,
   };
 
   return (

@@ -28,9 +28,9 @@ const CardList = ({produit}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');
+        const response = await axios.get('http://localhost:8000/api/products');
         setProducts(response.data);
-         console.log("response", response);
+        //  console.log("response", response);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -58,10 +58,10 @@ const CardList = ({produit}) => {
             </Link>
             </div>  
             <div className="p-3">
-              <h3 className="text-lg text-black mb-2">{product.category}</h3>
-              <p className="text-black text-xs mb-2">{product.category}</p>
+              <h3 className="text-lg text-black mb-2">{product.name}</h3>
+              <p className="text-black text-xs mb-2">{product.name}</p>
               <div className='flex justify-between items-center px-0'>
-              <p className="text-gray-900 font-bold">${product.price}</p>
+              <p className="text-gray-900 font-bold">${product.prix}</p>
               <button 
               onClick={() => handleAddProduitToCart(product)}
               className=" bottom-0 left-10  bg-red-500 text-white px-2 py-1 rounded-lg">

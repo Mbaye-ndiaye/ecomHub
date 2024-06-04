@@ -47,13 +47,13 @@ const BoutiqueUser = () => {
   console.log("nmbreBoutique", nmbreBoutique);
 
   // useEffect(() => {
-  if (nmbreBoutique > 0) {
-    alert("Vous avez déjà créé une boutique.");
-  }
+  // if (nmbreBoutique > 0) {
+  //   alert("Vous avez déjà créé une boutique.");
+  // }
   // }, [nmbreBoutique]);
 
   return (
-    <div className="bg-[#494C4F] p-5 h-screen">
+    <div className="bg-[#494C4F] p-5 h-auto">
       <h1 className="text-white font-bold text-2xl text-center mb-5">
         Le nombre de boutique existe: {nmbreBoutique}
       </h1>
@@ -61,20 +61,20 @@ const BoutiqueUser = () => {
         {boutiques.map((boutique) => {
           return (
             <div key={boutique.id}>
-              <Link to={`/accueil/${boutique.id}`}>
+              <Link to={`/accueil/${boutique.name}`}>
                 <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
                   <div className="flex gap-3 mx-4">
                     <img
-                      src={boutique.logo}
+                      src={boutique?.logo}
                       className="w-[30px] h-[30px] rounded-full"
                       alt="/"
                     />
                   </div>
                   <div className="">
                     <h1 className="text-lg text-black font-bold">
-                      {boutique.nom}
+                      {boutique.name}
                     </h1>
-                    <p className="text-center text-sm">{boutique.email}</p>
+                    {/* <p className="text-center text-sm">{boutique.email}</p> */}
                   </div>
                 </div>
               </Link>

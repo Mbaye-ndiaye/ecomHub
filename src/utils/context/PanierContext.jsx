@@ -6,7 +6,7 @@ export const PanierContext = createContext();
 const PanierContextProvider = ({ children }) => {
     const storedItems = JSON.parse(localStorage.getItem('cartItems')) || [];
     const validatedItems = storedItems.filter(
-        (item) => item && typeof item.price === 'number',
+        (item) => item && typeof item.prix === 'number',
     );
     const storedNotificationCount = 
     JSON.parse(localStorage.getItem('notificationCount')) || 0;
@@ -56,7 +56,7 @@ const PanierContextProvider = ({ children }) => {
         setNotificationCount(totalItemsCount);
 
         const newTotalPrice = items.reduce((total, item) => {
-            const itemPrice = item && typeof item.price === 'number' ? item.price : 0;
+            const itemPrice = item && typeof item.prix === 'number' ? item.prix : 0;
             const quantite = cartQuantities[item.id] || 1;
             return total + itemPrice * quantite;
         }, 0)
@@ -71,7 +71,7 @@ const PanierContextProvider = ({ children }) => {
 
 
     const addProduitToCart = (newItem) => {
-        if (!newItem || typeof newItem.price !== 'number') {
+        if (!newItem || typeof newItem.prix !== 'number') {
             console.error("L'article ajouter est invalide ou manque un price");
             return;
         }

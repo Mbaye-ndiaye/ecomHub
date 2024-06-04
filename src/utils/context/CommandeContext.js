@@ -88,7 +88,7 @@ const CommandeContextProvider = ({ children }) => {
       if (validationCommande.statut === 'livrée') {
         // Récupérer les produits associés à la commande
         const produitsPromises = produitVente.product_id.map(async (id) => {
-          const produitResponse = await axios.get('https://fakestoreapi.com/products' + id);
+          const produitResponse = await axios.get('http://localhost:8000/api/products' + id);
           return produitResponse.data;
         });
         const produits = await Promise.all(produitsPromises);
@@ -103,7 +103,7 @@ const CommandeContextProvider = ({ children }) => {
         // Mettre à jour les produits dans la base de données
         const updateProduitsPromises = updatedProduits.map(async (prod) => {
           const updateProduitResponse = await axios.put(
-            'https://fakestoreapi.com/products' + prod.id,
+            'http://localhost:8000/api/products' + prod.id,
             prod
           );
           return updateProduitResponse.data;
@@ -165,7 +165,7 @@ const CommandeContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchCommandes();
-  }, [commandes]);
+  }, []);
 
 
   const value = {
