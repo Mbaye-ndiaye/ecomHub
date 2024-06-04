@@ -41,7 +41,9 @@ const Produis = () => {
   useEffect(() => {
     // filtreProdCategorie();
     fetchProduct();
-  }, [products]);
+
+    // window.onload()
+  }, []);
 
   useEffect(() => {
     if (categories && categories.length > 0) {

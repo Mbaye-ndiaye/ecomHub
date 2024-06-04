@@ -156,7 +156,7 @@ export const Tbody = ({ tbody, actions }) => {
             </td>
             {td.name || td.name === 0 ? (
               <td className="px-4 py-5 text-xl text-center border">
-                {td.name}
+                {td.image}
               </td>
             ) : null}
             {td.description && (
@@ -171,6 +171,18 @@ export const Tbody = ({ tbody, actions }) => {
                 </span>
               </td>
             )}
+            {td.telephone && (
+              <td className="px-4 py-3 text-center border text-md">
+                <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm">
+                  {td.telephone}
+                </span>
+              </td>
+            )}
+            {td.statut && (
+             <td className="px-4 py-5 text-xl text-center border">
+               {td.statut}
+             </td>
+           )}
             {td.nombreDeProduit && (
               <td className="px-4 py-3 text-center border text-md">
                 <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm">

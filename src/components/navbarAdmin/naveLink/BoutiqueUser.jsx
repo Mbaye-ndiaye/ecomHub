@@ -12,6 +12,7 @@ const BoutiqueUser = () => {
 
   useEffect(() => {
     const fetchBoutique = async () => {
+
       const token = localStorage.getItem("tokenClient");
       console.log("tokenClient", token);
 
@@ -60,20 +61,20 @@ const BoutiqueUser = () => {
         {boutiques.map((boutique) => {
           return (
             <div key={boutique.id}>
-              <Link to={`/accueil/${boutique.id}`}>
+              <Link to={`/accueil/${boutique.name}`}>
                 <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
                   <div className="flex gap-3 mx-4">
                     <img
-                      src={boutique.logo}
+                      src={boutique?.logo}
                       className="w-[30px] h-[30px] rounded-full"
                       alt="/"
                     />
                   </div>
                   <div className="">
                     <h1 className="text-lg text-black font-bold">
-                      {boutique.nom}
+                      {boutique.name}
                     </h1>
-                    <p className="text-center text-sm">{boutique.email}</p>
+                    {/* <p className="text-center text-sm">{boutique.email}</p> */}
                   </div>
                 </div>
               </Link>

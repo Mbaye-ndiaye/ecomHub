@@ -543,7 +543,8 @@ const ProduitContextProvider = ({ children }) => {
     );
     if (selectedCategory) {
       setCategorie(selectedCategoryName);
-      setCategorie_id(selectedCategory._id);
+      setCategorie_id(selectedCategory.id);
+
     }
   };
 
@@ -569,7 +570,7 @@ const ProduitContextProvider = ({ children }) => {
       formData.append("categorie_id", produit.categorie_id);
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/products",
+        "http://localhost:8000/api/products",
         formData,
         {
           headers: {
@@ -649,6 +650,7 @@ const ProduitContextProvider = ({ children }) => {
     setTitreModal("Modification du produit");
     try {
       const response = await axios.get(
+
         `http://127.0.0.1:8000/api/products/${id}`
       );
       const datasUpdates = response.data;
@@ -687,9 +689,11 @@ const ProduitContextProvider = ({ children }) => {
 
   const fetchProduct = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/products");
+
+      const response = await axios.get("http://localhost:8000/api/products");
       setProducts(response.data);
-      console.log(response.data);
+      console.log("response.data", response.data);
+
     } catch (error) {
       console.error("Erreur lors de la récupération des produits:", error);
     }
@@ -724,12 +728,15 @@ const ProduitContextProvider = ({ children }) => {
     const categorieSelectObject = categories.find(
       (cat) => cat.name === categorieSelect
     );
+
+
     if (categorieSelectObject) {
       const filtreProduitsCategorie = products.filter(
         (produit) => produit.categorie === categorieSelectObject.name
       );
       setFiltreProduits(filtreProduitsCategorie);
     }
+
   };
 
   useEffect(() => {

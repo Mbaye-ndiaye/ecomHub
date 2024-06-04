@@ -146,7 +146,7 @@ export default function CategorieContextProvider({ children }) {
             timer: 9000,
           });
 
-          fetchCategories();
+          // fetchCategories();
         } else {
           console.error(
             "La réponse ne contient pas les catégories créées:",
