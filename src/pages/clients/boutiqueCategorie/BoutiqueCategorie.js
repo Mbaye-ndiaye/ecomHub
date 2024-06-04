@@ -143,14 +143,4 @@ const BoutiqueCategorie = () => {
 export default BoutiqueCategorie;
 
 
-      {/* <div>
-        {filteredProducts.length > 0 ? (
-          <div className="grid px-6 md:ps-9 md:pe-9  grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5  gap-[30px]  mx-auto md:max-w-none md:mx-0">
-            {filteredProducts.map((produit) => (
-              <CardList produit={produit} key={produit._id} />
-            ))}
-          </div>
-        ) : (
-          <LoaderCard />
-        )}
-      </div> */}
+    

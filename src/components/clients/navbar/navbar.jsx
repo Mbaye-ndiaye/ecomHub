@@ -9,10 +9,12 @@ import Input from './Input';
 import { useFormContext } from 'react-hook-form';
 import axios from 'axios';
 import { FormShopContext } from '../../../utils/context/FormShopContext';
+import { PanierContext } from '../../../utils/context/PanierContext';
 
 const Navbar = () => {
    const {name} = useParams();
    const {afficheUneBoutique, boutique} = useContext(FormShopContext) 
+   const {notificationCount} = useContext(PanierContext)
 
   // État local pour contrôler l'ouverture du menu
   const [isOpen, setIsOpen] = useState(false);
@@ -21,16 +23,6 @@ useEffect(() => {
   afficheUneBoutique(name);
 }, [afficheUneBoutique, name]);
 
-// const fetchData = async () => {
-//   try {
-//     const response = await axios.get("http://localhost:8000/api/shops")
-    
-//   } catch (error) {
-//     console.error('Erreur lors de la récupération des donnees:', error);
-//   }
-// };
-
-  // Fonction pour basculer l'état du menu
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -55,7 +47,9 @@ useEffect(() => {
         <div className="flex items-center mx-4 fs-5">
           <Input />
           <Link to="/panier">
-            <FaCartShopping className="mx-4 text-2xl text-white" />
+          <div className='absolute top-[4px] right-7 flex items-center justify-center text-white bg-red-700 text-sm font-bold w-5 h-5 rounded-full'>{notificationCount}</div>
+            <FaCartShopping className="mx-4 text-2xl text-white " />
+
           </Link>
           {/* Utilisation d'un icône pour basculer l'état du menu */}
           <div className="md:hidden">

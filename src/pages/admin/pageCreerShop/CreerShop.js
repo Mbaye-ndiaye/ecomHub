@@ -21,6 +21,7 @@ function FormsShop() {
     logo: null,
     user_id: localStorage.getItem("userId"),
   });
+  console.log("parametre id", id);
 
   const [errors, setErrors] = useState({});
   const [logoPreview, setLogoPreview] = useState(null);
@@ -50,12 +51,8 @@ function FormsShop() {
     e.preventDefault();
 
     const token = localStorage.getItem("tokenClient");
+
     console.log("tokenClient", token);
-    if (!token) {
-      alert("Connectez-vous d'abord avant de créer votre boutique");
-      navigate("/connexion");
-      return;
-    }
 
     const formDataToSend = new FormData();
 

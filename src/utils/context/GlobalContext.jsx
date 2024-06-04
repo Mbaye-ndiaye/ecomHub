@@ -12,7 +12,7 @@ const GlobalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
   const [admin, setAdmin] = useState("");
-//   const [commandes, setCommandes] = useState([]);
+  const [client, setClient] = useState('')
   const [password, setPassword] = useState("");
   const [dropdown, setDropdown] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
@@ -58,7 +58,7 @@ const GlobalContextProvider = ({ children }) => {
   // Fonction pour supprimer le token du local storage après la déconnexion
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/admin");
+    navigate("/connexion");
   };
 
   const handleLogoutUser = () => {
@@ -192,7 +192,8 @@ const GlobalContextProvider = ({ children }) => {
     setProduitAimer,
     // handleLikeToggle,
     admin,
-    // isLoading,
+    client,
+    setClient,
     setAdmin,
     // commandes,
     dropdown,
@@ -206,3 +207,38 @@ const GlobalContextProvider = ({ children }) => {
 };
 
 export default GlobalContextProvider;
+
+
+
+
+
+
+
+
+
+// await Swal.fire({
+//   icon: "success",
+//   title: "Connexion réussie!",
+//   showConfirmButton: false,
+//   timer: 2000,
+// });
+// navigate("/creeShop");
+// } catch (error) {
+// console.error("Erreur de connexion:", error.response || error.message);
+// if (error.response && error.response.status === 401) {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Connexion échouée",
+//     text: "Email ou mot de passe incorrect.",
+//   });
+// } else {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Erreur",
+//     text: "Une erreur s'est produite. Veuillez réessayer.",
+//   });
+// }
+// } finally {
+// setIsLoading(false);
+// }
+// };

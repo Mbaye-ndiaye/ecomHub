@@ -1,40 +1,42 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import Navbar from "../../../components/clients/navbar/navbar";
-import Footer from "./../../../components/footer/footer";
-import { BsTelephone } from "react-icons/bs";
-import { VscMail, VscSymbolNamespace } from "react-icons/vsc";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { FormShopContext } from "../../../utils/context/FormShopContext";
+import React, {useState, useEffect} from 'react';
+import {  useFormContext } from 'react-hook-form';
+import Navbar from '../../../components/clients/navbar/navbar';
+import Footer from './../../../components/footer/footer';
+import { BsTelephone } from 'react-icons/bs';
+import { VscMail } from 'react-icons/vsc';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+
 
 const ContactPage = () => {
-  const { id } = useParams();
-  const { afficheUneBoutique, boutique } = useContext(FormShopContext);
-  useEffect(() => {
-    afficheUneBoutique(id);
-  }, [id, afficheUneBoutique]);
+  const {name} = useParams()
+const {formData } = useFormContext();
+const [boutique, setBoutique] = useState([])
+// const [telephone, setTelephone] = useState([]);
+// const [email, setEmail] = useState([]);
 
-  // const [boutique, setBoutique] = useState([])
-  // const [telephone, setTelephone] = useState([]);
-  // const [email, setEmail] = useState([]);
+useEffect(() => {
+  fetchData();
+  }, []);
+  
 
-  // useEffect(() => {
-  //   fetchData();
+const fetchData = async () => {
+    try {
+        const response = await axios.get("http://localhost:8000/api/shops");
+        setBoutique(response.data);
+        // if (response.data.length > 0) {
+            // setTelephone(response.data);
+            // setEmail(response.data);
+        // }
+    } catch (error) {
+        console.error('Erreur lors de la récupération des données:', error);
+    }
+};
 
-  //   }, []);
+// const telephone = formData.find((items) => items.telephone === telephone)
+// console.log("telephone",telephone );
 
-  // const fetchData = async () => {
-  //     try {
-  //         const response = await axios.get("http://localhost:8000/api/shops/");
-  //         setBoutique(response.data);
-  //     } catch (error) {
-  //         console.error('Erreur lors de la récupération des données:', error);
-  //     }
-  // };
-
-  // const telephone = formData.find((items) => items.telephone === telephone)
-  // console.log("telephone",telephone );
 
   return (
     <section className="bg-gray-100">
@@ -43,22 +45,33 @@ const ContactPage = () => {
         <h1 className="mb-4 text-3xl font-bold px-9">Contacts</h1>
 
         <div className="flex flex-col w-full gap-4 pt-4 md:px-9 md:flex-row md:gap-7">
-          <div className="w-full py-4 border border-gray-200 rounded-md shadow-sm md:w-1/4">
-            <div className="p-5">
-              <div className="flex flex-col gap-12">
-                <h1>Let's get in touch</h1>
-                <p>We're open for any suggestion or just to have a chat</p>
-              </div>
-              <div>
-                <div className="flex gap-4">
-                  <p className="flex gap-2">
-                    <b>Address:</b>
-                    198 West 21th Street, Suite 721 New York NY 10016
-                  </p>
-                </div>
+            <div className="w-full py-4 border border-gray-200 rounded-md shadow-sm md:w-1/4">
+              <div className="px-5 py-6">
+                <h1 className="flex items-center gap-3 font-medium">
+                  <div className="p-3 text-white rounded-full bg-slate-800">
+                    <BsTelephone size={18} />
+                  </div>
+                  Appelez-nous
+                </h1>
+                <p className="my-5 text-sm">
+                  Nous sommes disponibles 6j/7 de 9h à 19h
+                </p>
+                <p className="text-sm border-b-2 pb-9 border-slate-800">
+                  Téléphone: {boutique?.telephone}
+                </p>
+                <h1 className="flex items-center gap-3 font-medium mt-7">
+                  <div className="p-3 text-white rounded-full bg-slate-800">
+                    <VscMail size={18} />
+                  </div>
+                  Ecrivez-nous
+                </h1>
+                <p className="my-5 text-sm">
+                  Remplissez notre formulaire et nous vous contacterons sous
+                  24h
+                </p>
+              <p>Emails: {boutique?.email}</p>
               </div>
             </div>
-          </div>
           <div className="w-full px-4 border shadow-sm md:px-9 md:w-3/4">
             <h1 className="pt-4 pb-2 font-medium border border-t-0 border-s-0 border-e-0 ">
               Contactez-nous
