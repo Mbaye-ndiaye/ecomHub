@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-
 export const PanierContext = createContext();
 
 const PanierContextProvider = ({ children }) => {
@@ -8,11 +7,9 @@ const PanierContextProvider = ({ children }) => {
     const validatedItems = storedItems.filter(
         (item) => item && typeof item.prix === 'number',
     );
-    const storedNotificationCount = 
-    JSON.parse(localStorage.getItem('notificationCount')) || 0;
+    const storedNotificationCount = JSON.parse(localStorage.getItem('notificationCount')) || 0;
+    const storedCartQuantities = JSON.parse(localStorage.getItem('cartQuantities')) || {};
 
-    const storedCartQuantities = 
-    JSON.parse(localStorage.getItem('cartQuantities')) || {};
     const [cartQuantities, setCartQuantities] = useState(storedCartQuantities);
     const [items, setItems] = useState(validatedItems);
     const [notificationCount, setNotificationCount] = useState(storedNotificationCount);
@@ -20,8 +17,8 @@ const PanierContextProvider = ({ children }) => {
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(items));
         localStorage.setItem('notificationCount', JSON.stringify(notificationCount));
-        localStorage.setItem('cartQuantities', JSON.stringify(cartQuantities))
-    }, [items, notificationCount, cartQuantities ])
+        localStorage.setItem('cartQuantities', JSON.stringify(cartQuantities));
+    }, [items, notificationCount, cartQuantities]);
 
     const [deliveryOption, setDeliveryOption] = useState('');
     const deliveryCost = {
@@ -42,9 +39,8 @@ const PanierContextProvider = ({ children }) => {
             [id]: Math.max(newQuantity, 0)
         }));
 
-        const updatedItems = items.map((item) => item.id === id ? {...item, quantity: Math.max(newQuantity, 0)} : item,
-    );
-    setItems(updatedItems);
+        const updatedItems = items.map((item) => item.id === id ? {...item, quantity: Math.max(newQuantity, 0)} : item);
+        setItems(updatedItems);
     };
 
     useEffect(() => {
@@ -59,24 +55,15 @@ const PanierContextProvider = ({ children }) => {
             const itemPrice = item && typeof item.prix === 'number' ? item.prix : 0;
             const quantite = cartQuantities[item.id] || 1;
             return total + itemPrice * quantite;
-        }, 0)
+        }, 0);
         setTotalPrice(newTotalPrice);
     }, [items, cartQuantities]);
 
-    // const addProduitToCart = (newItem) => {
-    //     if (!newItem || typeof newItem.price !== 'number' || !newItem.name) {
-    //         console.error("L'article ajouté est invalide ou manque un champ requis (price ou name).");
-    //         return;
-    //     }
-
-
     const addProduitToCart = (newItem) => {
         if (!newItem || typeof newItem.prix !== 'number') {
-            console.error("L'article ajouter est invalide ou manque un price");
+            console.error("L'article ajouté est invalide ou manque un prix");
             return;
         }
-
-        
 
         setItems((prevItems) => {
             const existingItem = prevItems.find((item) => item.id === newItem.id);
@@ -86,23 +73,16 @@ const PanierContextProvider = ({ children }) => {
                     [newItem.id]: (prevQuantities[newItem.id] || 0) + 1,
                 }));
                 return prevItems.map((item) => 
-                item.id === newItem.id
-            ? {...item, quantite: (item.quantite || 0) + 1}
-        : item,);
+                    item.id === newItem.id
+                    ? {...item, quantite: (item.quantite || 0) + 1}
+                    : item
+                );
             } else {
-                setCartQuantities({ ...cartQuantities, [newItem.id]: 1});
+                setCartQuantities({ ...cartQuantities, [newItem.id]: 1 });
                 return [...prevItems, {...newItem, quantite: 1}];
             }
         });
         setNotificationCount((prevCount) => prevCount + 1);
-        // toast.success('Produit ajouté au panier', {
-		// 	position: 'top-right',
-		// 	autoClose: 3000,
-		// 	hideProgressBar: true,
-		// 	closeOnClick: true,
-		// 	pauseOnHover: true,
-		// 	draggable: true,
-		// });
     };
 
     const viderPanier = () => {
@@ -136,14 +116,13 @@ const PanierContextProvider = ({ children }) => {
         setNotificationCount,
         cartQuantities,
         viderPanier,
+    };
 
+    return (
+        <PanierContext.Provider value={value}>
+            {children}
+        </PanierContext.Provider>
+    );
+};
 
-    }
-  return (
-    <PanierContext.Provider value={value}>
-        {children}
-    </PanierContext.Provider>
-  )
-}
-
-export default PanierContextProvider
+export default PanierContextProvider;

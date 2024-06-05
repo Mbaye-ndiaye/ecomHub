@@ -40,10 +40,8 @@ const BoutiqueUser = () => {
     return <LoaderCard />;
   }
 
-  // const uniqueBoutiqueIds = boutiques.map((boutique) => boutique.id);
   const nmbreBoutique = boutiques.length;
 
-  // const nmbreBoutique = uniqueBoutiqueIds.length;
   console.log("nmbreBoutique", nmbreBoutique);
 
   // useEffect(() => {
@@ -61,7 +59,7 @@ const BoutiqueUser = () => {
         {boutiques.map((boutique) => {
           return (
             <div key={boutique.id}>
-              <Link to={`/accueil/${boutique.name}`}>
+              <Link to={`/accueil/${boutique.id}`}>
                 <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
                   <div className="flex gap-3 mx-4">
                     <img
@@ -74,7 +72,6 @@ const BoutiqueUser = () => {
                     <h1 className="text-lg text-black font-bold">
                       {boutique.name}
                     </h1>
-                    {/* <p className="text-center text-sm">{boutique.email}</p> */}
                   </div>
                 </div>
               </Link>

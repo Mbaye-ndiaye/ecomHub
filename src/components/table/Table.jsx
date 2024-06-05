@@ -156,7 +156,7 @@ export const Tbody = ({ tbody, actions }) => {
             </td> */}
             {td.name || td.name === 0 ? (
               <td className="px-4 py-5 text-xl text-center border">
-                {td.image}
+                {td.name}
               </td>
             ) : null}
             {td.description && (

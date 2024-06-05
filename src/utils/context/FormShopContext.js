@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 export const FormShopContext = createContext();
 
 const FormProvider = ({ children }) => {
-  const { idShop: idShopParam } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [boutique, setBoutique] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,15 +21,15 @@ const FormProvider = ({ children }) => {
     description: "",
     banniere: null,
     logo: null,
-    idShop: localStorage.getItem("shopId"),
+    // idShop: localStorage.getItem("shopId"),
   });
 
-  useEffect(() => {
-    if (idShopParam) {
-      setFormData((prev) => ({ ...prev, idShop: idShopParam }));
-      afficheUneBoutique(idShopParam);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (idShopParam) {
+  //     setFormData((prev) => ({ ...prev, idShop: idShopParam }));
+  //     afficheUneBoutique(idShopParam);
+  //   }
+  // }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,7 +90,7 @@ const FormProvider = ({ children }) => {
     }
   };
 
-  const afficheUneBoutique = async (idShop) => {
+  const afficheUneBoutique = async () => {
     try {
       const token = localStorage.getItem("tokenClient");
 
@@ -100,7 +100,7 @@ const FormProvider = ({ children }) => {
         return;
       }
 
-      const response = await axios.get(`http://localhost:8000/api/shops/${idShop}`, {
+      const response = await axios.get("http://localhost:8000/api/shops/" + id, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -115,11 +115,14 @@ const FormProvider = ({ children }) => {
       }
     }
   };
+  useEffect(() => {
+    afficheUneBoutique(id)
+  }, [id])
 
-  const handleBoutiqueClick = (id) => {
-    setFormData((prev) => ({ ...prev, idShop: id }));
-    afficheUneBoutique(id);
-  };
+  // const handleBoutiqueClick = (id) => {
+  //   setFormData((prev) => ({ ...prev, idShop: id }));
+  //   afficheUneBoutique(id);
+  // };
 
   const valueContext = {
     formData,
@@ -128,7 +131,7 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
-    handleBoutiqueClick,
+    // handleBoutiqueClick,
   };
 
   return (
