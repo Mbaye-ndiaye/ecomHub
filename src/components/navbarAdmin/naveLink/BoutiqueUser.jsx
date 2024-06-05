@@ -12,7 +12,6 @@ const BoutiqueUser = () => {
 
   useEffect(() => {
     const fetchBoutique = async () => {
-
       const token = localStorage.getItem("tokenClient");
       console.log("tokenClient", token);
 
@@ -60,7 +59,7 @@ const BoutiqueUser = () => {
       <div className="grid grid-cols-4 gap-7">
         {boutiques.map((boutique) => {
           return (
-            <div key={boutique.id}>
+            <div key={boutique.name}>
               <Link to={`/accueil/${boutique.name}`}>
                 <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
                   <div className="flex gap-3 mx-4">

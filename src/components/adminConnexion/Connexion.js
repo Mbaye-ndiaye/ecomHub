@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import loginImg from "../../assets/imagesback.jfif";
-import LoadingSpinner from "./LoadingSpinner";  // Assurez-vous que ce composant existe et est correctement importé
+import LoadingSpinner from "./LoadingSpinner"; // Assurez-vous que ce composant existe et est correctement importé
 
 export default function Login() {
   const navigate = useNavigate();
@@ -53,13 +53,42 @@ export default function Login() {
       localStorage.setItem("tokenClient", token);
       localStorage.setItem("userId", response.data.user.id);
 
+      console.log(response.data);
+      console.log("token:", token);
+
+      console.log("UserID:", response.data.user.id);
+
+      const shopCheckResponse = await axios.get(
+        `http://localhost:8000/api/shops/user/${response.data.user.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const hasShop = shopCheckResponse.data.hasShop;
+      // afficher le message succes
       await Swal.fire({
         icon: "success",
         title: "Connexion réussie!",
         showConfirmButton: false,
         timer: 2000,
       });
-      navigate("/creeShop");
+      // Navigate based on whether the user has a shop
+      if (hasShop) {
+        await Swal.fire({
+          text: "Vous avez déjà une boutique. Vous aller etre diriger vers votre tablau de bord.",
+          showConfirmButton: true,
+        });
+        navigate("/dashboard");
+      } else {
+        await Swal.fire({
+          text: "Vous pas encore crée une boutique il faut crée une .",
+          showConfirmButton: true,
+        });
+        navigate("/creeShop");
+      }
     } catch (error) {
       console.error(error);
       await Swal.fire({
@@ -124,11 +153,9 @@ export default function Login() {
               isButtonDisabled || isLoading
                 ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
                 : "bg-gray-900 text-active text-white hover:bg-gray-900"
-
             }`}
           >
             {isLoading ? <LoadingSpinner /> : "Connexion"}
-
           </button>
           <p className="flex items-center mt-2">
             <input className="mr-2" type="checkbox" />
@@ -137,7 +164,10 @@ export default function Login() {
 
           <p className="mt-8 text-center">
             Not a member?{" "}
-            <span className="relative cursor-pointer" onClick={handleSignUpClick}>
+            <span
+              className="relative cursor-pointer"
+              onClick={handleSignUpClick}
+            >
               Sign up now
             </span>
           </p>
