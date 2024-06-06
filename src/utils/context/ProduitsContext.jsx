@@ -458,7 +458,7 @@ const ProduitContextProvider = ({ children }) => {
     shop_id: localStorage.getItem("shopId"),
   });
 
-  const table = ["Image", "Descript", "Nom", "Quantité", "Prix"];
+  const table = ["Image", "Descript", "Nom", "Quantité", "Prix", "Action"];
 
   const actions = [
     {

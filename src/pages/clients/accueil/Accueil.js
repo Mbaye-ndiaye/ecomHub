@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CardProduit from "../../../components/clients/card/CardProduit";
 import Navbar from "../../../components/clients/navbar/navbar";
 import Footer from "../../../components/footer/footer";
@@ -12,35 +12,34 @@ import NaveLinks from "../../../components/navbarAdmin/NavLinks";
 import { FormShopContext } from "../../../utils/context/FormShopContext";
 import SpinnerLoader from "../../../components/spinnerLoader/SpinnerLoader";
 
-
 const Accueil = () => {
   const { name } = useParams();
   const { afficheUneBoutique, boutique } = useContext(FormShopContext);
-  const [loading, setLoading] = useState(true)
+  console.log("4", boutique);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-  afficheUneBoutique(name)
-  .then(() => setLoading(false)) // Arrête le chargement une fois que les données sont chargées
-  .catch(() => setLoading(false)); // Arrête le chargement en cas d'erreur
-  }, [name, afficheUneBoutique])
+    afficheUneBoutique(name)
+      .then(() => setLoading(false)) // Arrête le chargement une fois que les données sont chargées
+      .catch(() => setLoading(false)); // Arrête le chargement en cas d'erreur
+  }, [name, afficheUneBoutique]);
 
-
-  if(loading) 
-    return <SpinnerLoader />
-  
-   
-  
- 
+  if (loading) return <SpinnerLoader />;
 
   return (
-    <div className="bg-gray-100 h-screen">
-      
+    <div className="bg-gray-100 h-auto">
       <div
         className="items-center bg-white bg-cover bg-no-repeat bg-center  w-full "
-        style={{ backgroundImage: `url(${boutique?.banniere})` }}>
+        style={{ backgroundImage: `url(${boutique?.banniere})` }}
+      >
         <Navbar />
+
 			<HeaderBanner /> 
+
+        {/* <NaveLinks className="bg-gray-700"/> */}
+        <HeaderBanner />
+
       </div>
-      
+
       <div>
         <CardProduit />
       </div>
