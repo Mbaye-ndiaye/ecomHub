@@ -32,6 +32,11 @@ const Sidebar = ({ children }) => {
     {
       path: "/dashboard/produis",
       name: "Product",
+      icon: <FaThList />,
+    },
+    {
+      path: "/dashboard/message",
+      name: "Message",
       icon: <FaShoppingBag />,
     },
   ];

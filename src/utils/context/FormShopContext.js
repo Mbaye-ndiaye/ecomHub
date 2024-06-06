@@ -295,7 +295,7 @@ const FormProvider = ({ children }) => {
   };
   useEffect(() => {
     afficheUneBoutique(name);
-  }, [name]);
+  }, []);
 
   const valueContext = {
     formData,
