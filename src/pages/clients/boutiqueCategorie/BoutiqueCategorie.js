@@ -16,7 +16,7 @@ const BoutiqueCategorie = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://fakestoreapi.com/products');
+      const response = await axios.get('https://localhost:8000/api/products');
       const produitsAvecQuantite = response.data.map((produit) => ({
         ...produit
       }))

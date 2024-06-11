@@ -159,6 +159,12 @@ export const Tbody = ({ tbody, actions }) => {
                 {td.name}
               </td>
             ) : null}
+            
+            {td.email || td.email === 0 ? (
+              <td className="px-4 py-5 text-xl text-center border">
+                {td.email}
+              </td>
+            ) : null}
             {td.description && (
               <td className="px-4 py-5 text-xl text-center border">
                 {td.description}
@@ -171,6 +177,7 @@ export const Tbody = ({ tbody, actions }) => {
                 </span>
               </td>
             )}
+            
             {td.telephone && (
               <td className="px-4 py-3 text-center border text-md">
                 <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm">
@@ -200,7 +207,7 @@ export const Tbody = ({ tbody, actions }) => {
                 {actions.map((action, index) => (
                   <button
                     key={index}
-                    className={`${action.color} p-1 text-white focus:ring-4 shadow rounded ml-2`}
+                              className={`${action.color} p-1 text-white focus:ring-4 shadow rounded ml-2`}
                     onClick={() => action.handleClick(td._id)}
                   >
                     {action.icon}

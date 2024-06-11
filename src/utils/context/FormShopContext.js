@@ -156,12 +156,15 @@ const FormProvider = ({ children }) => {
 
   const { name } = useParams();
   const navigate = useNavigate();
-  const [boutique, setBoutique] = useState();
+  const [boutique, setBoutique] = useState([]);
   // console.log("id", id);
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [messageShop, setMessageShop] = useState([])
+  const [messageNames, setMessageNames] = useState([]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -172,6 +175,8 @@ const FormProvider = ({ children }) => {
     banniere: null,
     logo: null,
     user_id: localStorage.getItem("userId"),
+    shop_id: localStorage.getItem("shopId"),
+
   });
 
   // const updateShowPassword = () => {
@@ -297,9 +302,26 @@ const FormProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-
-    afficheUneBoutique(name);
-  }, []);
+    if (name) {
+      afficheUneBoutique(name);
+    }
+  }, [name]);
+  
+  const fetchMessage = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/shops/${formData.shop_id}/messages`,
+        {
+          params: { shop_id: localStorage.getItem("shopId") },
+        }
+      );
+      console.log("message recuperer :", response.data);
+      setMessageShop(response.data);
+      setMessageNames(response.data.map((cat) => cat.name));
+    } catch (error) {
+      console.error("Erreur lors de la récupération des catégories:", error);
+    }
+  };
 
 
   const valueContext = {
@@ -309,6 +331,7 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
+    fetchMessage
   };
 
   return (

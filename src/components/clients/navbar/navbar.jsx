@@ -33,20 +33,20 @@ useEffect(() => {
         <nav className="">
           <div className="flex items-center justify-between mx-auto max-w-7xl">
             <div className="flex items-center">
-              <Link to="/accueil">
+              <Link to={`/accueil/${boutique.name}`}>
                 <img src={boutique?.logo} alt='logo boutique' className='mx-4 w-10 h-10 rounded-full' />
                 </Link>
               <div className="flex mx-4 mx-auto text-white items-center">
-                <Link to="/boutiqueCategorie"><p className='mx-4'>Boutique</p></Link>
-                <Link to="/apropos"><p className="mx-4">About</p></Link>
-                <Link to="/contact"><p className="mx-4">Contact</p></Link>
+                <Link to={`/boutique/${boutique.name}`}><p className='mx-4'>Boutique</p></Link>
+                <Link to={`/apropos/${boutique.name}`}><p className="mx-4">About</p></Link>
+                <Link to={`/contact/${boutique.name}`}><p className="mx-4">Contact</p></Link>
               </div>
             </div>
           </div>
         </nav>
         <div className="flex items-center mx-4 fs-5">
           <Input />
-          <Link to="/panier">
+          <Link to={`/panier/${boutique.name}`}>
           <div className='absolute top-[4px] right-7 flex items-center justify-center text-white bg-red-700 text-sm font-bold w-5 h-5 rounded-full'>{notificationCount}</div>
             <FaCartShopping className="mx-4 text-2xl text-white " />
 

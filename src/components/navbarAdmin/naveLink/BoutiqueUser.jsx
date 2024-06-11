@@ -17,12 +17,7 @@ const BoutiqueUser = () => {
       console.log("tokenClient", token);
 
       try {
-        const response = await axios.get("http://localhost:8000/api/shops", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.get("http://localhost:8000/api/shops");
 
         setBoutique(response.data);
         setLoading(false);

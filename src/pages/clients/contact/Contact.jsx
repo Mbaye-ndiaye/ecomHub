@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {  useFormContext } from 'react-hook-form';
 import Navbar from '../../../components/clients/navbar/navbar';
 import Footer from './../../../components/footer/footer';
@@ -6,33 +6,50 @@ import { BsTelephone } from 'react-icons/bs';
 import { VscMail } from 'react-icons/vsc';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import useGlobal from '../../../utils/hooks/useGlobal';
+import { FormShopContext } from '../../../utils/context/FormShopContext';
 
 
+const Contact = () => {
+  const { shopId } = useParams();
+    const { closeDropdown } = useGlobal();
+    const { boutique} = useContext(FormShopContext)
 
-const ContactPage = () => {
-  const {name} = useParams()
-const {formData } = useFormContext();
-const [boutique, setBoutique] = useState([])
-// const [telephone, setTelephone] = useState([]);
-// const [email, setEmail] = useState([]);
+// const [boutique, setBoutique] = useState([])
+const [client, setClient] = useState({
+  email: "",
+  prenom: "",
+  telephone: "",
+  body: ""
+});
 
-useEffect(() => {
-  fetchData();
-  }, []);
-  
-
-const fetchData = async () => {
-    try {
-        const response = await axios.get("http://localhost:8000/api/shops");
-        setBoutique(response.data);
-        // if (response.data.length > 0) {
-            // setTelephone(response.data);
-            // setEmail(response.data);
-        // }
-    } catch (error) {
-        console.error('Erreur lors de la récupération des données:', error);
-    }
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  setClient({ ...client, [name]: value });
 };
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post(`http://localhost:8000/api/shops/${boutique.name}/messages`, client); // Ajoutez l'ID de la boutique à l'URL
+    console.log("message.data", response.data);
+    if (response.status === 201) {
+      // Message envoyé avec succès
+      setClient({
+        prenom: "",
+        telephone: "",
+        email: "",
+        body: "",
+      });
+    } else {
+      throw new Error("Erreur lors de l'ajout du message");
+    }
+  } catch (error) {
+    console.error("Erreur lors de l'ajout du message:", error);
+  }
+}
+
 
 // const telephone = formData.find((items) => items.telephone === telephone)
 // console.log("telephone",telephone );
@@ -76,7 +93,7 @@ const fetchData = async () => {
             <h1 className="pt-4 pb-2 font-medium border border-t-0 border-s-0 border-e-0 ">
               Contactez-nous
             </h1>
-            <form className="w-full py-4 mx-auto">
+            <form onSubmit={handleSubmit} className="w-full py-4 mx-auto">
               <div className="mt-">
                 <div className="flex flex-col justify-center w-full gap-5 mt-5 align-center md:flex-row">
                   <div className="w-full mb-0 md:mb-5 md:w-1/3">
@@ -87,6 +104,8 @@ const fetchData = async () => {
                       placeholder="Prénom"
                       name="prenom"
                       className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none px- focus:border focus:border-double focus:border-sky-600"
+                      value={client.prenom}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="w-full mb-0 mt- md:mb-5 md:w-1/3">
@@ -97,6 +116,8 @@ const fetchData = async () => {
                       placeholder="Téléphone"
                       name="telephone"
                       className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                      value={client.telephone}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="w-full mb-4 mt- md:w-1/3">
@@ -107,6 +128,8 @@ const fetchData = async () => {
                       name="email"
                       placeholder="Email"
                       className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                      value={client.email}
+                      onChange={handleChange}
                     />
                   </div>
                 </div>
@@ -114,9 +137,11 @@ const fetchData = async () => {
                   <textarea
                     required
                     rows={8}
-                    name="message"
+                    name="body"
                     placeholder="Votre message"
                     className="w-full p-5 px-2 pt-3 mb-5 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                    value={client.body}
+                    onChange={handleChange}
                   ></textarea>
                 </div>
               </div>
@@ -138,4 +163,4 @@ const fetchData = async () => {
   );
 };
 
-export default ContactPage;
+export default Contact;
