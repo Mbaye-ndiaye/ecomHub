@@ -164,7 +164,8 @@ const FormProvider = ({ children }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [messageShop, setMessageShop] = useState([])
   const [messageNames, setMessageNames] = useState([]);
-
+  const [message, setMessage] = useState([]);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -306,22 +307,9 @@ const FormProvider = ({ children }) => {
       afficheUneBoutique(name);
     }
   }, [name]);
+
   
-  const fetchMessage = async () => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/shops/${formData.shop_id}/messages`,
-        {
-          params: { shop_id: localStorage.getItem("shopId") },
-        }
-      );
-      console.log("message recuperer :", response.data);
-      setMessageShop(response.data);
-      setMessageNames(response.data.map((cat) => cat.name));
-    } catch (error) {
-      console.error("Erreur lors de la récupération des catégories:", error);
-    }
-  };
+  
 
 
   const valueContext = {
@@ -331,7 +319,6 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
-    fetchMessage
   };
 
   return (

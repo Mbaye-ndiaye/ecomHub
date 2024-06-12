@@ -10,12 +10,11 @@ import useGlobal from '../../../utils/hooks/useGlobal';
 import { FormShopContext } from '../../../utils/context/FormShopContext';
 
 
-const Contact = () => {
-  const { shopId } = useParams();
+const ContactPage = () => {
+  const {name} = useParams()
+    const {formData, afficheUneBoutique } = useContext(FormShopContext);
     const { closeDropdown } = useGlobal();
-    const { boutique} = useContext(FormShopContext)
-
-// const [boutique, setBoutique] = useState([])
+const [boutique, setBoutique] = useState([])
 const [client, setClient] = useState({
   email: "",
   prenom: "",
@@ -28,14 +27,20 @@ const handleChange = (e) => {
   setClient({ ...client, [name]: value });
 };
 
+// useEffect(() => {
+//    afficheUneBoutique()
+// }, []);
+
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  const shopId = localStorage.getItem('shopId');
   try {
-    const response = await axios.post(`http://localhost:8000/api/shops/${boutique.name}/messages`, client); // Ajoutez l'ID de la boutique à l'URL
+    const response = await axios.post("http://localhost:8000/api/messages)");
     console.log("message.data", response.data);
+    
     if (response.status === 201) {
-      // Message envoyé avec succès
       setClient({
         prenom: "",
         telephone: "",
@@ -43,16 +48,14 @@ const handleSubmit = async (e) => {
         body: "",
       });
     } else {
-      throw new Error("Erreur lors de l'ajout du message");
+      throw new Error("Erreur lors de l'ajout du produit");
     }
   } catch (error) {
-    console.error("Erreur lors de l'ajout du message:", error);
+    console.error("Erreur lors de l'ajout du produit:", error);
+  } finally {
   }
 }
 
-
-// const telephone = formData.find((items) => items.telephone === telephone)
-// console.log("telephone",telephone );
 
 
   return (
@@ -104,10 +107,11 @@ const handleSubmit = async (e) => {
                       placeholder="Prénom"
                       name="prenom"
                       className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none px- focus:border focus:border-double focus:border-sky-600"
-                      value={client.prenom}
+                      value={client?.prenom}
                       onChange={handleChange}
                     />
                   </div>
+                 
                   <div className="w-full mb-0 mt- md:mb-5 md:w-1/3">
                     <input
                       required
@@ -116,7 +120,7 @@ const handleSubmit = async (e) => {
                       placeholder="Téléphone"
                       name="telephone"
                       className="w-full p-2 mt-1 bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-                      value={client.telephone}
+                      value={client?.telephone}
                       onChange={handleChange}
                     />
                   </div>
@@ -163,4 +167,4 @@ const handleSubmit = async (e) => {
   );
 };
 
-export default Contact;
+export default ContactPage;
