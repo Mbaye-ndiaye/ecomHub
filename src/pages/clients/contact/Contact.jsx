@@ -8,12 +8,17 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import useGlobal from '../../../utils/hooks/useGlobal';
 import { FormShopContext } from '../../../utils/context/FormShopContext';
+import LoadingSpinner from '../../../components/adminConnexion/LoadingSpinner';
 
 
 const ContactPage = () => {
   const {name} = useParams()
     const {formData, afficheUneBoutique, boutique } = useContext(FormShopContext);
     const { closeDropdown } = useGlobal();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+
 // const [boutique, setBoutique] = useState([])
 const [client, setClient] = useState({
   email: "",
@@ -45,7 +50,9 @@ useEffect(() => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
+  setIsLoading(true);
   console.log("client:", client); 
+
   try {
     const response = await axios.post("http://localhost:8000/api/messages", {
       ...client,
@@ -67,9 +74,22 @@ const handleSubmit = async (e) => {
   } catch (error) {
     console.error("Erreur lors de l'ajout du produit:", error);
   } finally {
+    setIsLoading(false)
   }
 }
 
+
+const updateButtonDisabled = () => {
+  if (formData.email.trim() !== "" && formData.password.trim() !== "") {
+    setIsButtonDisabled(false);
+  } else {
+    setIsButtonDisabled(true);
+  }
+};
+
+useEffect(() => {
+  updateButtonDisabled();
+}, [formData.email, formData.password]);
 
   return (
     <section className="bg-gray-100">
@@ -164,12 +184,17 @@ const handleSubmit = async (e) => {
               </div>
 
               <div className="flex items-center justify-end mt-2">
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-white bg-black rounded-md hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
-                >
-                  Envoyer le message
-                </button>
+              <button
+            type="submit"
+            disabled={ isLoading}
+            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center ${
+               isLoading
+                ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
+                : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            }`}
+          >
+            {isLoading ? <LoadingSpinner /> : "Connexion"}
+          </button>
               </div>
             </form>
           </div>
