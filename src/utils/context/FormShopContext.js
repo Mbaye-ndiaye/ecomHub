@@ -319,6 +319,7 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
+    shopId: formData.shop_id
   };
 
   return (

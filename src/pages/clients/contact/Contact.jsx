@@ -12,14 +12,15 @@ import { FormShopContext } from '../../../utils/context/FormShopContext';
 
 const ContactPage = () => {
   const {name} = useParams()
-    const {formData, afficheUneBoutique } = useContext(FormShopContext);
+    const {formData, afficheUneBoutique, boutique } = useContext(FormShopContext);
     const { closeDropdown } = useGlobal();
-const [boutique, setBoutique] = useState([])
+// const [boutique, setBoutique] = useState([])
 const [client, setClient] = useState({
   email: "",
   prenom: "",
   telephone: "",
-  body: ""
+  body: "",
+  shop_id: boutique?.id
 });
 
 const handleChange = (e) => {
@@ -27,17 +28,29 @@ const handleChange = (e) => {
   setClient({ ...client, [name]: value });
 };
 
-// useEffect(() => {
-//    afficheUneBoutique()
-// }, []);
+ // Fonction pour mettre à jour le client avec le shop_id
+ useEffect(() => {
+  if (boutique) {
+    setClient(prevClient => ({
+      ...prevClient,
+      shop_id: boutique.id 
+    }));
+  }
+}, [boutique]);
+useEffect(() => {
+   afficheUneBoutique()
+}, []);
 
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  const shopId = localStorage.getItem('shopId');
+  console.log("client:", client); 
   try {
-    const response = await axios.post("http://localhost:8000/api/messages)");
+    const response = await axios.post("http://localhost:8000/api/messages", {
+      ...client,
+      shop_id: boutique.id
+    });
     console.log("message.data", response.data);
     
     if (response.status === 201) {
@@ -46,6 +59,7 @@ const handleSubmit = async (e) => {
         telephone: "",
         email: "",
         body: "",
+        shop_id: boutique?.id
       });
     } else {
       throw new Error("Erreur lors de l'ajout du produit");
@@ -55,7 +69,6 @@ const handleSubmit = async (e) => {
   } finally {
   }
 }
-
 
 
   return (

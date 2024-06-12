@@ -5,7 +5,7 @@ export const PanierContext = createContext();
 const PanierContextProvider = ({ children }) => {
   const storedItems = JSON.parse(localStorage.getItem("cartItems")) || [];
   const validatedItems = storedItems.filter(
-    (item) => item && typeof item.prix === "number"
+    (item) => item && typeof item.prix === parseFloat("number")
   );
   const storedNotificationCount =
     JSON.parse(localStorage.getItem("notificationCount")) || 0;
@@ -61,12 +61,13 @@ const PanierContextProvider = ({ children }) => {
     setNotificationCount(totalItemsCount);
 
     const newTotalPrice = items.reduce((total, item) => {
-      const itemPrice = item && typeof item.prix === "number" ? item.prix : 0;
+      const itemPrice = item && typeof item.prix === parseFloat("number")  ? item.prix : 0;
       const quantite = cartQuantities[item._id] || 1;
       return total + itemPrice * quantite;
     }, 0);
     setTotalPrice(newTotalPrice);
   }, [items, cartQuantities]);
+
 
   // const addProduitToCart = (newItem) => {
   //     if (!newItem || typeof newItem.price !== 'number' || !newItem.name) {
@@ -75,11 +76,11 @@ const PanierContextProvider = ({ children }) => {
   //     }
 
   const addProduitToCart = (newItem) => {
-    if (!newItem || typeof newItem.prix !== "number") {
+    if (!newItem || typeof newItem.prix !== parseFloat("number")) {
       console.error("L'article ajouter est invalide ou manque un price");
       return;
     }
-
+    console.log("newItem", newItem);
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item._id === newItem._id);
       if (existingItem) {
