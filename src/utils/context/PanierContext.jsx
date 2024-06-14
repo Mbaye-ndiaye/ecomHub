@@ -47,14 +47,14 @@ const PanierContextProvider = ({ children }) => {
     }));
 
     const updatedItems = items.map((item) =>
-      item._id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
+      item.id === id ? { ...item, quantity: Math.max(newQuantity, 0) } : item
     );
     setItems(updatedItems);
   };
 
   useEffect(() => {
     const totalItemsCount = items.reduce(
-      (total, item) => total + (cartQuantities[item._id] || 1),
+      (total, item) => total + (cartQuantities[item.id] || 1),
       0
     );
     setTotalItems(totalItemsCount);
@@ -62,50 +62,51 @@ const PanierContextProvider = ({ children }) => {
 
     const newTotalPrice = items.reduce((total, item) => {
       const itemPrice = item && typeof item.prix === "number" ? item.prix : 0;
-      const quantite = cartQuantities[item._id] || 1;
+      const quantite = cartQuantities[item.id] || 1;
       return total + itemPrice * quantite;
     }, 0);
     setTotalPrice(newTotalPrice);
   }, [items, cartQuantities]);
 
-  // const addProduitToCart = (newItem) => {
-  //     if (!newItem || typeof newItem.price !== 'number' || !newItem.name) {
-  //         console.error("L'article ajouté est invalide ou manque un champ requis (price ou name).");
-  //         return;
-  //     }
-
   const addProduitToCart = (newItem) => {
-    if (!newItem || typeof newItem.prix !== "number") {
-      console.error("L'article ajouter est invalide ou manque un price");
+    // Convertir le prix en nombre
+    const prixAsNumber = parseFloat(newItem.prix);
+
+    if (!newItem || isNaN(prixAsNumber) || !newItem.name) {
+      console.error(
+        "L'article ajouté est invalide ou manque un champ requis (prix ou name).",
+        newItem
+      );
       return;
     }
 
+    // Mise à jour du newItem avec le prix converti en nombre
+    const newItemWithNumericPrice = { ...newItem, prix: prixAsNumber };
+
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item._id === newItem._id);
+      const existingItem = prevItems.find(
+        (item) => item.id === newItemWithNumericPrice.id
+      );
       if (existingItem) {
         setCartQuantities((prevQuantities) => ({
           ...prevQuantities,
-          [newItem._id]: (prevQuantities[newItem._id] || 0) + 1,
+          [newItemWithNumericPrice.id]:
+            (prevQuantities[newItemWithNumericPrice.id] || 0) + 1,
         }));
         return prevItems.map((item) =>
-          item._id === newItem._id
+          item.id === newItemWithNumericPrice.id
             ? { ...item, quantite: (item.quantite || 0) + 1 }
             : item
         );
       } else {
-        setCartQuantities({ ...cartQuantities, [newItem._id]: 1 });
-        return [...prevItems, { ...newItem, quantite: 1 }];
+        setCartQuantities({
+          ...cartQuantities,
+          [newItemWithNumericPrice.id]: 1,
+        });
+        return [...prevItems, { ...newItemWithNumericPrice, quantite: 1 }];
       }
     });
     setNotificationCount((prevCount) => prevCount + 1);
-    // toast.success('Produit ajouté au panier', {
-    // 	position: 'top-right',
-    // 	autoClose: 3000,
-    // 	hideProgressBar: true,
-    // 	closeOnClick: true,
-    // 	pauseOnHover: true,
-    // 	draggable: true,
-    // });
   };
 
   const viderPanier = () => {
@@ -140,6 +141,7 @@ const PanierContextProvider = ({ children }) => {
     cartQuantities,
     viderPanier,
   };
+
   return (
     <PanierContext.Provider value={value}>{children}</PanierContext.Provider>
   );

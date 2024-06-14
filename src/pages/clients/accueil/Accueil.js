@@ -20,7 +20,7 @@ const Accueil = () => {
     afficheUneBoutique(name)
       .then(() => setLoading(false)) // Arrête le chargement une fois que les données sont chargées
       .catch(() => setLoading(false)); // Arrête le chargement en cas d'erreur
-  }, [name, afficheUneBoutique]);
+  }, []);
 
   if (loading) return <SpinnerLoader />;
 

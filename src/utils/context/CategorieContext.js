@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbEyeShare } from "react-icons/tb";
 import { MdEdit } from "react-icons/md";
@@ -6,11 +6,19 @@ import useGlobal from "../hooks/useGlobal";
 import useProduit from "../hooks/useProduit";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
+import { FormShopContext } from "./FormShopContext";
 
 export const CategorieContext = createContext();
 
 export default function CategorieContextProvider({ children }) {
   const [test, setTest] = useState("");
+  const location = useLocation();
+
+  const shop = useContext(FormShopContext);
+  console.log("shop", shop);
+  const shopId = shop?.id || null;
+  console.log("shopId", shopId);
 
   // const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
@@ -26,8 +34,18 @@ export default function CategorieContextProvider({ children }) {
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
     categories: [],
-    shop_id: localStorage.getItem("shopId"),
+    shop_id: shop?.id || null,
   });
+
+  useEffect(() => {
+    console.log("useEffect", shop);
+    if (shop) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        shop_id: shop.id,
+      }));
+    }
+  }, [shop]);
 
   const table = ["Categorie", "Nombre produit", "Actions"];
 
@@ -58,15 +76,14 @@ export default function CategorieContextProvider({ children }) {
   ];
 
   const fetchCategories = async () => {
+    if (!formData.shop_id) return;
     try {
       const response = await axios.get(
         `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
         {
-          params: { shop_id: localStorage.getItem("shopId") },
+          params: { shop_id: formData.shop_id },
         }
       );
-      console.log("Catégories récupérées :", response.data);
-      // localStorage.setItem("categories", JSON.stringify(response.data));
       setCategories(response.data);
     } catch (error) {
       console.error("Erreur lors de la récupération des catégories :", error);
