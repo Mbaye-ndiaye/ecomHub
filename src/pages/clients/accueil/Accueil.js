@@ -15,6 +15,7 @@ import SpinnerLoader from "../../../components/spinnerLoader/SpinnerLoader";
 const Accueil = () => {
   const { name } = useParams();
   const { afficheUneBoutique, boutique } = useContext(FormShopContext);
+  console.log("4", boutique);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     afficheUneBoutique(name)
@@ -25,14 +26,18 @@ const Accueil = () => {
   if (loading) return <SpinnerLoader />;
 
   return (
-    <div className="bg-gray-100 h-screen">
+    <div className="bg-gray-100 ">
       <div
-        className="items-center bg-white bg-cover bg-no-repeat bg-center  w-full "
+        className=" bg-white bg-cover bg-no-repeat   w-full "
         style={{ backgroundImage: `url(${boutique?.banniere})` }}
       >
         <Navbar />
+
+			<HeaderBanner /> 
+
         {/* <NaveLinks className="bg-gray-700"/> */}
         <HeaderBanner />
+
       </div>
 
       <div>

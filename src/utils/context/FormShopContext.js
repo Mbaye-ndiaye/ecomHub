@@ -17,8 +17,15 @@ const FormProvider = ({ children }) => {
   const { name } = useParams();
   const [boutique, setBoutique] = useState();
 
+  // console.log("id", id);
+
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [messageShop, setMessageShop] = useState([]);
+  const [messageNames, setMessageNames] = useState([]);
+  const [message, setMessage] = useState([]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -29,6 +36,7 @@ const FormProvider = ({ children }) => {
     banniere: null,
     logo: null,
     user_id: userId,
+    shop_id: localStorage.getItem("shopId"),
   });
 
   const [logoPreview, setLogoPreview] = useState(null);
@@ -150,6 +158,7 @@ const FormProvider = ({ children }) => {
       const response = await axios.get(
         `http://localhost:8000/api/shops/name/${name}`
       );
+
       setBoutique(response.data);
       console.log("Accueil", response.data);
     } catch (error) {
@@ -157,8 +166,10 @@ const FormProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    afficheUneBoutique();
-  }, []);
+    if (name) {
+      afficheUneBoutique(name);
+    }
+  }, [name]);
 
   const valueContext = {
     formData,

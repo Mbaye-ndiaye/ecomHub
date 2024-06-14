@@ -44,11 +44,11 @@ export default function Cart() {
                           <img
                             src={item.image}
                             className="w-20 h-20"
-                            alt={item.name}
+                            alt={item.title}
                           />
                         </div>
                         <div className="md:mb-0">
-                          <p className="mb-1 font-semibold">{item.name}</p>
+                          <p className="mb-1 font-semibold">{item.title}</p>
                           <p>{item.category}</p>
                           <div className="">
                             <button
@@ -98,7 +98,7 @@ export default function Cart() {
                           </button>
                         </div>
                         <p className="mt-2 text-lg font-semibold text-center">
-                          {item.price} FCFA
+                          {item.prix} FCFA
                         </p>
                       </div>
                     </div>

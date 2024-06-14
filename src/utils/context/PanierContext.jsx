@@ -9,9 +9,9 @@ const PanierContextProvider = ({ children }) => {
   );
   const storedNotificationCount =
     JSON.parse(localStorage.getItem("notificationCount")) || 0;
-
   const storedCartQuantities =
     JSON.parse(localStorage.getItem("cartQuantities")) || {};
+
   const [cartQuantities, setCartQuantities] = useState(storedCartQuantities);
   const [items, setItems] = useState(validatedItems);
   const [notificationCount, setNotificationCount] = useState(

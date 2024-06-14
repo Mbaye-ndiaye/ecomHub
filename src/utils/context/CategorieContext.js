@@ -88,6 +88,7 @@ export default function CategorieContextProvider({ children }) {
     } catch (error) {
       console.error("Erreur lors de la récupération des catégories :", error);
     }
+
   };
 
   const handleChange = (e) => {
@@ -160,7 +161,7 @@ export default function CategorieContextProvider({ children }) {
             icon: "success",
             title: "Categorie ajoutée avec succès",
             showConfirmButton: false,
-            timer: 9000,
+            timer: 2000,
           });
 
           // fetchCategories();
@@ -177,7 +178,9 @@ export default function CategorieContextProvider({ children }) {
         console.log("Erreur détaillée:", error.response.data);
       }
     }
+
   };
+  // setCategories(" ");
 
   const handleDetail = (categoryId) => {
     const categorieIdCli = localStorage.getItem("categorieIdCli");

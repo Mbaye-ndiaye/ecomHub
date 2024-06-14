@@ -3,7 +3,6 @@ import { PanierContext } from "../../../utils/context/PanierContext";
 import { useNavigate } from "react-router-dom";
 import useGlobal from "../../../utils/hooks/useGlobal";
 import axios from "axios";
-import Swal from "sweetalert2";
 import ButtonComponent from "../../../components/clients/button/ButtonComponent";
 
 function CheckoutPage() {
@@ -45,45 +44,49 @@ function CheckoutPage() {
       name: item.name,
     }));
 
-    const prixLivraison = deliveryCost[deliveryOption];
-    const prixTotal = totalPrice + deliveryCost[deliveryOption];
+    const prixLivraison = deliveryCost[deliveryOption].toString();
+    const prixTotal = totalPrice + deliveryCost[deliveryOption].toString();
     const prixProduit = totalPrice;
-
+    const produitsJsonString = JSON.stringify(orderItems);
+    // const imageUrl = items.map(item => item.image);
     const orderData = {
       ...formData,
-      product_id: JSON.stringify(orderItems.map((item) => item.id)),
-      produits: JSON.stringify(orderItems.map((item) => item.name)),
-      quantite: orderItems.reduce((sum, item) => sum + item.quantity, 0),
+      // image: imageUrl,
+      //  product_id: JSON.stringify(orderItems.map((item) => item.id)),
+      //  produits: JSON.stringify(orderItems.map((item) => item.name)),
+      product_id: orderItems.map((item) => item.id),
+      produits: produitsJsonString,
+      //  produits: JSON.stringify(orderItems.map((item) => item.prix)), // En JSON string
+      quantite: orderItems.reduce((sum, item) => sum + item.quantity, 0), // Somme des quantités
       statut: "en attente",
-      prixProduit: prixProduit,
-      prixLivraison: prixLivraison.toString(),
+      prixProduit: prixProduit, // Prix produits
+      prixLivraison: prixLivraison, // Prix livraison en chaîne de caractères
       prixTotal: prixTotal,
-      created_at: new Date().toISOString().slice(0, 19).replace("T", " "),
-      updated_at: new Date().toISOString().slice(0, 19).replace("T", " "),
     };
 
     console.log("orderData", orderData);
 
-    const urlApiAdmin = "http://localhost:8000/api/commandes";
-
     try {
-      const response = await axios.post(urlApiAdmin, orderData);
-      console.log("Commande ", response.data);
-      await Swal.fire({
-        icon: "success",
-        title: "Commande envoyer avec succès!",
-        timer: 2000,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/commandes",
+        orderData
+      );
+      // const response = await axios.post(urlApiAdmin, orderData);
+      console.log("response.commande", response);
+
+      if (response.status === 201) {
+        console.log("Commande ajoutée avec succès:", response.data);
+        // toast.success('Commande approuvée avec succès!');
+      } else {
+        console.error("Erreur lors de l'ajout de commandes:", response.data);
+        // toast.error("Erreur lors de l'ajout de commandes");
+      }
     } catch (error) {
-      await Swal.fire({
-        icon: "error",
-        title: "Commande échouer",
-        timer: 2000,
-      });
       console.error(
         "Erreur lors de l'envoi de la commande:",
         error.response?.data || error.message
       );
+      // toast.error("Erreur lors de l'envoi de la commande");
     }
     viderPanier();
   };

@@ -35,7 +35,6 @@ const Categories = () => {
 
   return (
     <div className="">
-      {/* <Sidebare /> */}
       <div className="bg-white rounded-[20px] p-[2rem] flex-1 mb-5 h-auto ">
         <HeaderTable
           title="Liste categories"

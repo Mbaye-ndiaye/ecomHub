@@ -26,13 +26,13 @@ import Cart from "./pages/clients/panier/Cart";
 function App() {
   return (
     <div className="App">
-      <FormProvider>
         <PanierContextProvider>
+      <FormProvider>
         <Routes>
           <Route path="/connexion" element={<Login />} />
           <Route path="inscription" element={<Inscription />} />
           <Route path="/" element={<InterfaceAdmin />} />
-          <Route path="/panier" element={<Cart />}></Route>
+          <Route path="/panier/:name" element={<Cart />}></Route>
           <Route path="/checkout" element={<CheckoutPage />}></Route>
           <Route path="/accueil/:name" element={<Accueil />}></Route>
           <Route path="/apropos" element={<AboutPage />}></Route>
@@ -48,17 +48,16 @@ function App() {
           <Route path="/detailCard" element={<DetailCard />}></Route>
           <Route path="/creeShop" element={<FormsShop />}></Route>
           <Route path="/Accueil" element={<Accueil />}></Route>
-          <Route path="/Apropos" element={<AboutPage />}></Route>
-          <Route path="/Contact" element={<ContactPage />}></Route>
-          <Route path="/Boutique" element={<BoutiqueUser />} />
+          <Route path="/Apropos/:name" element={<AboutPage />}></Route>
+          <Route path="/Contact/:name" element={<ContactPage />}></Route>
+          <Route path="/boutique" element={<BoutiqueUser />} />
           <Route path="/ContactEcom" element={<ContactEcom />} />
           <Route path="/AproposEcom" element={<AproposEcom />} />
           <Route path="/ShopDetail" element={<ShopDetailPage />} />
           <Route path="/*" element={<DashboardWithSidebar />} />
         </Routes>
-        {/* </Router> */}
-        </PanierContextProvider>
       </FormProvider>
+        </PanierContextProvider>
       {/* </CategorieContextProvider>
         </GlobalContextProvider> */}
     </div>

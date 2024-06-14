@@ -12,16 +12,12 @@ const BoutiqueUser = () => {
 
   useEffect(() => {
     const fetchBoutique = async () => {
+
       const token = localStorage.getItem("tokenClient");
       console.log("tokenClient", token);
 
       try {
-        const response = await axios.get("http://localhost:8000/api/shops", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const response = await axios.get("http://localhost:8000/api/shops");
 
         setBoutique(response.data);
         setLoading(false);
@@ -59,7 +55,7 @@ const BoutiqueUser = () => {
       <div className="grid grid-cols-4 gap-7">
         {boutiques.map((boutique) => {
           return (
-            <div key={boutique.name}>
+            <div key={boutique.id}>
               <Link to={`/accueil/${boutique.name}`}>
                 <div className=" flex items-center shadow-lg p-5 mx-1 my-2 bg-white rounded-lg ">
                   <div className="flex gap-3 mx-4">
