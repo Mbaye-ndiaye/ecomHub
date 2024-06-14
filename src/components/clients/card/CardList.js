@@ -39,7 +39,7 @@ const CardList = () => {
   const groupedProducts = groupByCategory(products);
 
   return (
-    <div className="container px-5 mx-auto">
+    <div className=" px-5 mx-auto">
       <LoaderCard />
       <h1 className="text-3xl font-bold text-start my-8">Catégorie</h1>
       {Object.keys(groupedProducts).map((category, index) => (
