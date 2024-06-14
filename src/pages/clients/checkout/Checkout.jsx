@@ -39,24 +39,25 @@ function CheckoutPage() {
         const orderItems = items.map((item) => ({
             id: item.id,
             quantity: cartQuantities[item.id],
-            prix: item.price,
-            Total: item.price * cartQuantities[item.id],
-            name: item.title,
-        	// image: item.image,
+            prix: item.prix,
+            Total: item.prix * cartQuantities[item.id],
+            name: item.name,
 			
         }));
 
         const prixLivraison = deliveryCost[deliveryOption].toString();
 		const prixTotal = totalPrice + deliveryCost[deliveryOption].toString()
 		const prixProduit = totalPrice
-		
+		const produitsJsonString = JSON.stringify(orderItems);
 		// const imageUrl = items.map(item => item.image);
 		const orderData = {
             ...formData,
             // image: imageUrl,
-            product_id: JSON.stringify(orderItems.map((item) => item.id)),
-			produits: JSON.stringify(orderItems.map((item) => item.name)),
-            // produits: JSON.stringify(orderItems.map((item) => item.price)), // En JSON string
+            //  product_id: JSON.stringify(orderItems.map((item) => item.id)),
+			//  produits: JSON.stringify(orderItems.map((item) => item.name)),
+            product_id: orderItems.map((item) => item.id),
+            produits: produitsJsonString,
+            //  produits: JSON.stringify(orderItems.map((item) => item.prix)), // En JSON string
             quantite: orderItems.reduce((sum, item) => sum + item.quantity, 0), // Somme des quantités
             statut: 'en attente',
             prixProduit: prixProduit, // Prix produits
@@ -67,10 +68,11 @@ function CheckoutPage() {
 
         console.log('orderData', orderData);
 
-        const urlApiAdmin = 'http://localhost:8000/api/commandes';
-
+        
         try {
-            const response = await axios.post(urlApiAdmin, orderData);
+            const response = await axios.post ('http://localhost:8000/api/commandes', orderData);
+            // const response = await axios.post(urlApiAdmin, orderData);
+            console.log("response.commande", response);
 
             if (response.status === 201) {
                 console.log('Commande ajoutée avec succès:', response.data);

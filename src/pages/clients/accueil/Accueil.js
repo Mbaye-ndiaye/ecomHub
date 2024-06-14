@@ -26,9 +26,9 @@ const Accueil = () => {
   if (loading) return <SpinnerLoader />;
 
   return (
-    <div className="bg-gray-100 h-auto">
+    <div className="bg-gray-100 ">
       <div
-        className="items-center bg-white bg-cover bg-no-repeat bg-center  w-full "
+        className=" bg-white bg-cover bg-no-repeat   w-full "
         style={{ backgroundImage: `url(${boutique?.banniere})` }}
       >
         <Navbar />

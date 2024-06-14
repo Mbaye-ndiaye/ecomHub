@@ -60,30 +60,45 @@ const PanierContextProvider = ({ children }) => {
     }, [items, cartQuantities]);
 
     const addProduitToCart = (newItem) => {
-        if (!newItem || typeof newItem.prix !== 'number') {
-            console.error("L'article ajouté est invalide ou manque un prix");
-            return;
+        // Convertir le prix en nombre
+        const prixAsNumber = parseFloat(newItem.prix);
+    
+        if (!newItem || isNaN(prixAsNumber) || !newItem.name) {
+          console.error(
+            "L'article ajouté est invalide ou manque un champ requis (prix ou name).",
+            newItem
+          );
+          return;
         }
-
+    
+        // Mise à jour du newItem avec le prix converti en nombre
+        const newItemWithNumericPrice = { ...newItem, prix: prixAsNumber };
+    
         setItems((prevItems) => {
-            const existingItem = prevItems.find((item) => item.id === newItem.id);
-            if (existingItem) {
-                setCartQuantities((prevQuantities) => ({
-                    ...prevQuantities,
-                    [newItem.id]: (prevQuantities[newItem.id] || 0) + 1,
-                }));
-                return prevItems.map((item) => 
-                    item.id === newItem.id
-                    ? {...item, quantite: (item.quantite || 0) + 1}
-                    : item
-                );
-            } else {
-                setCartQuantities({ ...cartQuantities, [newItem.id]: 1 });
-                return [...prevItems, {...newItem, quantite: 1}];
-            }
+          const existingItem = prevItems.find(
+            (item) => item.id === newItemWithNumericPrice.id
+          );
+          if (existingItem) {
+            setCartQuantities((prevQuantities) => ({
+              ...prevQuantities,
+              [newItemWithNumericPrice.id]:
+                (prevQuantities[newItemWithNumericPrice.id] || 0) + 1,
+            }));
+            return prevItems.map((item) =>
+              item.id === newItemWithNumericPrice.id
+                ? { ...item, quantite: (item.quantite || 0) + 1 }
+                : item
+            );
+          } else {
+            setCartQuantities({
+              ...cartQuantities,
+              [newItemWithNumericPrice.id]: 1,
+            });
+            return [...prevItems, { ...newItemWithNumericPrice, quantite: 1 }];
+          }
         });
         setNotificationCount((prevCount) => prevCount + 1);
-    };
+      };
 
     const viderPanier = () => {
         setItems([]);

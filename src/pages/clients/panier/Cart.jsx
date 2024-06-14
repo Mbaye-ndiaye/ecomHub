@@ -96,7 +96,7 @@ export default function Cart() {
                                                     </button>
                                                 </div>
                                                 <p className="mt-2 text-lg font-semibold text-center">
-                                                    {item.price} FCFA
+                                                    {item.prix} FCFA
                                                 </p>
                                             </div>
                                         </div>
