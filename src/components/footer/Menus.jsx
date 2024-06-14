@@ -1,4 +1,4 @@
-export const CLIEN = [
+export const CLIENT = [
   { name: "FAQ", link: "#" },
   { name: "Visual Studio X", link: "#" },
   { name: "Easy Content", link: "#" },

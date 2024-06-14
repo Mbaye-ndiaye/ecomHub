@@ -47,7 +47,7 @@ const ContentHeader = () => {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <span>Votre boutique : {userShop.name}</span>
-        <Link to={`/accueil/${userShop.id}`}>Voir mon boutique</Link>
+        <Link to={`/accueil/${userShop.name}`}>Voir mon boutique</Link>
       </div>
 
       <div className="flex items-center gap-[20px]">

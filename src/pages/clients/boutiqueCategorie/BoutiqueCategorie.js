@@ -16,7 +16,7 @@ const BoutiqueCategorie = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://fakestoreapi.com/products');
+      const response = await axios.get('https://localhost:8000/api/products');
       const produitsAvecQuantite = response.data.map((produit) => ({
         ...produit
       }))
@@ -99,7 +99,7 @@ const BoutiqueCategorie = () => {
           ))}
           </div>
             </div>
-            <div className='grid grid-cols-1 sm:grid:cols-2'>
+            <div className='grid grid-cols-1 sm:grid:cols-4'>
               {produits.length > 0 ? (
                 <div className=''>
                   {produits.map((produit) => (

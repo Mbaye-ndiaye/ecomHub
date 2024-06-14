@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import Swal from "sweetalert2";
 import loginImg from "../../assets/imagesback.jfif";
-
 import trees from "../../assets/amie.avif";
+import LoadingSpinner from "../adminConnexion/LoadingSpinner";
+
 
 export default function Inscription() {
   const navigate = useNavigate();
@@ -54,6 +54,7 @@ export default function Inscription() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(false)
     try {
       const response = await axios.post(
         "http://localhost:8000/api/register",
@@ -75,6 +76,8 @@ export default function Inscription() {
     } catch (error) {
       console.error(error);
       alert("inscription echoue");
+    } finally {
+      setIsLoading(false)
     }
   };
   return (
@@ -192,19 +195,17 @@ export default function Inscription() {
               </div>
             </div>
 
-            {/* <Link to={"/connexion"}> */}
             <button
-              type="submit"
-              // disabled={isButtonDisabled || isLoading}
-              className="w-full bg-gray-800 mt-8 px-4 py-2 text-white rounded-md"
-              //   isButtonDisabled || isLoading
-              //     ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-              //     : "bg-gray-900 text-active text-white hover:bg-gray-900"
-              // } ${isLoading ? "relative" : ""}`}
-            >
-              Enregistrer
-            </button>
-            {/* </Link> */}
+            type="submit"
+            disabled={ isLoading}
+            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center ${
+               isLoading
+                ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
+                : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            }`}
+          >
+            {isLoading ? <LoadingSpinner /> : "Connexion"}
+          </button>
           </form>
         </div>
       </div>

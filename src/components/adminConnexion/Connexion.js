@@ -84,7 +84,7 @@ export default function Login() {
         navigate("/dashboard");
       } else {
         await Swal.fire({
-          text: "Vous pas encore crée une boutique il faut crée une .",
+          text: "Vous n'avez pas encore créé une boutique, il faut en créer une .",
           showConfirmButton: true,
         });
         navigate("/creeShop");
