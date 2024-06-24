@@ -68,6 +68,8 @@ export default function Login() {
       );
 
       const hasShop = shopCheckResponse.data.hasShop;
+      console.log("shopId", shopCheckResponse);
+
       // afficher le message succes
       await Swal.fire({
         icon: "success",
@@ -81,6 +83,8 @@ export default function Login() {
           text: "Vous avez déjà une boutique. Vous aller etre diriger vers votre tablau de bord.",
           showConfirmButton: true,
         });
+
+        
         navigate("/dashboard");
       } else {
         await Swal.fire({

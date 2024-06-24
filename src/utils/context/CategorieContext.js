@@ -26,7 +26,7 @@ export default function CategorieContextProvider({ children }) {
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
     categories: [],
-    shop_id: localStorage.getItem("shopId"),
+    shop_id: localStorage.getItem("shop_Id"),
   });
 
   const table = ["Categorie", "Nombre produit", "Actions"];

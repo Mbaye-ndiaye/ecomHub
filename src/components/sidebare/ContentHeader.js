@@ -29,7 +29,13 @@ const ContentHeader = () => {
             },
           }
         );
+        localStorage.removeItem('shopId');
         setUserShop(response.data);
+        localStorage.setItem("shop_Id", response.data.id);
+        
+
+        console.log("shopId", response.data.id);
+          navigate("/dashboard");
         console.log("response", response.data);
       } catch (error) {
         console.error(error);
