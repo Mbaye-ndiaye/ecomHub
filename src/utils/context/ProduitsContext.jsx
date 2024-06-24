@@ -455,7 +455,7 @@ const ProduitContextProvider = ({ children }) => {
     // prix: "",
     // image: null,
     // categorie_id: localStorage.getItem("categories"),
-    shop_id: localStorage.getItem("shopId"),
+    shop_id: localStorage.getItem("shop_Id"),
   });
 
   const table = ["Image", "Descript", "Nom", "Quantité", "Prix", "Action"];
@@ -570,7 +570,7 @@ const ProduitContextProvider = ({ children }) => {
       formData.append("categorie_id", produit.categorie_id);
 
       const response = await axios.post(
-        "http://localhost:8000/api/products",
+        `http://localhost:8000/api/products/${categorie_id}`,
         formData,
         {
           headers: {
@@ -690,7 +690,7 @@ const ProduitContextProvider = ({ children }) => {
   const fetchProduct = async () => {
     try {
 
-      const response = await axios.get("http://localhost:8000/api/products");
+      const response = await axios.get(`http://localhost:8000/api/products/${categorie_id}`);
       setProducts(response.data);
       console.log("response.data", response.data);
 

@@ -57,7 +57,7 @@ const GlobalContextProvider = ({ children }) => {
 
   // Fonction pour supprimer le token du local storage après la déconnexion
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("tokenClient");
     navigate("/connexion");
   };
 

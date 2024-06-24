@@ -7,8 +7,6 @@ import LoadingSpinner from "./LoadingSpinner"; // Assurez-vous que ce composant 
 
 export default function Login() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null); // State for user
-  // const [shop, setShop] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -51,27 +49,26 @@ export default function Login() {
         formData
       );
 
-      // const token = response.data.access_token;
-      // localStorage.setItem("tokenClient", token);
-      const userData = response.data;
-      if (!userData.access_token) {
-        throw new Error("Token d'accès non fourni");
-      }
+      const token = response.data.access_token;
+      localStorage.setItem("tokenClient", token);
+      localStorage.setItem("userId", response.data.user.id);
 
-      setUser(userData);
-      localStorage.setItem("tokenClient", userData.access_token);
+      console.log(response.data);
+      console.log("token:", token);
+
+      console.log("UserID:", response.data.user.id);
 
       const shopCheckResponse = await axios.get(
-        `http://localhost:8000/api/shops/user/${userData.user.id}`,
+        `http://localhost:8000/api/shops/user/${response.data.user.id}`,
         {
           headers: {
-            Authorization: `Bearer ${userData.access_token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       const hasShop = shopCheckResponse.data.hasShop;
-      console.log("hasShop", hasShop);
+      console.log("shopId", shopCheckResponse);
 
       // afficher le message succes
       await Swal.fire({
@@ -86,17 +83,15 @@ export default function Login() {
           text: "Vous avez déjà une boutique. Vous aller etre diriger vers votre tablau de bord.",
           showConfirmButton: true,
         });
+
+        
         navigate("/dashboard");
       } else {
         await Swal.fire({
           text: "Vous n'avez pas encore créé une boutique, il faut en créer une .",
           showConfirmButton: true,
         });
-        navigate("/creeShop", {
-          state: {
-            user: userData,
-          },
-        });
+        navigate("/creeShop");
       }
     } catch (error) {
       console.error(error);
@@ -107,9 +102,6 @@ export default function Login() {
         // showConfirmButton: false,
         timer: 2000,
       });
-      if (error.response) {
-        console.log("Erreur détaillée:", error.response.data);
-      }
     } finally {
       setIsLoading(false);
     }

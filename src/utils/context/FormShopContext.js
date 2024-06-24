@@ -2,30 +2,25 @@ import axios from "axios";
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
 
 export const FormShopContext = createContext();
 //  export { FormShopContext };
 
 const FormProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { user } = location.state || {};
-  const [shop, setShop] = useState(null);
-  const userId = user?.user?.id || null;
-  console.log("user_id", userId);
-  const { name } = useParams();
-  const [boutique, setBoutique] = useState();
+  
 
+  const { name } = useParams();
+  const navigate = useNavigate();
+  const [boutique, setBoutique] = useState([]);
   // console.log("id", id);
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [messageShop, setMessageShop] = useState([]);
+  const [messageShop, setMessageShop] = useState([])
   const [messageNames, setMessageNames] = useState([]);
   const [message, setMessage] = useState([]);
-
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,21 +30,13 @@ const FormProvider = ({ children }) => {
     description: "",
     banniere: null,
     logo: null,
-    user_id: userId,
-    shop_id: localStorage.getItem("shopId"),
+    user_id: localStorage.getItem("userId"),
   });
 
+
+  const [errors, setErrors] = useState({});
   const [logoPreview, setLogoPreview] = useState(null);
   const [bannierePreview, setBannierePreview] = useState(null);
-
-  useEffect(() => {
-    if (user) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        user_id: user.user.id,
-      }));
-    }
-  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,8 +48,9 @@ const FormProvider = ({ children }) => {
     const { name } = e.target;
     setFormData({
       ...formData,
-      [name]: file,
+      [e.target.name]: file,
     });
+    // Mettre à jour l'aperçu de l'image
     if (name === "logo") {
       setLogoPreview(URL.createObjectURL(file));
     } else if (name === "banniere") {
@@ -73,7 +61,12 @@ const FormProvider = ({ children }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const token = localStorage.getItem("tokenClient");
+
+    console.log("tokenClient", token);
+
     const formDataToSend = new FormData();
+
     formDataToSend.append("name", formData.name);
     formDataToSend.append("description", formData.description);
     formDataToSend.append("logo", formData.logo);
@@ -83,7 +76,8 @@ const FormProvider = ({ children }) => {
     formDataToSend.append("adresse", formData.adresse);
     formDataToSend.append("a_propos", formData.a_propos);
     formDataToSend.append("user_id", formData.user_id);
-    console.log("user_id", formData.user_id);
+
+    console.log("formData.user_id",formData.user_id);
 
     try {
       const response = await axios.post(
@@ -91,30 +85,30 @@ const FormProvider = ({ children }) => {
         formDataToSend,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      const userData = response.data;
+      // Here, you get the shop_id from the response
+      const shopId = response.data.id;
+      console.log("shopId",shopId);
 
-      // updateShop(response.data.shop);
-      // setFormData((prevFormData) => ({
-      //   ...prevFormData,
-      //   shop_id: response.data.shop.id,
-      // }));
-      console.log("userData", userData);
+      localStorage.setItem("shopId", response.data.id);
 
+      console.log(response.data);
+      // afficher le message de succès
       await Swal.fire({
         icon: "success",
         title: "Boutique ajoutée avec succès",
         showConfirmButton: false,
-        timer: 9000,
+        timer: 2000,
       });
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
+      // Display error message if user already has a shop
       if (error.response && error.response.status === 403) {
         await Swal.fire({
           icon: "error",
@@ -131,27 +125,21 @@ const FormProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchUserShops = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8000/api/user/shops",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        setShop(response.data);
-        console.log("setShop", response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //   const fetchShopById = async (id) => {
+  //     try {
+  //         const response = await axios.get(`http://localhost:8000/api/shops/${id}`);
+  //         setBoutique(response.data)
 
-    fetchUserShops();
-  }, []);
+  //         console.log("DATA", response.data);
+  //         //  return response.data;
+  //     } catch (error) {
+  //         console.error('Erreur lors de la récupération des détails de la boutique :', error);
+  //     }
+  // };
+
+  // useEffect(() => {
+  //   fetchShopById()
+  // }, [id])
 
   const afficheUneBoutique = async (name) => {
     try {
@@ -171,6 +159,10 @@ const FormProvider = ({ children }) => {
     }
   }, [name]);
 
+  
+  
+
+
   const valueContext = {
     formData,
     handleChange,
@@ -178,10 +170,8 @@ const FormProvider = ({ children }) => {
     handleSubmit,
     afficheUneBoutique,
     boutique,
-    shop,
     bannierePreview,
-    logoPreview,
-    isLoading,
+    logoPreview
   };
 
   return (
