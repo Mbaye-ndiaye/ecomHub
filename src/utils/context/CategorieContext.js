@@ -5,13 +5,19 @@ import { MdEdit } from "react-icons/md";
 import useGlobal from "../hooks/useGlobal";
 import useProduit from "../hooks/useProduit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const CategorieContext = createContext();
 
-export { CategorieContext };
 
-export default function CategorieContextProvider({ children }) {
-  const [test, setTest] = useState("Awa");
+export const CategorieContext = createContext();
+
+// { CategorieContext };
+
+export default function CategorieContextProvider({children}) {
+
+  const [test, setTest] = useState("");
+
+
   const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
   const [categories, setCategories] = useState([]);
@@ -40,6 +46,7 @@ export default function CategorieContextProvider({ children }) {
   //   },
   // ];
 
+
   const actions = [
     {
       icon: <TbEyeShare />,
@@ -56,11 +63,11 @@ export default function CategorieContextProvider({ children }) {
       handleClick: (category) => {
         categories.map((categorie) => {
           if (categorie._id === category) {
-            setNom(categorie.nom);
+            setNom(categorie.name);
           }
         });
         setIsEditing(true);
-        setShowModal(true);
+        // setShowModal(true);
         setEditingCategoryId(category);
       },
     },
@@ -80,7 +87,9 @@ export default function CategorieContextProvider({ children }) {
     setFormData({ ...formData, [name]: value });
   };
 
+
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     const token = localStorage.getItem("tokenClient");
@@ -97,8 +106,8 @@ export default function CategorieContextProvider({ children }) {
     fromDataToSend.append("name", formData.name);
     fromDataToSend.append("shop_id", formData.shop_id);
 
-    console.log(formData.shop_id);
-    console.log(formData.name);
+    console.log("formData.shop_id", formData.shop_id);
+    console.log("formData.name", formData.name);
 
     if (isEditing) {
       handleEditCategory(editingCategoryId, formData);
@@ -114,8 +123,15 @@ export default function CategorieContextProvider({ children }) {
             },
           }
         );
-        setShowModal(false);
-        alert("yes");
+
+        // afficher le message de succès
+        await Swal.fire({
+          icon: "success",
+          title: "Categorie joutée avec succès",
+          showConfirmButton: false,
+         timer: 9000,
+
+        });
         // setNom("");
         console.log("respose :", response);
         fetchCategories();
@@ -146,7 +162,7 @@ export default function CategorieContextProvider({ children }) {
   const handleEditCategory = (categoryId, newData) => {
     setEditData(newData);
     handleEdit(categoryId, newData);
-    setShowModal(false);
+    // setShowModal(false);
   };
 
   // const handleDelete = async (categoryId) => {

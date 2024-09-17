@@ -24,13 +24,3 @@ const ButtonComponent = ({className, onClick, texte, disabled, link}) => {
 export default ButtonComponent
 
 
-{/* <div className="flex items-center justify-between mx-auto max-w-7xl">
-            {logo && (
-              <div key={logo.id} className="flex items-center">
-                <img 
-                  className="mx-4 text-xl font-semibold text-white"
-                  src={logo.logo} 
-                  alt={logo.name} />
-              </div>
-            )}
-          </div> */}
