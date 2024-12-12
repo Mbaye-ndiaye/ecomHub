@@ -1,44 +1,35 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbEyeShare } from "react-icons/tb";
 import { MdEdit } from "react-icons/md";
 import useGlobal from "../hooks/useGlobal";
 import useProduit from "../hooks/useProduit";
 import axios from "axios";
+import Swal from "sweetalert2";
 
-const CategorieContext = createContext();
-
-export { CategorieContext };
+export const CategorieContext = createContext();
 
 export default function CategorieContextProvider({ children }) {
-  const [test, setTest] = useState("Awa");
-  const [nom, setNom] = useState("");
+  const [test, setTest] = useState("");
+
+  // const [nom, setNom] = useState("");
   const [quantite, setQuantite] = useState("0");
   const [categories, setCategories] = useState([]);
   const [categoriesProd, setCategoriesProd] = useState([]);
   const [editingCategoryId, setEditingCategoryId] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({});
+  const [userShops, setUserShops] = useState("");
   const [quantiteParCategorie, setQuantiteParCategorie] = useState({});
   const navigate = useNavigate();
   const { setShowModal } = useGlobal();
   const { produits, filtreProduits } = useProduit();
   const [formData, setFormData] = useState({
-    name: "",
-    shop_id: localStorage.getItem("shopId"),
+    categories: [],
+    shop_id: localStorage.getItem("shop_Id"),
   });
 
   const table = ["Categorie", "Nombre produit", "Actions"];
-
-  // const inputs = [
-  //   {
-  //     label: "Nom catégorie",
-  //     type: "text",
-  //     value: nom,
-  //     name: "catégorie",
-  //     setValue: setNom,
-  //   },
-  // ];
 
   const actions = [
     {
@@ -56,28 +47,43 @@ export default function CategorieContextProvider({ children }) {
       handleClick: (category) => {
         categories.map((categorie) => {
           if (categorie._id === category) {
-            setNom(categorie.nom);
+            // setNom(categorie.name);
           }
         });
         setIsEditing(true);
-        setShowModal(true);
+        // setShowModal(true);
         setEditingCategoryId(category);
       },
     },
-    // {
-    //   icon: <MdOutlineDelete />,
-    //   color: "bg-red-600",
-    //   handleClick: (categoryId) => {
-    //     handleDelete(categoryId);
-    //   },
-    // }
   ];
 
-  //   const [shopId, setShopId] = useState("");
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
+        {
+          params: { shop_id: localStorage.getItem("shopId") },
+        }
+      );
+      console.log("Catégories récupérées :", response.data);
+      // localStorage.setItem("categories", JSON.stringify(response.data));
+      setCategories(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des catégories :", error);
+    }
+
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // Ajoutez une validation pour vous assurer que formData.categories reste un tableau
+    if (name === "categories") {
+      let categoriesArray = value.split(",").map((item) => item.trim());
+      setFormData({ ...formData, categories: categoriesArray });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -86,27 +92,33 @@ export default function CategorieContextProvider({ children }) {
     const token = localStorage.getItem("tokenClient");
     console.log("tokenClient", token);
 
-    if (!token) {
-      alert("connectez vous d" / "abord avant de creer votre boutique");
-      navigate("/connexion");
+    const formDataToSend = new FormData();
+    formDataToSend.append("shop_id", formData.shop_id);
+
+    // Vérifiez que categories est un tableau
+    if (Array.isArray(formData.categories)) {
+      formData.categories.forEach((category, index) => {
+        formDataToSend.append(`categories[${index}]`, category);
+      });
+    } else {
+      console.error(
+        "formData.categories n'est pas un tableau:",
+        formData.categories
+      );
       return;
     }
 
-    const fromDataToSend = new FormData();
+    console.log("formData.shop_id", formData.shop_id);
+    console.log("formData.categories", formData.categories);
 
-    fromDataToSend.append("name", formData.name);
-    fromDataToSend.append("shop_id", formData.shop_id);
-
-    console.log(formData.shop_id);
-    console.log(formData.name);
-
-    if (isEditing) {
-      handleEditCategory(editingCategoryId, formData);
-    } else {
-      try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/categories",
-          fromDataToSend,
+    try {
+      let response;
+      if (isEditing) {
+        handleEditCategory(editingCategoryId, formData);
+      } else {
+        response = await axios.post(
+          `http://127.0.0.1:8000/api/shops/${formData.shop_id}/categories`,
+          formDataToSend,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -114,19 +126,46 @@ export default function CategorieContextProvider({ children }) {
             },
           }
         );
-        setShowModal(false);
-        alert("yes");
-        // setNom("");
-        console.log("respose :", response);
-        fetchCategories();
-      } catch (error) {
-        console.error("Erreur lors de l'ajout de la catégorie:", error);
+
+        // Log the complete response
+        console.log("Réponse du serveur complète :", response);
+        console.log("Données de la réponse :", response.data);
+
+        // Vérifiez la structure de la réponse
+        if (response.data && response.data.categories) {
+          const createdCategories = response.data.categories;
+          if (createdCategories.length > 0) {
+            const createdCategoryId = createdCategories[0].id; // Assurez-vous de gérer plusieurs catégories si nécessaire
+            localStorage.setItem("categorie", createdCategoryId);
+            console.log("Catégorie créée ID :", createdCategoryId);
+          }
+
+          await Swal.fire({
+            icon: "success",
+            title: "Categorie ajoutée avec succès",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+
+          // fetchCategories();
+        } else {
+          console.error(
+            "La réponse ne contient pas les catégories créées:",
+            response.data
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout de la catégorie:", error);
+      if (error.response) {
+        console.log("Erreur détaillée:", error.response.data);
       }
     }
+
   };
+  // setCategories(" ");
 
   const handleDetail = (categoryId) => {
-    // Récupérer l'ID de la catégorie depuis le stockage local
     const categorieIdCli = localStorage.getItem("categorieIdCli");
   };
 
@@ -146,35 +185,6 @@ export default function CategorieContextProvider({ children }) {
   const handleEditCategory = (categoryId, newData) => {
     setEditData(newData);
     handleEdit(categoryId, newData);
-    setShowModal(false);
-  };
-
-  // const handleDelete = async (categoryId) => {
-  //   try {
-  //     await axiosInstance.delete(`/categorie/${categoryId}`);
-  //     const updatedCategories = categories.filter(
-  //       (category) => category._id !== categoryId
-  //     );
-  //     setCategories(updatedCategories);
-  //     console.log("Catégorie supprimée avec succès");
-
-  //     // Actualisez la liste des catégories après la suppression
-  //     fetchCategories();
-  //   } catch (error) {
-  //     console.error("Erreur lors de la suppression de la catégorie:", error);
-  //   }
-  // };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/categories",
-        formData
-      );
-      setCategories(response.data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des catégories :", error);
-    }
   };
 
   const updateCategoryQuantities = async () => {
@@ -188,7 +198,6 @@ export default function CategorieContextProvider({ children }) {
             const produitsCategorie = response.data;
             const quantite = produitsCategorie.length;
 
-            // Mettre à jour la quantité dans la base de données
             await axios.put(
               `http://127.0.0.1:8000/api/categories/${category._id}`,
               { quantite }
@@ -234,14 +243,12 @@ export default function CategorieContextProvider({ children }) {
     setEditingCategoryId,
     isEditing,
     setIsEditing,
+    userShops,
     table,
     actions,
-    // inputs,
     formData,
     categories,
-    nom,
     quantite,
-    setNom,
     setQuantite,
     setCategories,
     handleChange,

@@ -1,51 +1,61 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-import { BiSearch, BiNotification } from "react-icons/bi";
+import { BiNotification } from "react-icons/bi";
+import { BiSearch } from "react-icons/bi";
+import useGlobal from "../../utils/hooks/useGlobal";
+
+
 const ContentHeader = () => {
   const navigate = useNavigate();
-  const [shopName, setShopName] = useState("");
+  const [userShop, setUserShop] = useState(null);
+  const { handleLogout } = useGlobal()
+
+  const deconnexion = () => {
+    handleLogout()
+
+  }
+ 
 
   useEffect(() => {
-    // Récupérer le nom de la boutique depuis la base de données en utilisant l'ID de l'utilisateur
-    const user_Id = localStorage.getItem("userId");
-    console.log("tokenClient", user_Id);
-
-    const token = localStorage.getItem("tokenClient");
-    console.log("tokenClient", token);
-
-    if (!token) {
-      alert("connectez vous d" / "abord avant de creer votre boutique");
-      navigate("/connexion");
-      return;
-    }
-    const fetchShopName = async () => {
+    const fetchUserShops = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/shops/${user_Id}`,
+          "http://localhost:8000/api/user/shops",
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("tokenClient")}`,
               "Content-Type": "multipart/form-data",
             },
           }
         );
-        setShopName(response.data.name);
-        console.log("response", response.data.name);
+        localStorage.removeItem('shopId');
+        setUserShop(response.data);
+        localStorage.setItem("shop_Id", response.data.id);
+        
+
+        console.log("shopId", response.data.id);
+          navigate("/dashboard");
+        console.log("response", response.data);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchShopName();
+
+    fetchUserShops();
   }, []);
+
+  if (!userShop) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex items-center justify-between">
-      <h1 className="text-[#526d82] text-2xl">
-        Bienvenue sur le tableau de bord de :{" "}
-        <Link to={`/ShopDetail`}>{shopName}</Link>
-      </h1>
+      <div className="flex items-center gap-4">
+        <span>Votre boutique : {userShop.name}</span>
+        <Link to={`/accueil/${userShop.name}`}>Voir mon boutique</Link>
+      </div>
+
       <div className="flex items-center gap-[20px]">
         <div className="bg-blue-300 px-5 py-1 rounded flex items-center">
           <input
@@ -55,9 +65,14 @@ const ContentHeader = () => {
           />
           <BiSearch className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
         </div>
-        <div className="bg-[#dde6ed] p-[12px] rounded text-[#969393] flex items-center justify-center ">
-          <BiNotification className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
-        </div>
+        <Link to={"/dashboard/FormProfilUser"}>
+          <div className="bg-[#dde6ed] p-[12px] rounded text-[#969393] flex items-center justify-center ">
+            <BiNotification className="text-[#969393] text-md cursor-pointer ease-in-out duration-100 hover:cursor-pointer hover:scale-75" />
+          </div>
+        </Link>
+        <button onClick={deconnexion} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+            Déconnexion
+          </button>
       </div>
     </div>
   );

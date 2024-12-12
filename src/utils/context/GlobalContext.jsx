@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import axios from "axios";
+import React, { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 // import axiosInstance from "../axiosInstance";
 
 export let prenom;
@@ -9,11 +11,11 @@ export const GlobalContext = createContext();
 const GlobalContextProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [email, setEmail] = useState("");
+  const [admin, setAdmin] = useState("");
   const [client, setClient] = useState("");
-//   const [commandes, setCommandes] = useState([]);
   const [password, setPassword] = useState("");
   const [dropdown, setDropdown] = useState(false);
-//   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [produitAimer, setProduitAimer] = useState(() => {
     const listesEnvies = localStorage.getItem("produitAimer");
@@ -29,34 +31,34 @@ const GlobalContextProvider = ({ children }) => {
   };
 
   // Fonction de connexion
-//   const handleLogin = () => {
-//     setIsLoading(true);
-//     axiosInstance
-//       .post("/auth/login", {
-//         email,
-//         password,
-//       })
-//       .then((response) => {
-//         console.log(response.data); // Connexion réussie, vous pouvez gérer le token ici
-//         const token = response.data.token;
-//         // Stocker le token dans le local storage
-//         localStorage.setItem("token", token);
-//         // Rediriger l'utilisateur vers une autre page par exemple
-//         navigate("/admin/dashboard");
-//       })
-//       .catch((error) => {
-//         console.error(error); // Gérer les erreurs ici
-//         alert("Email ou mot de passe incorrect");
-//       })
-//       .finally(() => {
-//         setIsLoading(false);
-//       });
-//   };
+  //   const handleLogin = () => {
+  //     setIsLoading(true);
+  //     axiosInstance
+  //       .post("/auth/login", {
+  //         email,
+  //         password,
+  //       })
+  //       .then((response) => {
+  //         console.log(response.data); // Connexion réussie, vous pouvez gérer le token ici
+  //         const token = response.data.token;
+  //         // Stocker le token dans le local storage
+  //         localStorage.setItem("token", token);
+  //         // Rediriger l'utilisateur vers une autre page par exemple
+  //         navigate("/admin/dashboard");
+  //       })
+  //       .catch((error) => {
+  //         console.error(error); // Gérer les erreurs ici
+  //         alert("Email ou mot de passe incorrect");
+  //       })
+  //       .finally(() => {
+  //         setIsLoading(false);
+  //       });
+  //   };
 
   // Fonction pour supprimer le token du local storage après la déconnexion
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/admin");
+    localStorage.removeItem("tokenClient");
+    navigate("/connexion");
   };
 
   const handleLogoutUser = () => {
@@ -109,28 +111,28 @@ const GlobalContextProvider = ({ children }) => {
   //   //   });
   // };
 
-//   const profileUser = async () => {
-//     const token = localStorage.getItem("tokenclient");
+  const profileUser = async () => {
+    const token = localStorage.getItem("tokenclient");
 
-//     if (!token) {
-//       return;
-//     }
+    if (!token) {
+      return;
+    }
 
-//     try {
-//       const res = await axiosInstance.get("/authclient/profile", {
-//         headers: {
-//           Authorization: `Bearer ${token}`,
-//         },
-//       });
+    try {
+      const res = await axios.get("/api/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-//       setClient(res.data);
-//       // console.log(res.data);
-//       prenom = res.data.prenom;
-//       // console.log(client, 'client');
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
+      setAdmin(res.data);
+      console.log(res.data);
+      prenom = res.data.prenom;
+      console.log(admin, "admin");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   //   const fetchProduits = async () => {
   //     try {
@@ -143,35 +145,35 @@ const GlobalContextProvider = ({ children }) => {
   //   fetchProduits();
   // }, [])
 
-//   const fetchCommandes = async () => {
-//     try {
-//       const response = await axiosInstance.get(`/commandes`);
-//       setCommandes(response.data);
-//     } catch (error) {
-//       console.error("Erreur lors de la récupération des commandes:", error);
-//     }
-//   };
+  //   const fetchCommandes = async () => {
+  //     try {
+  //       const response = await axiosInstance.get(`/commandes`);
+  //       setCommandes(response.data);
+  //     } catch (error) {
+  //       console.error("Erreur lors de la récupération des commandes:", error);
+  //     }
+  //   };
 
-//   const handleLikeToggle = (id, produit) => {
-//     const isLiked = produitAimer.some(
-//       (produit) => produit && produit._id === id
-//     );
+  //   const handleLikeToggle = (id, produit) => {
+  //     const isLiked = produitAimer.some(
+  //       (produit) => produit && produit._id === id
+  //     );
 
-//     if (isLiked) {
-//       const updaterProduits = produitAimer.filter(
-//         (produit) => produit && produit._id !== id
-//       );
-//       setProduitAimer(updaterProduits);
-//     } else {
-//       const updaterProduits = [...produitAimer, produit];
-//       setProduitAimer(updaterProduits);
-//     }
-//   };
+  //     if (isLiked) {
+  //       const updaterProduits = produitAimer.filter(
+  //         (produit) => produit && produit._id !== id
+  //       );
+  //       setProduitAimer(updaterProduits);
+  //     } else {
+  //       const updaterProduits = [...produitAimer, produit];
+  //       setProduitAimer(updaterProduits);
+  //     }
+  //   };
 
-//   useEffect(() => {
-//     profileUser();
-//     fetchCommandes();
-//   }, [commandes]);
+  useEffect(() => {
+    profileUser();
+    // fetchCommandes();
+  }, []);
 
   const value = {
     showModal,
@@ -184,14 +186,15 @@ const GlobalContextProvider = ({ children }) => {
     handleLogout,
     isLoggedIn,
     handleLogoutUser,
-    // profileUser,
+    profileUser,
     handleToggle,
     produitAimer,
     setProduitAimer,
     // handleLikeToggle,
+    admin,
     client,
-    // isLoading,
     setClient,
+    setAdmin,
     // commandes,
     dropdown,
     setDropdown,
@@ -204,3 +207,30 @@ const GlobalContextProvider = ({ children }) => {
 };
 
 export default GlobalContextProvider;
+
+// await Swal.fire({
+//   icon: "success",
+//   title: "Connexion réussie!",
+//   showConfirmButton: false,
+//   timer: 2000,
+// });
+// navigate("/creeShop");
+// } catch (error) {
+// console.error("Erreur de connexion:", error.response || error.message);
+// if (error.response && error.response.status === 401) {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Connexion échouée",
+//     text: "Email ou mot de passe incorrect.",
+//   });
+// } else {
+//   await Swal.fire({
+//     icon: "error",
+//     title: "Erreur",
+//     text: "Une erreur s'est produite. Veuillez réessayer.",
+//   });
+// }
+// } finally {
+// setIsLoading(false);
+// }
+// };

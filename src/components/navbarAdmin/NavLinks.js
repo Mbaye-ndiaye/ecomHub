@@ -87,7 +87,7 @@ function NaveLinks({ className }) {
                   to="/ContactEcom"
                   activeClassName="active"
                 >
-                  Contact 
+                  Contact
                 </NavLink>
               </li>
 

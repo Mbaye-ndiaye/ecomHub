@@ -17,6 +17,7 @@ const Categories = () => {
     updateCategoryQuantities,
     fetchCategories,
     handleChange,
+    userShops,
     produits,
   } = useContext(CategorieContext);
 
@@ -33,26 +34,30 @@ const Categories = () => {
   const handleSelectChange = (e) => {};
 
   return (
-    <div className="flex bg-gray-700 p-[20px]   gap[20px]">
-      <Sidebare />
-      <div className="bg-white rounded-[20px] p-[2rem] flex-1 gap-[1.5rem] justify-between mb-5 h-auto ml-8">
+    <div className="">
+      <div className="bg-white rounded-[20px] p-[2rem] flex-1 mb-5 h-auto ">
         <HeaderTable
           title="Liste categories"
           nomAjout="Ajouter un nouveau categorie"
           body={
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="name" className="block text-sm font-medium ">
-                Nom du boutique
-              </label>
-              <input
-                required
-                type="text"
-                id="name"
-                name="name"
-                className="w-[24rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
-                value={formData.name}
-                onChange={handleChange}
-              />
+            <form className="flex gap-5" onSubmit={handleSubmit}>
+              <div className="flex flex-col ">
+                <label
+                  htmlFor="categories"
+                  className="block text-sm font-medium "
+                >
+                  Nom du catégorie
+                </label>
+                <input
+                  required
+                  type="text"
+                  id="categories"
+                  name="categories"
+                  className="w-[20rem] p-2 mt-1  bg-gray-200 border rounded-md outline-none focus:border focus:border-double focus:border-sky-600"
+                  value={formData.categories}
+                  onChange={handleChange}
+                />
+              </div>
               <button
                 type="submit"
                 className="mx-3 text-white bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-500 dark:focus:ring-gray-850 shadow-lg shadow-gray-500/50 dark:shadow-sm font-medium rounded-lg text-sm px-5 py-3 text-center  me-2 mb-2"

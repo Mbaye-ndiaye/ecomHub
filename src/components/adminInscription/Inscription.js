@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import Swal from "sweetalert2";
+import loginImg from "../../assets/imagesback.jfif";
+import trees from "../../assets/amie.avif";
+import LoadingSpinner from "../adminConnexion/LoadingSpinner";
 
-import trees from "../../assets/images.jfif";
 
 export default function Inscription() {
   const navigate = useNavigate();
@@ -53,16 +54,16 @@ export default function Inscription() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(false)
     try {
       const response = await axios.post(
         "http://localhost:8000/api/register",
         formData
       );
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem("token", response.data.token);
 
       console.log(response.data);
-      
-      
+
       // afficher le message succes
       await Swal.fire({
         icon: "success",
@@ -75,19 +76,26 @@ export default function Inscription() {
     } catch (error) {
       console.error(error);
       alert("inscription echoue");
+    } finally {
+      setIsLoading(false)
     }
   };
   return (
-    <div className="flex w-full h-screen bg-gradient-to-r from-cyan-500 to-blue-500 ">
-      <div className="  grid grid-cols-2 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
+    <div className="relative flex w-full h-screen">
+      <img
+        className="absolute object-cover w-full h-full mix-blend-overlay"
+        src={loginImg}
+        alt="/"
+      />
+      <div className=" z-30 grid grid-cols-2 md:grid-cols-2 m-auto  h-[550px] shadow-lg shadow-gray-600 sm:max-w-[900px]">
         <div className="w-full h-[550px] hidden md:block">
-          <img className="w-[130rem] h-full" src={trees} alt="/" />
+          <img className=" w-[190rem] h-full" src={trees} alt="/" />
         </div>
         <div className="flex flex-col justify-center items-center w-[35rem] bg-white ">
           <h1 className="text-3xl text-center">Inscription</h1>
           <form className="w-full p-8 rounded " onSubmit={handleSubmit}>
             <div className="flex flex-row gap-5 mb-4">
-              <div className="flex flex-col ">
+              <div className="relative flex flex-col mb-4">
                 <label htmlFor="prenom" className="block text-sm font-medium ">
                   Prenom
                 </label>
@@ -187,19 +195,17 @@ export default function Inscription() {
               </div>
             </div>
 
-            {/* <Link to={"/connexion"}> */}
             <button
-              type="submit"
-              disabled={isButtonDisabled || isLoading}
-              className={`w-full mt-8 px-4 py-2 text-white rounded-md md:w-1/2 ${
-                isButtonDisabled || isLoading
-                  ? "bg-gray-800 opacity-85 cursor-not-allowed text-disabled text-black relative"
-                  : "bg-gray-900 text-active text-white hover:bg-gray-900"
-              } ${isLoading ? "relative" : ""}`}
-            >
-              Enregistrer
-            </button>
-            {/* </Link> */}
+            type="submit"
+            disabled={ isLoading}
+            className={`w-full relative mt-8 px-4 py-2 text-white rounded-md bg-black flex gap-4 items-center justify-center ${
+               isLoading
+                ? "bg-gray-800 cursor-not-allowed text-disabled text-black"
+                : "bg-gray-900 text-active text-white hover:bg-gray-900"
+            }`}
+          >
+            {isLoading ? <LoadingSpinner /> : "Connexion"}
+          </button>
           </form>
         </div>
       </div>
